@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Modal from './Modal';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import axios from 'axios'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Timeline from '@material-ui/lab/Timeline';
@@ -76,6 +77,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CustomizedTimeline(props) {
     const classes = useStyles();
+    const history = useHistory()
     const [modalImage, setModalImage] = useState("")
     const [open, setOpen] = useState(false)
     const [data, setData] = useState([])
@@ -100,8 +102,13 @@ export default function CustomizedTimeline(props) {
         setOpen(false);
     };
 
+
     const deleteHandler = (id) => {
-        alert('Are you sure?')
+            axios.delete(`/event/${id}`)
+                .then(res => res.data)
+            setData(data.filter(item => item._id !== id))
+            history.push('/')
+        
     };
 
 
@@ -152,7 +159,6 @@ export default function CustomizedTimeline(props) {
                                     </Link>
                                     <div>
                                         <Link
-                                            target='_blank'
                                             // id={item._id}
                                             className={classes.link}
                                             to={`/update/${item._id}`}
@@ -160,7 +166,8 @@ export default function CustomizedTimeline(props) {
                                             Edit
                                     </Link>
                                         <Button
-                                        onClick={deleteHandler}
+                                        disabled
+                                        onClick={() => deleteHandler(item._id)}
                                         >
                                             Delete
                                         </Button>
