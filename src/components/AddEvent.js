@@ -177,7 +177,7 @@ export default function AddEvent() {
                         type="submit"
                         fullWidth
                         variant="contained"
-                        color="secondary"
+                        color="primary"
                         className={classes.submit}
                     >
                         Submit

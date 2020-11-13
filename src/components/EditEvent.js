@@ -199,7 +199,7 @@ export default function EditEvent(props) {
                         type="submit"
                         fullWidth
                         variant="contained"
-                        color="secondary"
+                        color="primary"
                         className={classes.submit}
                     >
                         Update 
