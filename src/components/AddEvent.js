@@ -56,7 +56,7 @@ export default function AddEvent() {
             const {year, event, imageUrl, link, latitude, longitude } = data
 
             // posting to database
-            fetch("http://localhost:5000/event", {
+            fetch("https://japan-history-timeline-api.herokuapp.com/event", {
                 method: "post",
                 headers: {
                     "Content-Type": "application/json",
@@ -84,7 +84,7 @@ export default function AddEvent() {
                 })
                 .catch(err => console.log(err))
         }
-    }, [data])
+    }, [data, history])
 
 
     return (

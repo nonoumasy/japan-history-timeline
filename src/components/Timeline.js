@@ -72,7 +72,7 @@ export default function CustomizedTimeline(props) {
     const [data, setData] = useState([])
 
     useEffect(() => {
-        fetch('http://localhost:5000/event')
+        fetch('https://japan-history-timeline-api.herokuapp.com/event')
             .then(res => res.json())
             .then(result =>{
                 // console.log(result)
