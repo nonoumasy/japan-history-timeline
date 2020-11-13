@@ -115,7 +115,7 @@ export default function CustomizedTimeline(props) {
 
     return (
         <>
-            <ProgressBar height="1px" color="#BC002D" />
+            <ProgressBar height="2px" color="#BC002D" />
             <Modal 
                 open={open}
                 handleClose={handleClose}
