@@ -10,7 +10,6 @@ import {ScrollTrigger} from 'gsap/ScrollTrigger'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import { ProgressBar } from 'scrolling-based-progressbar';
 import AddEvent from './components/AddEvent'
 import EditEvent from './components/EditEvent'
 
@@ -90,7 +89,6 @@ function App() {
           exact path='/update/:id' 
           render={props => <EditEvent {...props} />}
         />
-        <ProgressBar height="1px" color="#BC002D" />
         <Route exact path='/'>
           <div style={{ marginTop: 100, marginLeft: -220 }}>
             <Timeline addToRefs={addToRefs} />

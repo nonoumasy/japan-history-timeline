@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Modal from './Modal';
 import { Link, useHistory } from 'react-router-dom'
 import axios from 'axios'
+import { ProgressBar } from 'scrolling-based-progressbar';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Timeline from '@material-ui/lab/Timeline';
@@ -114,6 +115,7 @@ export default function CustomizedTimeline(props) {
 
     return (
         <>
+            <ProgressBar height="1px" color="#BC002D" />
             <Modal 
                 open={open}
                 handleClose={handleClose}
