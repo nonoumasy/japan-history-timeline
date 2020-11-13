@@ -4,7 +4,7 @@ import Timeline from './components/Timeline'
 import {Route} from 'react-router-dom'
 import Scroll from '../src/components/Scroll'
 import gsap from 'gsap'
-import {Link} from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 import {ScrollTrigger} from 'gsap/ScrollTrigger'
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -38,7 +38,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://www.linkedin.com/in/nonoumasy/">
+      <Link target='_blank' href="https://www.linkedin.com/in/nonoumasy/">
         Nonoumasy
       </Link>{' '}
       {new Date().getFullYear()}
