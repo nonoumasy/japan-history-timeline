@@ -58,16 +58,30 @@ export default function EditEvent(props) {
     const [longitude, setLongitude] = useState('')
 
     useEffect(() => {
+        axios.get(`https://japan-history-timeline-api.herokuapp.com/event/${props.match.params.id}`)
+            .then(res =>
+                [
+                    setYear(res.data.year),
+                    setEvent(res.data.event),
+                    setImageUrl(res.data.imageUrl),
+                    setLink(res.data.link),
+                    setLatitude(res.data.latitude),
+                    setLongitude(res.data.longitude)
+                ]
+            )
+    })
+
+    useEffect(() => {
         if (data) {
             const { year, event, imageUrl, link, latitude, longitude } = data
             // posting to database
             axios.put(`https://japan-history-timeline-api.herokuapp.com/event/${props.match.params.id}`, {
-                year: year,
-                event: event, 
-                imageUrl: imageUrl,
-                link: link,
-                latitude: latitude,
-                longitude: longitude
+                year,
+                event, 
+                imageUrl,
+                link,
+                latitude,
+                longitude
             })
                 .then(data => {
                     if (data.error) {
@@ -80,21 +94,7 @@ export default function EditEvent(props) {
                 })
                 .catch(err => console.log(err))
         }
-    }, [data, history])
-
-    useEffect(() => {
-        axios.get(`https://japan-history-timeline-api.herokuapp.com/event/${props.match.params.id}`)
-        .then(res => 
-            [
-            setYear(res.data.year),
-            setEvent(res.data.event),
-            setImageUrl(res.data.imageUrl),
-            setLink(res.data.link),
-            setLatitude(res.data.latitude),
-            setLongitude(res.data.longitude)
-            ]
-        )
-    }, [props.match.params.id])
+    }, [data, history, props.match.params.id])
 
     return (
         <Container component="main" maxWidth="sm">
