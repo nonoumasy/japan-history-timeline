@@ -12,6 +12,7 @@ import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 // import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import CardMedia from '@material-ui/core/CardMedia';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -99,6 +100,10 @@ export default function CustomizedTimeline(props) {
         setOpen(false);
     };
 
+    const deleteHandler = (id) => {
+        alert('Are you sure?')
+    };
+
 
     return (
         <>
@@ -145,14 +150,21 @@ export default function CustomizedTimeline(props) {
                                     >
                                         More Details
                                     </Link>
-                                    <Link
-                                        target='_blank'
-                                        // id={item._id}
-                                        className={classes.link}
-                                        to={`/update/${item._id}`}
-                                    >
-                                        Edit
+                                    <div>
+                                        <Link
+                                            target='_blank'
+                                            // id={item._id}
+                                            className={classes.link}
+                                            to={`/update/${item._id}`}
+                                        >
+                                            Edit
                                     </Link>
+                                        <Button
+                                        onClick={deleteHandler}
+                                        >
+                                            Delete
+                                        </Button>
+                                    </div>
                                 </CardActions>
                             </Card>
                         </TimelineContent>
