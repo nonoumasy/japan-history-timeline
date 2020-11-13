@@ -4,14 +4,15 @@ import Timeline from './components/Timeline'
 import {Route} from 'react-router-dom'
 import Scroll from '../src/components/Scroll'
 import gsap from 'gsap'
+import {Link} from 'react-router-dom';
 import {ScrollTrigger} from 'gsap/ScrollTrigger'
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import { ProgressBar } from 'scrolling-based-progressbar';
 import AddEvent from './components/AddEvent'
+import EditEvent from './components/EditEvent'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -40,7 +41,7 @@ function Copyright() {
       {'Copyright © '}
       <Link color="inherit" href="https://www.linkedin.com/in/nonoumasy/">
         Nonoumasy
-            </Link>{' '}
+      </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -82,10 +83,13 @@ function App() {
       <ThemeProvider theme={theme}>
         <Scroll showBelow={300} />
         <NavBar />
-        
         <Route exact path='/add'>
           <AddEvent />
         </Route>
+        <Route 
+          exact path='/update/:id' 
+          render={props => <EditEvent {...props} />}
+        />
         <ProgressBar height="1px" color="#BC002D" />
         <Route exact path='/'>
           <div style={{ marginTop: 100, marginLeft: -220 }}>
