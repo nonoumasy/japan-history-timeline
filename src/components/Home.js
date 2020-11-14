@@ -81,6 +81,7 @@ export default function Home(props) {
     const history = useHistory()
     const [modalImage, setModalImage] = useState("")
     const [open, setOpen] = useState(false)
+    const [modalOpen, setModalOpen] = useState(false)
     const [data, setData] = useState([])
     const [imageOpen, setImageOpen] = useState(false);
 
@@ -96,12 +97,12 @@ export default function Home(props) {
     
     const clickImageHandler = (props) => {
         // console.log(props)
-        setImageOpen(true);
+        setModalOpen(true);
         setModalImage(props)
     }
 
     const handleClose = () => {
-        setImageOpen(false);
+        setModalOpen(false);
     };
 
 
@@ -130,7 +131,7 @@ export default function Home(props) {
                 message="Successfully Deleted"
             />
             <Modal 
-                open={open}
+                open={modalOpen}
                 handleClose={handleClose}
             >
                 <img src={modalImage} className={classes.dialogImage} alt='' />
@@ -157,7 +158,7 @@ export default function Home(props) {
                                             // controls
                                             // className={classes.iframe}
                                             src={item.imageUrl}
-                                            allowfullscreen="allowfullscreen"
+                                            allowFullScreen
                                             mozallowfullscreen="mozallowfullscreen"
                                             msallowfullscreen="msallowfullscreen"
                                             oallowfullscreen="oallowfullscreen" 
@@ -166,10 +167,6 @@ export default function Home(props) {
                                             height='200'
                                             allow="accelerometer"
                                             title={item.year}
-                                            clipboard-write
-                                            encrypted-media
-                                            gyroscope
-                                            picture-in-picture
                                             // type="*"
                                         ></iframe>
                                         :
@@ -181,12 +178,6 @@ export default function Home(props) {
                                             onClick={() => clickImageHandler(item.imageUrl)}
                                         />
                                     }
-                                    
-                                    {/* <CardMedia
-                                        className={classes.media}
-                                        image={item.imageUrl}
-                                        alt=''
-                                        onClick={() => clickImageHandler(item.imageUrl)}/> */}
                                 </CardActionArea>
                                     <CardContent>
                                         <Typography

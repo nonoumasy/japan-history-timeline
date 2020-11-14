@@ -9,13 +9,13 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Modal = ({ imageOpen, handleClose, children }) => {
+const Modal = ({ open, handleClose, children }) => {
 
     const classes = useStyles();
     return (
         <>
             <Dialog
-                open={imageOpen}
+                open={open}
                 fullWidth
                 maxWidth={'lg'}
                 className={classes.dialog}
