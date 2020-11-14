@@ -162,7 +162,7 @@ export default function Home(props) {
                                             msallowfullscreen="msallowfullscreen"
                                             oallowfullscreen="oallowfullscreen" 
                                             webkitallowfullscreen="webkitallowfullscreen"
-                                            width='auto'
+                                            width='100%'
                                             height='200'
                                             allow="accelerometer"
                                             title={item.year}
