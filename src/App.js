@@ -1,8 +1,8 @@
 import React, {useRef, useEffect} from 'react'
 import NavBar from './components/NavBar'
-import Timeline from './components/Timeline'
+import Home from './components/Home'
 import {Route} from 'react-router-dom'
-import Scroll from '../src/components/Scroll'
+import Scroll from './components/shared/Scroll'
 import gsap from 'gsap'
 import Link from '@material-ui/core/Link';
 import {ScrollTrigger} from 'gsap/ScrollTrigger'
@@ -91,7 +91,7 @@ function App() {
         />
         <Route exact path='/'>
           <div style={{ marginTop: 100, marginLeft: -220 }}>
-            <Timeline addToRefs={addToRefs} />
+            <Home addToRefs={addToRefs} />
           </div>
         </Route>
         <Box mb={4} mt={8}>
