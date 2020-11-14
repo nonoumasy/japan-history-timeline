@@ -54,7 +54,8 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '12px',
         fontWeight: 700,
         textDecoration: 'none',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        color: '#333'
     },
     cardaction: {
         overflow: 'hidden',
