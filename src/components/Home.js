@@ -142,7 +142,8 @@ export default function Home(props) {
             >
                 <img src={modalImage} className={classes.dialogImage} alt='' />
             </Modal>
-            <Timeline >
+            <h2>Export </h2>
+            <Timeline > 
                 {data.map((item) => (
                     <TimelineItem key={item._id} align="alternate" ref={props.addToRefs}>
                         <TimelineOppositeContent>
