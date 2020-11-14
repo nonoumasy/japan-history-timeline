@@ -10,7 +10,8 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Snackbar from '@material-ui/core/Snackbar';
+import Snackbar from '@material-ui/core/Snackbar'; 
+import Tooltip from '@material-ui/core/Tooltip';
 
 
 const schema = yup.object().shape({
@@ -144,18 +145,21 @@ export default function AddEvent() {
                         error={!!errors.event}
                         helperText={errors?.event?.message}
                     />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        name="imageUrl"
-                        label="imageUrl"
-                        type="text"
-                        id="imageUrl"
-                        inputRef={register}
-                        error={!!errors.imageUrl}
-                        helperText={errors?.imageUrl?.message}
-                    />
+                    <Tooltip title='Go to YouTube. Navigate to the video you wish to embed. Click the Share link below the video, then click the Embed link. The embed link will be highlighted in blue. You will need to copy this link in order to add it to your page in the Employer Center.'>
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            fullWidth
+                            name="imageUrl"
+                            label="imageUrl"
+                            type="text"
+                            id="imageUrl"
+                            inputRef={register}
+                            error={!!errors.imageUrl}
+                            helperText={errors?.imageUrl?.message}
+                        />
+                    </Tooltip>
+                    
                     <TextField
                         variant="outlined"
                         margin="normal"
