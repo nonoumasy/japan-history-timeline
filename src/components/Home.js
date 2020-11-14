@@ -74,6 +74,11 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         padding: '0 30px 20px'
     },
+    video: {
+        outline: 0,
+        border: 0,
+        padding: 0,
+    }
 }));
 
 export default function Home(props) {
@@ -156,7 +161,7 @@ export default function Home(props) {
                                         <iframe
                                             // component='video'
                                             // controls
-                                            // className={classes.iframe}
+                                            className={classes.video}
                                             src={item.imageUrl}
                                             allowFullScreen
                                             mozallowfullscreen="mozallowfullscreen"
