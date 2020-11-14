@@ -157,11 +157,14 @@ export default function Home(props) {
                                             // controls
                                             // className={classes.iframe}
                                             src={item.imageUrl}
-                                            allowfullscreen
+                                            allowfullscreen="allowfullscreen"
+                                            mozallowfullscreen="mozallowfullscreen"
+                                            msallowfullscreen="msallowfullscreen"
+                                            oallowfullscreen="oallowfullscreen" 
+                                            webkitallowfullscreen="webkitallowfullscreen"
                                             width='auto'
                                             height='200'
                                             allow="accelerometer"
-                                            autoplay
                                             title={item.year}
                                             clipboard-write
                                             encrypted-media
