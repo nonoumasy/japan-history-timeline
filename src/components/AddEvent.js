@@ -10,6 +10,9 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 
 const schema = yup.object().shape({
@@ -50,6 +53,8 @@ export default function AddEvent() {
         resolver: yupResolver(schema)
     })
     const [data, setData] = useState('')
+    const [open, setOpen] = useState(false);
+    const [status, setStatusBase] = React.useState("");
 
     useEffect(() => {
         if (data) {
@@ -78,6 +83,7 @@ export default function AddEvent() {
                         console.log(data.error)
                     }
                     else {
+                        setOpen(true)
                         setData('')
                         history.push('/')
                     }
@@ -86,9 +92,23 @@ export default function AddEvent() {
         }
     }, [data, history])
 
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
+
+    const setStatus = msg => setStatusBase({ msg, date: new Date() })
 
     return (
         <Container component="main" maxWidth="sm">
+            <Snackbar
+                open={open}
+                autoHideDuration={1000}
+                onClose={handleClose}
+                message="Successfully Added"
+            />
             <CssBaseline />
             <div className={classes.paper}>
                 <Typography>
