@@ -151,14 +151,24 @@ export default function Home(props) {
                         <TimelineContent>
                             <Card className={classes.root}>
                                 <CardActionArea className={classes.cardaction}>
-                                    {item.imageUrl.includes('video') ?
-                                        <CardMedia
-                                            component='video'
-                                            controls
-                                            // className={classes.media}
-                                            image={item.imageUrl}
-                                            type="*"
-                                        />
+                                    {item.imageUrl.includes('youtube.com') ?
+                                        <iframe
+                                            // component='video'
+                                            // controls
+                                            // className={classes.iframe}
+                                            src={item.imageUrl}
+                                            allowfullscreen
+                                            width='auto'
+                                            height='200'
+                                            allow="accelerometer"
+                                            autoplay
+                                            title={item.year}
+                                            clipboard-write
+                                            encrypted-media
+                                            gyroscope
+                                            picture-in-picture
+                                            // type="*"
+                                        ></iframe>
                                         :
                                         <CardMedia
                                             className={classes.media}
