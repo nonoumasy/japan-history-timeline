@@ -10,7 +10,6 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Snackbar from '@material-ui/core/Snackbar'; 
 import Tooltip from '@material-ui/core/Tooltip';
 
 
@@ -52,8 +51,7 @@ export default function AddEvent() {
         resolver: yupResolver(schema)
     })
     const [data, setData] = useState('')
-    const [open, setOpen] = useState(false);
-    const [status, setStatusBase] = React.useState("");
+    const [open, setOpen] = useState(false); 
 
     useEffect(() => {
         if (data) {
@@ -98,16 +96,8 @@ export default function AddEvent() {
         setOpen(false);
     };
 
-    const setStatus = msg => setStatusBase({ msg, date: new Date() })
-
     return (
         <Container component="main" maxWidth="sm">
-            <Snackbar
-                open={open}
-                autoHideDuration={1000}
-                onClose={handleClose}
-                message="Successfully Added"
-            />
             <CssBaseline />
             <div className={classes.paper}>
                 <Typography>

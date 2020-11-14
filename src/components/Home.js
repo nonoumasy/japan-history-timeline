@@ -21,7 +21,6 @@ import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import {SimpleMenu} from './shared/SimpleMenu';
 import MenuItem from '@material-ui/core/MenuItem';
-import Snackbar from '@material-ui/core/Snackbar';
 
 // import data from '../data.json'
 
@@ -119,23 +118,10 @@ export default function Home(props) {
                 .then(setData(data.filter(item => item._id !== id)))
     };
 
-    const snackbarHandler = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpen(false);
-    };
-
-
     return (
         <>
             <ProgressBar height="2px" color="#BC002D" />
-            <Snackbar
-                open={open}
-                autoHideDuration={100}
-                onClose={snackbarHandler}
-                message="Successfully Deleted"
-            />
+            
             <Modal 
                 open={modalOpen}
                 handleClose={handleClose}

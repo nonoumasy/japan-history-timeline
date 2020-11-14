@@ -34,6 +34,7 @@ const theme = createMuiTheme({
   }
 });
 
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -62,7 +63,7 @@ function App() {
         scrollTrigger: {
           id: `section-${index + 1}`,
           trigger: el,
-          start: 'top center+=80',
+          start: `top center+=80`,
           toggleActions: 'play none none reverse',
           scrub: 1,
           // markers: true

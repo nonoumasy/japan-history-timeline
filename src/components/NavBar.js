@@ -17,11 +17,8 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         flexGrow: 1,
+        fontSize: '16px'
     },
-    event : {
-        fontWeight: 600,
-        fontSize: '14px'
-    }
 }));
 
 const NavBar = (props) =>  {
@@ -46,7 +43,7 @@ const NavBar = (props) =>  {
                     </Typography>
                     <Tooltip title="Add New Event">
                         <IconButton color='secondary' onClick={handleMenuClick}>
-                            <AddCircleIcon fontSize='large' />
+                            <AddCircleIcon fontSize='medium' />
                         </IconButton>
                     </Tooltip>
                 </Toolbar>
