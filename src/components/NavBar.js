@@ -43,7 +43,7 @@ const NavBar = (props) =>  {
                     </Typography>
                     <Tooltip title="Add New Event">
                         <IconButton color='secondary' onClick={handleMenuClick}>
-                            <AddCircleIcon fontSize='medium' />
+                            <AddCircleIcon fontSize='small' />
                         </IconButton>
                     </Tooltip>
                 </Toolbar>

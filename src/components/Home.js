@@ -191,7 +191,7 @@ export default function Home(props) {
                                                 <MenuItem onClick={props.handleClose}>
                                                     <Link
                                                         className={classes.link}
-                                                        to={`/update/${item._id}`}
+                                                        to={`/event/update/${item._id}`}
                                                     >
                                                         Edit
                                                 </Link>

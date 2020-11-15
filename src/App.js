@@ -4,14 +4,12 @@ import Home from './components/Home'
 import {Route} from 'react-router-dom'
 import Scroll from './components/shared/Scroll'
 import gsap from 'gsap'
-import Link from '@material-ui/core/Link';
 import {ScrollTrigger} from 'gsap/ScrollTrigger'
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
 import AddEvent from './components/AddEvent'
 import EditEvent from './components/EditEvent'
+import Footer from './components/Footer'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -33,20 +31,6 @@ const theme = createMuiTheme({
     },
   }
 });
-
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link target='_blank' href="https://www.linkedin.com/in/nonoumasy/">
-        Nonoumasy
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 function App() {
   const revealRefs = useRef([])
@@ -87,7 +71,7 @@ function App() {
           <AddEvent />
         </Route>
         <Route 
-          exact path='/update/:id' 
+          exact path='/event/update/:id' 
           render={props => <EditEvent {...props} />}
         />
         <Route exact path='/'>
@@ -95,9 +79,7 @@ function App() {
             <Home addToRefs={addToRefs} />
           </div>
         </Route>
-        <Box mb={4} mt={8}>
-          <Copyright />
-        </Box>
+        <Footer mb={4} mt={8}/>
       </ThemeProvider>
     </>
   );
