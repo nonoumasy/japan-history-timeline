@@ -75,7 +75,7 @@ function App() {
           render={props => <EditEvent {...props} />}
         />
         <Route exact path='/'>
-          <div style={{ marginTop: 80, marginLeft: -220 }}>
+          <div style={{ marginTop: 80, marginLeft: -210 }}>
             <Home addToRefs={addToRefs} />
           </div>
         </Route>
