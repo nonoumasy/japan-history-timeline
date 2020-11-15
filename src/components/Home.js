@@ -19,12 +19,11 @@ import Button from '@material-ui/core/Button';
 import CardMedia from '@material-ui/core/CardMedia';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';    
 import {SimpleMenu} from './shared/SimpleMenu';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
-import ChatIcon from '@material-ui/icons/Chat';
+import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import { Avatar } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 
@@ -251,7 +250,7 @@ export default function Home(props) {
                                         aria-expanded={expanded}
                                         aria-label="show more"
                                     >
-                                        <ChatIcon />
+                                        <ChatBubbleIcon />
                                     </IconButton>
 
                                     <SimpleMenu props={props}>
