@@ -143,7 +143,7 @@ export default function Home(props) {
             </Modal>
 
             <Timeline >
-                <div style={{ margin: '20px auto' }}>
+                <div style={{ margin: '10px auto' }}>
                     <Button
                         variant='outlined'
                         href={`data:text/json;charset=utf-8,${encodeURIComponent(
