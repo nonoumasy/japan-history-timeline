@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 import * as yup from 'yup'
 import { yupResolver } from "@hookform/resolvers/yup"
+import axios from 'axios'
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -58,23 +59,14 @@ export default function AddEvent() {
             const {year, event, imageUrl, link, latitude, longitude } = data
 
             // posting to database
-            fetch("https://japan-history-timeline-api.herokuapp.com/event", {
-                method: "post",
-                headers: {
-                    "Content-Type": "application/json",
-                    // "Authorization": "Bearer " + localStorage.getItem("jwt")
-                },
-                body: JSON.stringify({
+            axios.post("https://japan-history-timeline-api.herokuapp.com/event", {
                     year,
                     event,
                     imageUrl,
                     link,
                     latitude,
                     longitude
-
                 })
-            })
-                .then(res => res.json())
                 .then(data => {
                     if (data.error) {
                         console.log(data.error)
