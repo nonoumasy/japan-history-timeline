@@ -14,6 +14,7 @@ import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 // import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import CardMedia from '@material-ui/core/CardMedia';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -74,6 +75,10 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         padding: '0 30px 20px'
     },
+    imageContainer:{
+        margin: 0,
+        padding: 0
+    },
     video: {
         outline: 0,
         border: 0,
@@ -100,7 +105,6 @@ export default function Home(props) {
     useEffect(() => {
         axios.get('https://japan-history-timeline-api.herokuapp.com/event')
             .then(result =>{
-                console.log(result)
                 setData(result.data)
                 
             }) 
@@ -130,28 +134,45 @@ export default function Home(props) {
         <>
             <ProgressBar height="2px" color="#BC002D" />
 
+            {/* modal */}
             <Modal
                 open={modalOpen}
                 handleClose={handleClose}
             >
                 <img src={modalImage} className={classes.dialogImage} alt='' />
             </Modal>
+
             <Timeline >
+                <div style={{ margin: '20px auto' }}>
+                    <Button
+                        variant='outlined'
+                        href={`data:text/json;charset=utf-8,${encodeURIComponent(
+                            JSON.stringify(data)
+                        )}`}
+                        download="filename.json"
+                    >
+                        Export Data as Json
+                    </Button>
+                </div> 
+                
                 {data.map((item) => (
                     <TimelineItem key={item._id} align="alternate" ref={props.addToRefs}>
+
                         <TimelineOppositeContent>
                             <Typography variant="body2" color="textSecondary">
                                 {item.year}
                             </Typography>
                         </TimelineOppositeContent>
+
                         <TimelineSeparator >
                             <TimelineDot>
                             </TimelineDot>
                             <TimelineConnector className={classes.timeline} />
                         </TimelineSeparator>
+
                         <TimelineContent>
                             <Card className={classes.root}>
-                                <CardActionArea className={classes.cardaction}>
+                                <div className={classes.imageContainer}>
                                     {item.imageUrl.includes('youtube.com') ?
                                         <iframe
                                             // component='video'
@@ -178,7 +199,8 @@ export default function Home(props) {
                                             onClick={() => clickImageHandler(item.imageUrl)}
                                         />
                                     }
-                                </CardActionArea>
+                                </div>
+
                                 <CardContent>
                                     <Typography
                                         className={classes.event}
@@ -186,6 +208,7 @@ export default function Home(props) {
                                         {item.event}
                                     </Typography>
                                 </CardContent>
+
                                 <CardActions className={classes.actions}>
                                     <Link
                                         target='_blank'
