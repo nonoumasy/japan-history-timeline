@@ -127,7 +127,7 @@ export default function AddEvent() {
                         error={!!errors.event}
                         helperText={errors?.event?.message}
                     />
-                    <Tooltip title='Go to YouTube. Navigate to the video you wish to embed. Click the Share link below the video, then click the Embed link. The embed link will be highlighted in blue. You will need to copy this link in order to add it to your page in the Employer Center.'>
+                    <Tooltip title='On YouTube, Navigate to the video you wish to embed. Click the Share link below the video, then click the Embed link. The embed link will be highlighted in blue. Copy and paste this link here.'>
                         <TextField
                             variant="outlined"
                             margin="normal"
