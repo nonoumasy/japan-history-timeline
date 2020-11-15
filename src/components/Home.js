@@ -69,8 +69,7 @@ const useStyles = makeStyles((theme) => ({
         width: '1px'
     },
     dialogImage: {
-        objectFit: 'cover',
-        height: 'auto'
+        objectFit: 'cover'
     },
     actions: {
         display: 'flex',
