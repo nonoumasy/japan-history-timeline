@@ -3,6 +3,7 @@ import Modal from './shared/Modal';
 import { Link, useHistory } from 'react-router-dom'
 import axios from 'axios'
 import { ProgressBar } from 'scrolling-based-progressbar';
+import clsx from 'clsx';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Timeline from '@material-ui/lab/Timeline';
@@ -12,7 +13,7 @@ import TimelineConnector from '@material-ui/lab/TimelineConnector';
 import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
-// import Link from '@material-ui/core/Link';
+import Collapse from '@material-ui/core/Collapse';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -22,6 +23,10 @@ import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import {SimpleMenu} from './shared/SimpleMenu';
 import MenuItem from '@material-ui/core/MenuItem';
+import IconButton from '@material-ui/core/IconButton';
+import ChatIcon from '@material-ui/icons/Chat';
+import { Avatar } from '@material-ui/core';
+import Divider from '@material-ui/core/Divider';
 
 // import data from '../data.json'
 
@@ -91,6 +96,16 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         margin: '30px auto',
     },
+    expand: {
+        transform: 'rotate(0deg)',
+        marginLeft: 'auto',
+        transition: theme.transitions.create('transform', {
+            duration: theme.transitions.duration.shortest,
+        }),
+    },
+    expandOpen: {
+        transform: 'rotate(180deg)',
+    },
 }));
 
 export default function Home(props) {
@@ -101,6 +116,8 @@ export default function Home(props) {
     const [modalOpen, setModalOpen] = useState(false)
     const [data, setData] = useState([])
     const [imageOpen, setImageOpen] = useState(false);
+    const [expanded, setExpanded] = React.useState(false);
+
 
     useEffect(() => {
         axios.get('https://japan-history-timeline-api.herokuapp.com/event')
@@ -128,6 +145,10 @@ export default function Home(props) {
             axios.delete(`/event/${id}`)
                 .then(res => res.data)
                 .then(setData(data.filter(item => item._id !== id)))
+    };
+
+    const handleExpandClick = () => {
+        setExpanded(!expanded);
     };
 
     return (
@@ -213,13 +234,26 @@ export default function Home(props) {
                                 </CardContent>
 
                                 <CardActions className={classes.actions}>
+
                                     <Link
                                         target='_blank'
                                         className={classes.link}
                                         onClick={() => window.open(item.link, "_blank")}
                                     >
                                         More Details
-                                        </Link>
+                                    </Link>
+
+                                    <IconButton
+                                        className={clsx(classes.expand, {
+                                            [classes.expandOpen]: expanded,
+                                        })}
+                                        onClick={handleExpandClick}
+                                        aria-expanded={expanded}
+                                        aria-label="show more"
+                                    >
+                                        <ChatIcon />
+                                    </IconButton>
+
                                     <SimpleMenu props={props}>
                                         <MenuItem onClick={props.handleClose}>
                                             <Link
@@ -243,7 +277,23 @@ export default function Home(props) {
                                                 </Link>
                                         </MenuItem>
                                     </SimpleMenu>
-                                </CardActions>
+                                    
+                                </CardActions> 
+                                <Divider light/>
+                                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                                    <CardContent className={classes.actions} style={{ marginTop: 20 }}>
+                                            <div >
+                                                <Avatar alt="Freya" src="https://pbs.twimg.com/media/B-d6yG4IIAAM7Wt.png" />
+                                            </div>
+                                            <div>
+                                                <Typography gutterBottom>
+                                                    I love Japanese History.
+                                                </Typography>
+                                            </div>
+                                        
+                                        
+                                    </CardContent>
+                                </Collapse>
                             </Card>
                         </TimelineContent>
                     </TimelineItem>
