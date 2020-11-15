@@ -26,6 +26,9 @@ import IconButton from '@material-ui/core/IconButton';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import { Avatar } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import ShareIcon from '@material-ui/icons/Share';
 
 // import data from '../data.json'
 
@@ -254,7 +257,8 @@ export default function Home(props) {
 
                                     <SimpleMenu props={props}>
                                         <MenuItem onClick={props.handleClose}>
-                                            <Link
+                                            <EditIcon fontSize='small' style={{marginRight: 16}}/>
+                                            <Link 
                                                 className={classes.link}
                                                 to={`/update/${item._id}`}
                                             >
@@ -262,6 +266,7 @@ export default function Home(props) {
                                                 </Link>
                                         </MenuItem>
                                         <MenuItem onClick={props.handleClose}>
+                                            <DeleteIcon fontSize='small' style={{ marginRight: 16 }}/>
                                             <Link
                                                 className={classes.link}
                                                 onClick={() => deleteHandler(item._id)}
@@ -270,6 +275,7 @@ export default function Home(props) {
                                                 </Link>
                                         </MenuItem>
                                         <MenuItem onClick={props.handleClose}>
+                                            <ShareIcon fontSize='small' style={{ marginRight: 16 }}/>
                                             <Link className={classes.link}>
                                                 Share
                                                 </Link>
