@@ -71,7 +71,7 @@ function App() {
           <AddEvent />
         </Route>
         <Route 
-          exact path='/event/update/:id' 
+          exact path='/update/:id' 
           render={props => <EditEvent {...props} />}
         />
         <Route exact path='/'>
