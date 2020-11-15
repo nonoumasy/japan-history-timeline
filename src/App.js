@@ -67,19 +67,24 @@ function App() {
       <ThemeProvider theme={theme}>
         <Scroll showBelow={300} />
         <NavBar />
+
         <Route exact path='/add'>
           <AddEvent />
         </Route>
+
         <Route 
           exact path='/update/:id' 
           render={props => <EditEvent {...props} />}
         />
+
         <Route exact path='/'>
           <div style={{ marginTop: 80, marginLeft: -200 }}>
             <Home addToRefs={addToRefs} />
           </div>
         </Route>
+
         <Footer mb={4} mt={8}/>
+
       </ThemeProvider>
     </>
   );
