@@ -117,12 +117,15 @@ export default function Home(props) {
     const [modalOpen, setModalOpen] = useState(false)
     const [data, setData] = useState([])
     const [imageOpen, setImageOpen] = useState(false);
-    const [expanded, setExpanded] = React.useState(false);
+    const [expanded, setExpanded] = useState(false);
+    const [isLoading, setIsLoading] = useState(false)
 
 
     useEffect(() => {
+        setIsLoading(true)
         axios.get('https://japan-history-timeline-api.herokuapp.com/event')
             .then(result =>{
+                setIsLoading(false)
                 setData(result.data)
                 
             }) 
@@ -156,7 +159,6 @@ export default function Home(props) {
         <>
             <ProgressBar height="2px" color="#BC002D" />
 
-            {/* modal */}
             <Modal
                 open={modalOpen}
                 handleClose={handleClose}
@@ -165,6 +167,7 @@ export default function Home(props) {
             </Modal>
 
             <Timeline >
+                {isLoading && <h2 style={{ margin: '0px auto' }}>Loading....</h2>}
                 <div style={{ margin: '10px auto' }}>
                     <Button
                         variant='outlined'
