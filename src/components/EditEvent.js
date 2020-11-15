@@ -59,7 +59,7 @@ export default function EditEvent(props) {
     const [longitude, setLongitude] = useState('')
 
     useEffect(() => {
-        axios.get(`https://japan-history-timeline-api.herokuapp.com/api/event/${props.match.params.id}`)
+        axios.get(`https://japan-history-timeline-api.herokuapp.com/event/${props.match.params.id}`)
             .then(res =>
                 [
                     setYear(res.data.year),
@@ -77,7 +77,7 @@ export default function EditEvent(props) {
         if (data) {
             const { year, event, imageUrl, link, latitude, longitude } = data
             // posting to database
-            axios.put(`https://japan-history-timeline-api.herokuapp.com/api/event/update/${props.match.params.id}`, {
+            axios.put(`https://japan-history-timeline-api.herokuapp.com/event/${props.match.params.id}`, {
                 year,
                 event, 
                 imageUrl,

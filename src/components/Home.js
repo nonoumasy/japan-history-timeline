@@ -103,7 +103,7 @@ export default function Home(props) {
     const [imageOpen, setImageOpen] = useState(false);
 
     useEffect(() => {
-        axios.get('https://japan-history-timeline-api.herokuapp.com/api/event')
+        axios.get('https://japan-history-timeline-api.herokuapp.com/event')
             .then(result =>{
                 setData(result.data)
                 
@@ -125,7 +125,7 @@ export default function Home(props) {
 
     const deleteHandler = (id) => {
         setOpen(true)
-            axios.delete(`/api/event/${id}`)
+            axios.delete(`/event/${id}`)
                 .then(res => res.data)
                 .then(setData(data.filter(item => item._id !== id)))
     };
