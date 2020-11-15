@@ -77,7 +77,7 @@ export default function EditEvent(props) {
         if (data) {
             const { year, event, imageUrl, link, latitude, longitude } = data
             // posting to database
-            axios.put(`https://japan-history-timeline-api.herokuapp.com/update/${props.match.params.id}`, {
+            axios.put(`https://japan-history-timeline-api.herokuapp.com/event/update/${props.match.params.id}`, {
                 year,
                 event, 
                 imageUrl,
