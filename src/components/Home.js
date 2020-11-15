@@ -78,7 +78,14 @@ const useStyles = makeStyles((theme) => ({
         outline: 0,
         border: 0,
         padding: 0,
-    }
+    },
+    spinner: {
+        display: 'flex',
+        '& > * + *': {
+        },
+        justifyContent: 'center',
+        margin: '30px auto',
+    },
 }));
 
 export default function Home(props) {
@@ -91,12 +98,13 @@ export default function Home(props) {
     const [imageOpen, setImageOpen] = useState(false);
 
     useEffect(() => {
-        fetch('https://japan-history-timeline-api.herokuapp.com/event')
-            .then(res => res.json())
+        axios.get('https://japan-history-timeline-api.herokuapp.com/event')
             .then(result =>{
-                // console.log(result)
-                setData(result)
+                console.log(result)
+                setData(result.data)
+                
             }) 
+            .catch(err => console.log(err))
 
     }, [])
     
@@ -121,15 +129,14 @@ export default function Home(props) {
     return (
         <>
             <ProgressBar height="2px" color="#BC002D" />
-            
-            <Modal 
+
+            <Modal
                 open={modalOpen}
                 handleClose={handleClose}
             >
                 <img src={modalImage} className={classes.dialogImage} alt='' />
             </Modal>
-            
-            <Timeline > 
+            <Timeline >
                 {data.map((item) => (
                     <TimelineItem key={item._id} align="alternate" ref={props.addToRefs}>
                         <TimelineOppositeContent>
@@ -140,7 +147,7 @@ export default function Home(props) {
                         <TimelineSeparator >
                             <TimelineDot>
                             </TimelineDot>
-                            <TimelineConnector className={classes.timeline}/>
+                            <TimelineConnector className={classes.timeline} />
                         </TimelineSeparator>
                         <TimelineContent>
                             <Card className={classes.root}>
@@ -154,13 +161,13 @@ export default function Home(props) {
                                             allowFullScreen
                                             mozallowfullscreen="mozallowfullscreen"
                                             msallowfullscreen="msallowfullscreen"
-                                            oallowfullscreen="oallowfullscreen" 
+                                            oallowfullscreen="oallowfullscreen"
                                             webkitallowfullscreen="webkitallowfullscreen"
                                             width='100%'
                                             height='200'
                                             allow="accelerometer"
                                             title={item.year}
-                                            // type="*"
+                                        // type="*"
                                         ></iframe>
                                         :
                                         <CardMedia
@@ -172,44 +179,44 @@ export default function Home(props) {
                                         />
                                     }
                                 </CardActionArea>
-                                    <CardContent>
-                                        <Typography
-                                            className={classes.event}
-                                        >
-                                            {item.event}
-                                        </Typography>
-                                    </CardContent>
+                                <CardContent>
+                                    <Typography
+                                        className={classes.event}
+                                    >
+                                        {item.event}
+                                    </Typography>
+                                </CardContent>
                                 <CardActions className={classes.actions}>
-                                        <Link
-                                            target='_blank'
-                                            className={classes.link}
-                                            onClick={() => window.open(item.link, "_blank")}
-                                        >
-                                            More Details
+                                    <Link
+                                        target='_blank'
+                                        className={classes.link}
+                                        onClick={() => window.open(item.link, "_blank")}
+                                    >
+                                        More Details
                                         </Link>
-                                            <SimpleMenu props={props}>
-                                                <MenuItem onClick={props.handleClose}>
-                                                    <Link
-                                                        className={classes.link}
-                                                        to={`/update/${item._id}`}
-                                                    >
-                                                        Edit
+                                    <SimpleMenu props={props}>
+                                        <MenuItem onClick={props.handleClose}>
+                                            <Link
+                                                className={classes.link}
+                                                to={`/update/${item._id}`}
+                                            >
+                                                Edit
                                                 </Link>
-                                                </MenuItem>
-                                                <MenuItem onClick={props.handleClose}>
-                                                    <Link
-                                                        className={classes.link}
-                                                        onClick={() => deleteHandler(item._id)}
-                                                    >
-                                                        Delete
+                                        </MenuItem>
+                                        <MenuItem onClick={props.handleClose}>
+                                            <Link
+                                                className={classes.link}
+                                                onClick={() => deleteHandler(item._id)}
+                                            >
+                                                Delete
                                                 </Link>
-                                                </MenuItem>
-                                                <MenuItem onClick={props.handleClose}>
-                                                    <Link className={classes.link}>
-                                                        Share
+                                        </MenuItem>
+                                        <MenuItem onClick={props.handleClose}>
+                                            <Link className={classes.link}>
+                                                Share
                                                 </Link>
-                                                </MenuItem>
-                                            </SimpleMenu>
+                                        </MenuItem>
+                                    </SimpleMenu>
                                 </CardActions>
                             </Card>
                         </TimelineContent>
