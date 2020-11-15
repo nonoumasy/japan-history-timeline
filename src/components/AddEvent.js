@@ -59,7 +59,7 @@ export default function AddEvent() {
             const {year, event, imageUrl, link, latitude, longitude } = data
 
             // posting to database
-            axios.post("https://japan-history-timeline-api.herokuapp.com/event", {
+            axios.post("https://japan-history-timeline-api.herokuapp.com/api/event", {
                     year,
                     event,
                     imageUrl,

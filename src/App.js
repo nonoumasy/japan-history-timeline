@@ -47,7 +47,7 @@ function App() {
         scrollTrigger: {
           id: `section-${index + 1}`,
           trigger: el,
-          start: `top center+=80`,
+          start: `top center+=100`,
           toggleActions: 'play none none reverse',
           scrub: 1,
           // markers: true

@@ -103,7 +103,7 @@ export default function Home(props) {
     const [imageOpen, setImageOpen] = useState(false);
 
     useEffect(() => {
-        axios.get('https://japan-history-timeline-api.herokuapp.com/event')
+        axios.get('https://japan-history-timeline-api.herokuapp.com/api/event')
             .then(result =>{
                 setData(result.data)
                 
@@ -125,7 +125,7 @@ export default function Home(props) {
 
     const deleteHandler = (id) => {
         setOpen(true)
-            axios.delete(`/event/${id}`)
+            axios.delete(`/api/event/${id}`)
                 .then(res => res.data)
                 .then(setData(data.filter(item => item._id !== id)))
     };
@@ -151,7 +151,10 @@ export default function Home(props) {
                         )}`}
                         download="filename.json"
                     >
-                        Export Data as Json
+                        <div className={classes.link}>
+                            Export Data as Json         
+                        </div>
+                        
                     </Button>
                 </div> 
                 
