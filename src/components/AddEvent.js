@@ -52,11 +52,10 @@ export default function AddEvent() {
         resolver: yupResolver(schema)
     })
     const [data, setData] = useState('')
-    const [open, setOpen] = useState(false); 
 
     useEffect(() => {
         if (data) {
-            const {year, event, imageUrl, link, latitude, longitude } = data
+            const {year, event, imageUrl, link, latitude, longitude, tags } = data
 
             // posting to database
             axios.post("https://japan-history-timeline-api.herokuapp.com/event", {
@@ -65,14 +64,14 @@ export default function AddEvent() {
                     imageUrl,
                     link,
                     latitude,
-                    longitude
+                    longitude,
+                    tags
                 })
                 .then(data => {
                     if (data.error) {
                         console.log(data.error)
                     }
                     else {
-                        setOpen(true)
                         setData('')
                         history.push('/')
                     }
@@ -81,11 +80,8 @@ export default function AddEvent() {
         }
     }, [data, history])
 
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpen(false);
+    const handleClose = () => {
+        history.goBack()
     };
 
     return (
@@ -176,6 +172,27 @@ export default function AddEvent() {
                         max="180" 
                         inputRef={register}
                     />
+
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        id="tags"
+                        name="tags"
+                        label="tags"
+                        inputRef={register}
+                    />
+
+                    <Button
+                        // type="submit"
+                        fullWidth
+                        variant="outlined"
+                        color="default"
+                        onClick={handleClose}
+                        className={classes.submit}
+                    >
+                        Cancel
+                    </Button>
 
                     <Button
                         type="submit"
