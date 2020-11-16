@@ -16,9 +16,9 @@ import Container from '@material-ui/core/Container';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 
 const schema = yup.object().shape({
-    name: yup
+    username: yup
         .string().min(3, "3 Character Mininum")
-        .required("Name is a required field"),
+        .required("Username is a required field"),
     email: yup
         .string()
         .email("Email should have correct format")
@@ -51,9 +51,9 @@ const useStyles = makeStyles((theme) => ({
 const Signup = () => {
     const classes = useStyles()
     const history = useHistory()
-    const [name, setName] = useState('')
-    const [password, setPassword] = useState('')
+    const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
     const [image, setImage] = useState("")
     const [url, setUrl] = useState(undefined)
     const { register, handleSubmit, errors } = useForm({ resolver: yupResolver(schema) })
@@ -79,16 +79,16 @@ const Signup = () => {
     }
 
     const uploadFields = () => {
-        fetch('signup', {
+        fetch('http://localhost:5000/user/signup', {
             method: 'post',
             headers: {
                 "content-type": "application/json"
             },
             body: JSON.stringify({
-                name,
+                username,
                 email,
                 password,
-                pic: url
+                image: url
             })
         })
             .then(res => res.json())
@@ -126,18 +126,18 @@ const Signup = () => {
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
-                                autoComplete="name"
-                                name="name"
+                                autoComplete="username"
+                                name="username"
                                 variant="outlined"
                                 required
                                 fullWidth
-                                id="name"
-                                label="name"
+                                id="username"
+                                label="username"
                                 autoFocus
-                                onChange={(e) => setName(e.target.value)}
+                                onChange={(e) => setUsername(e.target.value)}
                                 inputRef={register}
-                                error={!!errors.name}
-                                helperText={errors?.name?.message}
+                                error={!!errors.username}
+                                helperText={errors?.username?.message}
                             />
                         </Grid>
                         <Grid item xs={12}>
