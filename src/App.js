@@ -5,11 +5,12 @@ import {Route} from 'react-router-dom'
 import Scroll from './components/shared/Scroll'
 import gsap from 'gsap'
 import {ScrollTrigger} from 'gsap/ScrollTrigger'
-
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import AddEvent from './components/AddEvent'
 import EditEvent from './components/EditEvent'
 import Footer from './components/Footer'
+import Signup from './components/Signup'
+import Login from './components/Login'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -70,6 +71,13 @@ function App() {
 
         <Route exact path='/add'>
           <AddEvent />
+        </Route>
+
+        <Route path='/signup'>
+          <Signup />
+        </Route>
+        <Route path='/login'>
+          <Login />
         </Route>
 
         <Route 
