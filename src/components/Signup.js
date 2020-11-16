@@ -56,7 +56,10 @@ const Signup = () => {
     const [password, setPassword] = useState('')
     const [image, setImage] = useState("")
     const [url, setUrl] = useState(undefined)
-    const { register, handleSubmit, errors } = useForm({ resolver: yupResolver(schema) })
+    const { register, handleSubmit, errors } = useForm({
+        mode: 'onBlur',
+        resolver: yupResolver(schema)
+    })
 
     useEffect(() => {
         if (url) {

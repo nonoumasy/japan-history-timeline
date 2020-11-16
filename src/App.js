@@ -12,6 +12,8 @@ import Footer from './components/Footer'
 import Signup from './components/Signup'
 import Login from './components/Login'
 
+import Box from '@material-ui/core/Box';
+
 gsap.registerPlugin(ScrollTrigger)
 
 const theme = createMuiTheme({
@@ -91,7 +93,10 @@ function App() {
           </div>
         </Route>
 
-        <Footer mb={4} mt={8}/>
+        <Box mt={8} mb={4}>
+          <Footer />
+        </Box>
+        
 
       </ThemeProvider>
     </>
