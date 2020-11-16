@@ -98,6 +98,10 @@ export default function EditEvent(props) {
         }
     }, [data])
 
+    const handleClose = () => {
+        history.goBack()
+    };
+
     return (
         <Container component="main" maxWidth="sm">
             <CssBaseline />
@@ -198,6 +202,17 @@ export default function EditEvent(props) {
                         max="180"
                         inputRef={register}
                     />
+
+                    <Button
+                        // type="submit"
+                        fullWidth
+                        variant="outlined"
+                        color="default"
+                        onClick={handleClose}
+                        className={classes.submit}
+                    >
+                        Cancel
+                    </Button>
 
                     <Button
                         type="submit"
