@@ -107,6 +107,13 @@ const useStyles = makeStyles((theme) => ({
     expandOpen: {
         transform: 'rotate(180deg)',
     },
+    tags: {
+        textTransform: 'uppercase',
+        fontSize: '12px',
+        fontWeight: 700,
+        backgroundColor: '#333',
+        color: '#fff'
+    }
 }));
 
 export default function Home(props) {
@@ -115,8 +122,7 @@ export default function Home(props) {
     const [modalImage, setModalImage] = useState("")
     const [open, setOpen] = useState(false)
     const [modalOpen, setModalOpen] = useState(false)
-    const [data, setData] = useState([])
-    const [imageOpen, setImageOpen] = useState(false);
+    const [data, setData] = useState([]) 
     const [expanded, setExpanded] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
 
@@ -235,6 +241,16 @@ export default function Home(props) {
                                     >
                                         {item.event}
                                     </Typography>
+                                </CardContent>
+
+                                <CardContent>
+
+                                    {/* {item.tags.map(tag => (
+                                    <Typography className={classes.tags}>
+                                        {tag}
+                                    </Typography>
+                                    ))} */}
+                                
                                 </CardContent>
 
                                 <CardActions className={classes.actions}>
