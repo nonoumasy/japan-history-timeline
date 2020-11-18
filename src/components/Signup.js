@@ -100,7 +100,7 @@ const Signup = () => {
                     console.log(data.error)
                 } else {
                     console.log(data.message)
-                    history.push('/login')
+                    history.push('/')
                 }
 
             })
