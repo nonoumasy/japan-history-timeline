@@ -129,7 +129,7 @@ export default function Home(props) {
 
     useEffect(() => {
         setIsLoading(true)
-        axios.get('https://japan-history-timeline-api.herokuapp.com/event')
+        axios.get('http://localhost:5000/event')
             .then(result =>{
                 setIsLoading(false)
                 setData(result.data)
@@ -164,7 +164,6 @@ export default function Home(props) {
     return (
         <>
             <ProgressBar height="2px" color="#BC002D" />
-
             <Modal
                 open={modalOpen}
                 handleClose={handleClose}
@@ -199,7 +198,7 @@ export default function Home(props) {
                         </TimelineOppositeContent>
 
                         <TimelineSeparator >
-                            <TimelineDot>
+                            <TimelineDot variant='outlined'>
                             </TimelineDot>
                             <TimelineConnector className={classes.timeline} />
                         </TimelineSeparator>
