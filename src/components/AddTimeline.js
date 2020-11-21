@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import * as yup from 'yup'
 import { yupResolver } from "@hookform/resolvers/yup"
 import axios from 'axios'
@@ -15,18 +15,14 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 
 const schema = yup.object().shape({
-    year: yup
-    .number()
-    .required('Year is a required field.'),
-    event: yup
-    .string()
-    .max(140)
-    .required('Event is a required field.'),
+    name: yup
+        .string()
+        .required('Name is a required field.'),
     imageUrl: yup
-    .string(),
-    link: yup
-    .string()
-    
+        .string(),
+    tags: yup
+        .string()
+
 })
 
 const useStyles = makeStyles((theme) => ({
@@ -45,37 +41,33 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function AddEvent() {
+export default function AddTimeline() {
     const classes = useStyles();
     const history = useHistory()
-    const { register, handleSubmit, errors } = useForm({ 
+    const { register, handleSubmit, errors } = useForm({
         mode: 'onBlur',
         resolver: yupResolver(schema)
     })
     const [data, setData] = useState('')
 
-    const { id } = useParams()
-
     useEffect(() => {
         if (data) {
-            const {year, event, imageUrl, link, coordinates, tags } = data
+            const { name, imageUrl, tags} = data
 
             // posting to database
-            axios.put(`http://localhost:5000/timeline/${id}`, {
-                    year,
-                    event,
-                    imageUrl,
-                    link,
-                    coordinates,
-                    tags
-                })
-                .then(data => {
+            axios.post("http://localhost:5000/timeline", {
+                timelineTitle: name,
+                timelineImageUrl: imageUrl,
+                tags,
+            })
+                .then((data) => {
                     if (data.error) {
                         console.log(data.error)
                     }
                     else {
+                        console.log(data)
                         setData('')
-                        history.push('/')
+                        history.push(`/timeline/${data.data.id}`)
                     }
                 })
                 .catch(err => console.log(err))
@@ -91,41 +83,26 @@ export default function AddEvent() {
             <CssBaseline />
             <div className={classes.paper}>
                 <Typography>
-                    Add New Event
+                    Add New Timeline
                 </Typography>
-                
+
                 <form className={classes.form} noValidate onSubmit={handleSubmit((data) => setData(data))}>
                     <TextField
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
-                        id="year"
-                        label="year"
-                        name="year"
-                        autoComplete="year"
-                        type="number"
+                        id="name"
+                        label="name"
+                        name="name"
+                        autoComplete="name"
+                        type="text"
                         autoFocus
                         inputRef={register}
-                        error={!!errors.year}
-                        helperText={errors?.year?.message}
+                        error={!!errors.name}
+                        helperText={errors?.name?.message}
                     />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        multiline
-                        rows={4}
-                        name="event"
-                        label="event"
-                        type="text"
-                        id="event"
-                        inputRef={register}
-                        error={!!errors.event}
-                        helperText={errors?.event?.message}
-                    />
-                    <Tooltip title='On YouTube, Navigate to the video you wish to embed. Click the Share link below the video, then click the Embed link. The embed link will be highlighted in blue. Copy and paste this link here.'>
+                    <Tooltip title='This will be the cover image for your Timeline.'>
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -139,40 +116,23 @@ export default function AddEvent() {
                             helperText={errors?.imageUrl?.message}
                         />
                     </Tooltip>
+
+                    <Tooltip title='Add some tags to identify your Timeline. For eg, "Japan", "Battle", etc.'>
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            fullWidth
+                            id="tags"
+                            label="tags"
+                            name="tags"
+                            autoComplete="tags"
+                            type="text"
+                            inputRef={register}
+                            error={!!errors.tags}
+                            helperText={errors?.tags?.message}
+                        />
+                    </Tooltip>
                     
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        name="link"
-                        label="link"
-                        type="text"
-                        id="link"
-                        inputRef={register}
-                    />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        name="coordinates"
-                        label="coordinates"
-                        type="number"
-                        id="coordinates"
-                        min="-90" 
-                        max="90" 
-                        inputRef={register}
-                    />
-
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        id="tags"
-                        name="tags"
-                        label="tags"
-                        inputRef={register}
-                    />
-
                     <Button
                         // type="submit"
                         fullWidth
@@ -193,7 +153,7 @@ export default function AddEvent() {
                     >
                         Submit
                     </Button>
-                    
+
                 </form>
             </div>
         </Container>

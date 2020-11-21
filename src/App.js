@@ -11,8 +11,11 @@ import EditEvent from './components/EditEvent'
 import Footer from './components/Footer'
 import Signup from './components/Signup'
 import Login from './components/Login'
+import AddTimeline from './components/AddTimeline'
+import Timeline from './components/Timeline'
 
 import Box from '@material-ui/core/Box';
+
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -71,7 +74,7 @@ function App() {
         <Scroll showBelow={300} />
         <NavBar />
 
-        <Route exact path='/add'>
+        <Route exact path='/addEvent'>
           <AddEvent />
         </Route>
 
@@ -88,8 +91,22 @@ function App() {
         />
 
         <Route exact path='/'>
-          <div style={{ marginTop: 80, marginLeft: -200 }}>
+          <div style={{ margin: '80px auto'}}>
             <Home addToRefs={addToRefs} />
+          </div>
+        </Route>
+
+        <Route exact path='/timeline/:id'>
+          <div style={{ margin: '80px auto'}}>
+            <Timeline  />
+          </div>
+        </Route>
+
+
+
+        <Route exact path='/addTimeline'>
+          <div style={{ margin: '80px auto' }}>
+            <AddTimeline />
           </div>
         </Route>
 

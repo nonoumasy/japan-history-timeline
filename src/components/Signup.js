@@ -15,6 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 
+
 const schema = yup.object().shape({
     username: yup
         .string().min(3, "3 Character Mininum")
@@ -46,16 +47,29 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    link: {
+        // textAlign: 'left',
+        textTransform: 'uppercase',
+        fontSize: '12px',
+        fontWeight: 700,
+        textDecoration: 'none',
+        cursor: 'pointer',
+        color: '#333'
+    },
 }));
 
 const Signup = () => {
     const classes = useStyles()
     const history = useHistory()
+
+    //state
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [image, setImage] = useState("")
     const [url, setUrl] = useState(undefined)
+
+    //formdata
     const { register, handleSubmit, errors } = useForm({
         mode: 'onBlur',
         resolver: yupResolver(schema)
@@ -66,6 +80,14 @@ const Signup = () => {
             uploadFields()
         }
     }, [url])
+
+    const postData = () => {
+        if (image) {
+            uploadPic()
+        } else {
+            uploadFields()
+        }
+    }
 
     const uploadPic = () => {
         const data = new FormData()
@@ -82,7 +104,8 @@ const Signup = () => {
     }
 
     const uploadFields = () => {
-        fetch('http://localhost:5000/user/signup', {
+        //posting to db
+        fetch(' /auth/signup', {
             method: 'post',
             headers: {
                 "content-type": "application/json"
@@ -105,14 +128,6 @@ const Signup = () => {
 
             })
             .catch(err => console.log(err))
-    }
-
-    const postData = () => {
-        if (image) {
-            uploadPic()
-        } else {
-            uploadFields()
-        }
     }
 
     return (

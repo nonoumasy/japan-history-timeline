@@ -25,7 +25,7 @@ const NavBar = (props) =>  {
     const {history} = props
 
     const handleMenuClick = () => {
-        history.push('/add')
+        history.push('/addTimeline')
     };
 
     return (
@@ -37,7 +37,7 @@ const NavBar = (props) =>  {
                             to="/"
                             style={{ textDecoration: 'none', color: '#fff' }}
                         >
-                            Timelines: <span>Japan History </span>
+                            Timelines
                         </Link>
                     </Typography>
 
@@ -58,6 +58,12 @@ const NavBar = (props) =>  {
                     >
                         Login
                     </Link>
+                    <a
+                        href="http://localhost:5000/logout"
+                        style={{ textDecoration: 'none', color: '#fff', marginLeft: 16 }}
+                    >
+                        Logout
+                    </a>
                 </Toolbar>
             </AppBar>
         </div>

@@ -19,6 +19,7 @@ const schema = yup.object().shape({
         .required('Year is a required field.'),
     event: yup
         .string()
+        .max(140)
         .required('Event is a required field.'),
     imageUrl: yup
         .string(),
@@ -55,19 +56,17 @@ export default function EditEvent(props) {
     const [event, setEvent] = useState('')
     const [imageUrl, setImageUrl] = useState('')
     const [link, setLink] = useState('')
-    const [latitude, setLatitude] = useState('')
-    const [longitude, setLongitude] = useState('')
+    const [coordinates, setCoordinates] = useState('')
 
     useEffect(() => {
-        axios.get(`https://japan-history-timeline-api.herokuapp.com/event/${props.match.params.id}`)
+        axios.get(`http://localhost:5000/event/${props.match.params.id}`)
             .then(res =>
                 [
                     setYear(res.data.year),
                     setEvent(res.data.event),
                     setImageUrl(res.data.imageUrl),
                     setLink(res.data.link),
-                    setLatitude(res.data.latitude),
-                    setLongitude(res.data.longitude)
+                    setCoordinates(res.data.coordinates)
                 ]
             )
             .then({new: true})
@@ -75,15 +74,14 @@ export default function EditEvent(props) {
 
     useEffect(() => {
         if (data) {
-            const { year, event, imageUrl, link, latitude, longitude } = data
+            const { year, event, imageUrl, link, coordinates } = data
             // posting to database
             axios.put(`https://japan-history-timeline-api.herokuapp.com/event/${props.match.params.id}`, {
                 year,
                 event, 
                 imageUrl,
                 link,
-                latitude,
-                longitude
+                coordinates
             })
                 .then(data => {
                     if (data.error) {
@@ -178,28 +176,14 @@ export default function EditEvent(props) {
                         variant="outlined"
                         margin="normal"
                         fullWidth
-                        name="latitude"
-                        label="latitude"
+                        name="coordinates"
+                        label="coordinates"
                         type="number"
-                        value={latitude}
-                        onChange={e => setLatitude(e.target.value)}
-                        id="latitude"
+                        value={coordinates}
+                        onChange={e => setCoordinates(e.target.value)}
+                        id="coordinates"
                         min="-90"
                         max="90"
-                        inputRef={register}
-                    />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        name="longitude"
-                        label="longitude"
-                        type="number"
-                        value={longitude}
-                        onChange={e => setLongitude(e.target.value)}
-                        id="longitude"
-                        min="-180"
-                        max="180"
                         inputRef={register}
                     />
 
