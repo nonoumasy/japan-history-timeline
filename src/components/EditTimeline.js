@@ -103,7 +103,7 @@ export default function EditTimeline(props) {
             <CssBaseline />
             <div className={classes.paper}>
                 <Typography>
-                    Add New Timeline
+                    EditTimeline
                 </Typography>
 
                 <form className={classes.form} noValidate onSubmit={handleSubmit((data) => setData(data))}>
