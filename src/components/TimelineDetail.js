@@ -25,7 +25,7 @@ import { SimpleMenu } from './shared/SimpleMenu';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
-import { Avatar } from '@material-ui/core';
+import { Avatar, Tooltip } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'hidden',
     },
     timelineContainer: {
-        marginTop: 40,
+        marginTop: 20,
         marginLeft: -240
 
     },
@@ -173,14 +173,17 @@ const TimelineDetail = (props) => {
     return (
         <Container maxWidth="md"> 
             <Timeline >
-                <Fab
-                    color="primary"
-                    aria-label="add"
-                    onClick={eventHandler}
-                    className={classes.fab}
-                >
-                    <AddIcon />
-                </Fab>
+                <Tooltip arrow placement='left' title='Add New Event' >
+                    <Fab
+                        color="primary"
+                        aria-label="add"
+                        onClick={eventHandler}
+                        className={classes.fab}
+                    >
+                        <AddIcon />
+                    </Fab>
+                </Tooltip>
+                
                 <div style={{ margin: '0px auto', padding: 0}}>
                     <div>
                         <div className={classes.actions2}>
