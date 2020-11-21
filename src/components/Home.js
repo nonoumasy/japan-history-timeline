@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     title: {
         fontSize: 16,
         textAlign: 'center',
-        marginTop: 20
+        marginTop: 12
     }
 }));
 
@@ -80,7 +80,7 @@ const Home = () => {
     return (
         <Container maxWidth="md">
 
-            <Button variant='outlined'>
+            <Button variant='outlined' style={{marginBottom: 30}}>
                 <Link to={'/addTimeline'} className={classes.link}>
                     Create New Timeline
                 </Link>
@@ -94,7 +94,7 @@ const Home = () => {
                     
 
                 {data.map(item => (
-                        <Grid item xs={12} sm={6} md={4}>
+                        <Grid item xs={12} sm={6} md={4} lg={3}>
                             <Card className={classes.container}>
                                 <CardMedia
                                     component='img'
