@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
@@ -61,14 +61,15 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
     const classes = useStyles()
     const [data, setData] = useState([])
+    const history = useHistory()
 
     fetch('https://japan-history-timeline-api.herokuapp.com/timeline')
     .then(res => res.json())
     .then(data => setData(data))
     .catch(err => console.log(err))
 
-    const clickImageHandler = () => {
-
+    const clickImageHandler = (id) => {
+        history.push(`/timeline/${id}`)
     }
 
 
@@ -100,7 +101,7 @@ const Home = () => {
                                         component='img'
                                         className={classes.image}
                                         image={item.timelineImageUrl}
-                                        onClick={() => clickImageHandler(item.timelineImageUrl)}
+                                        onClick={() => clickImageHandler(item._id)}
                                     />
                                 </Card>
                             </Tooltip>
