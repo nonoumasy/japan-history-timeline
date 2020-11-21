@@ -8,9 +8,7 @@ import { Grid } from "@material-ui/core";
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
-import Tooltip from '@material-ui/core/Tooltip';
-import Avatar from '@material-ui/core/Avatar';
-import Dialog from '@material-ui/core/Dialog';
+import CardContent from '@material-ui/core/CardContent';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -56,6 +54,11 @@ const useStyles = makeStyles((theme) => ({
             transform: 'scale(1.1)',
         },
     },
+    title: {
+        fontSize: 16,
+        textAlign: 'center',
+        marginTop: 20
+    }
 }));
 
 const Home = () => {
@@ -74,10 +77,7 @@ const Home = () => {
 
 
     return (
-        <Container component="main" maxWidth="md">
-            <div style={{margins:'20px'}}>
-                Welcome to Timelines.
-            </div>
+        <Container maxWidth="md">
 
             <Button variant='outlined'>
                 <Link to={'/addTimeline'} className={classes.link}>
@@ -90,24 +90,25 @@ const Home = () => {
                 spacing={2}
                 className={classes.gridContainer}
                 justify='start'>
+                    
 
-                {data.map(item => {
-                    return (
-
+                {data.map(item => (
                         <Grid item xs={12} sm={6} md={4}>
-                            <Tooltip title={item.timelineTitle} arrow placement="top">
-                                <Card className={classes.container}>
-                                    <CardMedia
-                                        component='img'
-                                        className={classes.image}
-                                        image={item.timelineImageUrl}
-                                        onClick={() => clickImageHandler(item._id)}
-                                    />
-                                </Card>
-                            </Tooltip>
+                            <Card className={classes.container}>
+                                <CardMedia
+                                    component='img'
+                                    className={classes.image}
+                                    image={item.timelineImageUrl}
+                                    onClick={() => clickImageHandler(item._id)}
+                                />
+                                
+                            </Card>
+                            <Typography variant="h6" className={classes.title}>
+                                {item.timelineTitle}
+                            </Typography>
                         </Grid>
                     )
-                })
+                )
                 }
             </Grid>
 

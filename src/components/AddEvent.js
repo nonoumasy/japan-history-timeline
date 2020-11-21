@@ -18,10 +18,10 @@ const schema = yup.object().shape({
     year: yup
     .number()
     .required('Year is a required field.'),
-    event: yup
+    description: yup
     .string()
     .max(140)
-    .required('Event is a required field.'),
+    .required('Description is a required field.'),
     imageUrl: yup
     .string(),
     link: yup
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function AddEvent() {
+export default function Adds() {
     const classes = useStyles();
     const history = useHistory()
     const { register, handleSubmit, errors } = useForm({ 
@@ -53,34 +53,14 @@ export default function AddEvent() {
         resolver: yupResolver(schema)
     })
     const [data, setData] = useState('')
-
     const { id } = useParams()
 
     useEffect(() => {
-        if (data) {
-            const {year, event, imageUrl, link, coordinates, tags } = data
+        axios.post(`/timeline/${id}`)
+        .then(result => console.log(result))
+        .catch(err => console.log(err))
+    })
 
-            // posting to database
-            axios.put(`http://localhost:5000/timeline/${id}`, {
-                    year,
-                    event,
-                    imageUrl,
-                    link,
-                    coordinates,
-                    tags
-                })
-                .then(data => {
-                    if (data.error) {
-                        console.log(data.error)
-                    }
-                    else {
-                        setData('')
-                        history.push('/')
-                    }
-                })
-                .catch(err => console.log(err))
-        }
-    }, [data])
 
     const handleClose = () => {
         history.goBack()
@@ -117,13 +97,13 @@ export default function AddEvent() {
                         fullWidth
                         multiline
                         rows={4}
-                        name="event"
-                        label="event"
+                        name="description"
+                        label="description"
                         type="text"
-                        id="event"
+                        id="description"
                         inputRef={register}
-                        error={!!errors.event}
-                        helperText={errors?.event?.message}
+                        error={!!errors.description}
+                        helperText={errors?.description?.message}
                     />
                     <Tooltip title='On YouTube, Navigate to the video you wish to embed. Click the Share link below the video, then click the Embed link. The embed link will be highlighted in blue. Copy and paste this link here.'>
                         <TextField
