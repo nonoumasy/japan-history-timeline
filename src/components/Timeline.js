@@ -20,7 +20,7 @@ const Timeline = () => {
     }, [])
 
     const eventHandler = () => {
-        history.push('/addEvent')
+        history.push(`/timeline/${id}/addEvent`)
     }
     
     return (

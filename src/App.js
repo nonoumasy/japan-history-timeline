@@ -72,11 +72,7 @@ function App() {
     <>
       <ThemeProvider theme={theme}>
         <Scroll showBelow={300} />
-        <NavBar />
-
-        <Route exact path='/addEvent'>
-          <AddEvent />
-        </Route>
+        <NavBar/>
 
         <Route path='/signup'>
           <Signup />
@@ -91,9 +87,13 @@ function App() {
         />
 
         <Route exact path='/'>
-          <div style={{ margin: '80px auto'}}>
+          <div style={{ margin: '120px'}}>
             <Home addToRefs={addToRefs} />
           </div>
+        </Route>
+
+        <Route exact path='/timeline/:id/addEvent'>
+          <AddEvent />
         </Route>
 
         <Route exact path='/timeline/:id'>
@@ -102,7 +102,7 @@ function App() {
           </div>
         </Route>
 
-
+       
 
         <Route exact path='/addTimeline'>
           <div style={{ margin: '80px auto' }}>
