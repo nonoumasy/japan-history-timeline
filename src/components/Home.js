@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
 
 import Button from '@material-ui/core/Button';
@@ -22,6 +22,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = () => {
     const classes = useStyles()
+    const [data, setData] = useState([])
+
+    fetch('https://japan-history-timeline-api.herokuapp.com/timeline')
+    .then(res => res.json())
+        .then(data => setData(data))
+    .catch(err => console.log(err))
+
 
     return (
         <Container component="main" maxWidth="xs">
@@ -33,8 +40,17 @@ const Home = () => {
                 <Link to={'/addTimeline'} className={classes.link}>
                     Create New Timeline
                 </Link>
-                
             </Button>
+
+            {data.map(item => (
+                <>
+                    <h2>{item.timelineTitle}</h2>
+                    <img src={item.timelineImageUrl} alt=""/>
+                </>
+            ))}
+            
+            
+            
         </Container>
     )
 }
