@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import { useHistory, useParams} from 'react-router-dom'
 
+import Container from '@material-ui/core/Container';
+
 const Timeline = () => {
     const [data, setData] = useState([])
     const history = useHistory()
@@ -22,11 +24,11 @@ const Timeline = () => {
     }
     
     return (
-        <div>
+        <Container component="main" maxWidth="xs">
             <button onClick={eventHandler}>Add Event</button>
-            <h2>{data.timelineTitle}</h2>
-            <h3>by:{data.creator}</h3>
-            <img src={data.timelineImageUrl} alt=''></img>
+            <h3>{data.timelineTitle}</h3>
+            <p>by:{data.creator}</p>
+            {/* <img src={data.timelineImageUrl} alt=''></img> */}
 
             {data.event && data.event.map(item => (
                 <>
@@ -34,8 +36,7 @@ const Timeline = () => {
                     <iframe src={item.imageUrl}></iframe>
                 </>
             ))}
-
-        </div>
+        </Container>
         
     )
 }
