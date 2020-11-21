@@ -97,14 +97,14 @@ function App() {
         </Route>
 
         <Route exact path='/timeline/:id'>
-          <div style={{ margin: '80px -280px'}}>
+          <div style={{ margin: '120px auto'}}>
             <TimelineDetail />
           </div>
         </Route>
 
 
         <Route exact path='/addTimeline'>
-          <div style={{ margin: '80px auto' }}>
+          <div style={{ margin: '120px auto' }}>
             <AddTimeline />
           </div>
         </Route>

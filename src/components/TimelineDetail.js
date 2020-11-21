@@ -35,13 +35,12 @@ import ShareIcon from '@material-ui/icons/Share';
 const useStyles = makeStyles((theme) => ({
     root: {
         maxWidth: 345,
+        margin:0,
+        padding: 0
     },
-    paper: {
-        padding: '6px 24px',
-    },
-    secondaryTail: {
-        backgroundColor: theme.palette.secondary.main,
-    },
+    // paper: {
+    //     padding: '6px 24px',
+    // },
     media: {
         height: 'auto',
         objectFit: 'cover',
@@ -171,7 +170,7 @@ const TimelineDetail = (props) => {
     return (
         <Container maxWidth="md">            
             <Timeline >
-                <div style={{ margin: 'auto' }}>
+                <div style={{ margin: 'auto', padding: 0}}>
                     <button onClick={eventHandler}>Add Event</button>
                     <h3>{data.timelineTitle}</h3>
                     <p>by:{data.creator}</p>
