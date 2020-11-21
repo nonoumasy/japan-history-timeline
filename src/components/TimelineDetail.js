@@ -174,16 +174,19 @@ const TimelineDetail = (props) => {
                     <button onClick={eventHandler}>Add Event</button>
                     <h3>{data.timelineTitle}</h3>
                     <p>by:{data.creator}</p>
-                    <Button
+                    <Button 
                         variant='outlined'
+                        className={classes.link}>
+                        Import Data
+                    </Button>
+                    <Button
                         href={`data:text/json;charset=utf-8,${encodeURIComponent(
                             JSON.stringify(data)
                         )}`}
                         download="filename.json"
+                        className={classes.link}
                     >
-                        <div className={classes.link}>
-                            Export Data as Json
-                        </div>
+                        Export Data as Json
                     </Button>
                     {isLoading && <h2 style={{ margin: '60px auto' }}>Loading....</h2>}
                 </div>
