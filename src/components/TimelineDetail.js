@@ -151,12 +151,11 @@ const TimelineDetail = (props) => {
         setModalOpen(false);
     };
 
-
     const deleteHandler = (id) => {
-        setOpen(true)
-        axios.delete(`/event/${id}`)
-            .then(res => res.data)
-            .then(setData(data.filter(item => item._id !== id)))
+        axios.delete(`/timeline/${id}`)
+        .then(() => {
+            history.push('/')
+        })
     };
 
     const handleExpandClick = () => {
@@ -166,14 +165,31 @@ const TimelineDetail = (props) => {
     const eventHandler = () => {
         history.push(`/timeline/addEvent`)
     }
+
+    const editHandler = () => {
+        history.push(`/edit/${id}`)
+    }
     
     return (
         <Container maxWidth="md">            
             <Timeline >
                 <div style={{ margin: 'auto', padding: 0}}>
                     <button onClick={eventHandler}>Add Event</button>
-                    <h3>{data.timelineTitle}</h3>
-                    <p>by:{data.creator}</p>
+                    <div>
+                        <h2 style={{display: 'inline'}}>{data.timelineTitle}</h2>
+                        <button onClick={editHandler}>edit</button>
+                        <Link
+                            onClick={() => deleteHandler(data._id)}
+                        >
+                            Delete
+                        </Link>
+                        <p>by:{data.creator}</p>
+                        <p>tags:{data.tags}</p>
+                        
+                        
+                    </div>
+                    
+                    
                     <Button 
                         variant='outlined'
                         className={classes.link}>

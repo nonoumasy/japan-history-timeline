@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function AddTimeline() {
+export default function EditTimeline(props) {
     const classes = useStyles();
     const history = useHistory()
     const { register, handleSubmit, errors } = useForm({
@@ -50,16 +50,35 @@ export default function AddTimeline() {
         resolver: yupResolver(schema)
     })
     const [data, setData] = useState('')
+    const [timelineTitle, setTimelineTitle] = useState('')
+    const [timelineImageUrl, setTimelineImageUrl] = useState('')
+    const [tags, setTags] = useState('')
+    const [event, setEvent] = useState([])
+
+    useEffect(() => {
+
+        axios.get(`http://localhost:5000/timeline/${props.match.params.id}`)
+            .then(res =>
+                [
+                    setTimelineTitle(res.data.timelineTitle),
+                    setTimelineImageUrl(res.data.timelineImageUrl),
+                    setTags(res.data.tags),
+                    setEvent(res.data.event)
+                ]
+            )
+            .then({ new: true })
+    }, [])
 
     useEffect(() => {
         if (data) {
-            const { timelineTitle, timelineImageUrl, tags} = data
+            const { timelineTitle, timelineImageUrl, tags, event} = data
 
             // posting to database
-            axios.post("https://japan-history-timeline-api.herokuapp.com/timeline", {
+            axios.put(`http://localhost:5000/timeline/${props.match.params.id}`, {
                 timelineTitle,
                 timelineImageUrl,
                 tags,
+                event
             })
                 .then((data) => {
                     if (data.error) {
@@ -68,7 +87,7 @@ export default function AddTimeline() {
                     else {
                         console.log(data)
                         setData('')
-                        history.push(`/timeline/${data.data.id}`)
+                        history.push(`/timeline/${props.match.params.id}`)
                     }
                 })
                 .catch(err => console.log(err))
@@ -98,6 +117,8 @@ export default function AddTimeline() {
                         name="timelineTitle"
                         autoComplete="timelineTitle"
                         type="text"
+                        value={timelineTitle}
+                        onChange={e => setTimelineTitle(e.target.value)}
                         autoFocus
                         inputRef={register}
                         error={!!errors.timelineTitle}
@@ -112,6 +133,8 @@ export default function AddTimeline() {
                             name="timelineImageUrl"
                             label="timelineImageUrl"
                             type="text"
+                            value={timelineImageUrl}
+                            onChange={e => setTimelineImageUrl(e.target.value)}
                             id="timelineImageUrl"
                             inputRef={register}
                             error={!!errors.timelineImageUrl}
@@ -129,6 +152,8 @@ export default function AddTimeline() {
                             name="tags"
                             autoComplete="tags"
                             type="text"
+                            value={tags}
+                            onChange={e => setTags(e.target.value)}
                             inputRef={register}
                             error={!!errors.tags}
                             helperText={errors?.tags?.message}

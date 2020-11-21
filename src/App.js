@@ -8,6 +8,7 @@ import {ScrollTrigger} from 'gsap/ScrollTrigger'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import AddEvent from './components/AddEvent'
 import EditEvent from './components/EditEvent'
+import EditTimeline from './components/EditTimeline'
 import Footer from './components/Footer'
 import Signup from './components/Signup'
 import Login from './components/Login'
@@ -82,8 +83,8 @@ function App() {
         </Route>
 
         <Route 
-          exact path='/update/:id' 
-          render={props => <EditEvent {...props} />}
+          exact path='/edit/:id' 
+          render={props => <EditTimeline {...props} />}
         />
 
         <Route exact path='/'>
