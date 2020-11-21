@@ -32,6 +32,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ShareIcon from '@material-ui/icons/Share';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,9 +42,6 @@ const useStyles = makeStyles((theme) => ({
         margin:0,
         padding: 0
     },
-    // paper: {
-    //     padding: '6px 24px',
-    // },
     media: {
         height: 'auto',
         objectFit: 'cover',
@@ -123,6 +123,12 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
+    fab: {
+        position: 'fixed',
+        top: '5rem',
+        right: '1rem',
+        zIndex: 100
+    }
 }));
 
 const TimelineDetail = (props) => {
@@ -163,10 +169,17 @@ const TimelineDetail = (props) => {
     }
     
     return (
-        <Container maxWidth="md">            
+        <Container maxWidth="md"> 
             <Timeline >
+                <Fab
+                    color="primary"
+                    aria-label="add"
+                    onClick={eventHandler}
+                    className={classes.fab}
+                >
+                    <AddIcon />
+                </Fab>
                 <div style={{ margin: '0px auto', padding: 0}}>
-                    <button onClick={eventHandler} style={{ marginBottom: 10}}>Add Event</button>
                     <div>
                         <div className={classes.actions2}>
                             <h2 style={{ marginRight: 24, marginTop: 0, marginBottom: 0 }}>{data.timelineTitle}</h2>
@@ -217,13 +230,6 @@ const TimelineDetail = (props) => {
                         <p>by:{data.creator}</p>
                         <p className={classes.link}>Tags:{data.tags}</p>
                     </div>
-                    
-                    
-                    <Button 
-                        variant='outlined'
-                        className={classes.link}>
-                        Import Data
-                    </Button>
                     
                     {isLoading && <h2 style={{ margin: '60px auto' }}>Loading....</h2>}
                 </div>

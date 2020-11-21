@@ -80,7 +80,7 @@ const Home = () => {
     return (
         <Container maxWidth="md">
 
-            <Button variant='outlined' style={{marginBottom: 30}}>
+            <Button variant='outlined' style={{marginBottom: 10}}>
                 <Link to={'/addTimeline'} className={classes.link}>
                     Create New Timeline
                 </Link>

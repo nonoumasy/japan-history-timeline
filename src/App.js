@@ -7,7 +7,6 @@ import gsap from 'gsap'
 import {ScrollTrigger} from 'gsap/ScrollTrigger'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import AddEvent from './components/AddEvent'
-import EditEvent from './components/EditEvent'
 import EditTimeline from './components/EditTimeline'
 import Footer from './components/Footer'
 import Signup from './components/Signup'
@@ -88,7 +87,7 @@ function App() {
         />
 
         <Route exact path='/'>
-          <div style={{ margin: '120px auto'}}>
+          <div style={{ margin: '80px auto'}}>
             <Home />
           </div>
         </Route>
@@ -98,14 +97,14 @@ function App() {
         </Route>
 
         <Route exact path='/timeline/:id'>
-          <div style={{ margin: '120px auto'}}>
+          <div style={{ margin: '80px auto'}}>
             <TimelineDetail />
           </div>
         </Route>
 
 
         <Route exact path='/addTimeline'>
-          <div style={{ margin: '120px auto' }}>
+          <div style={{ margin: '80px auto' }}>
             <AddTimeline />
           </div>
         </Route>
