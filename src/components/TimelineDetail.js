@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import { useHistory, useParams, Link} from 'react-router-dom'
-import Modal from './shared/Modal';
 import axios from 'axios'
 import { ProgressBar } from 'scrolling-based-progressbar';
 import clsx from 'clsx';
@@ -31,6 +30,8 @@ import Divider from '@material-ui/core/Divider';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ShareIcon from '@material-ui/icons/Share';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -115,7 +116,13 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 700,
         backgroundColor: '#333',
         color: '#fff'
-    }
+    },
+    actions2: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
 }));
 
 const TimelineDetail = (props) => {
@@ -123,9 +130,7 @@ const TimelineDetail = (props) => {
     const history = useHistory()
 
     const [data, setData] = useState([])
-    const [modalImage, setModalImage] = useState("")
     const [open, setOpen] = useState(false)
-    const [modalOpen, setModalOpen] = useState(false)
     const [expanded, setExpanded] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
 
@@ -141,15 +146,6 @@ const TimelineDetail = (props) => {
         } ) 
     }, [])
 
-    const clickImageHandler = (props) => {
-        // console.log(props)
-        setModalOpen(true);
-        setModalImage(props)
-    }
-
-    const handleClose = () => {
-        setModalOpen(false);
-    };
 
     const deleteHandler = (id) => {
         axios.delete(`/timeline/${id}`)
@@ -165,28 +161,61 @@ const TimelineDetail = (props) => {
     const eventHandler = () => {
         history.push(`/timeline/addEvent`)
     }
-
-    const editHandler = () => {
-        history.push(`/edit/${id}`)
-    }
     
     return (
         <Container maxWidth="md">            
             <Timeline >
-                <div style={{ margin: 'auto', padding: 0}}>
-                    <button onClick={eventHandler}>Add Event</button>
+                <div style={{ margin: '0px auto', padding: 0}}>
+                    <button onClick={eventHandler} style={{ marginBottom: 10}}>Add Event</button>
                     <div>
-                        <h2 style={{display: 'inline'}}>{data.timelineTitle}</h2>
-                        <button onClick={editHandler}>edit</button>
-                        <Link
-                            onClick={() => deleteHandler(data._id)}
-                        >
-                            Delete
-                        </Link>
+                        <div className={classes.actions2}>
+                            <h2 style={{ marginRight: 24, marginTop: 0, marginBottom: 0 }}>{data.timelineTitle}</h2>
+                            <SimpleMenu props={props}>
+                                <MenuItem onClick={props.handleClose}>
+                                    <EditIcon fontSize='small' style={{ marginRight: 16 }}/>
+                                    <Link
+                                        className={classes.link}
+                                        to={`/edit/${id}`}
+                                    >
+                                        Edit
+                                                </Link>
+                                </MenuItem>
+                                <MenuItem onClick={props.handleClose}>
+                                    <DeleteIcon fontSize='small' style={{ marginRight: 16 }} />
+                                    <Link
+                                        className={classes.link}
+                                        onClick={() => deleteHandler(data._id)}
+                                    >
+                                        Delete
+                                                </Link>
+                                </MenuItem>
+                                <MenuItem onClick={props.handleClose}>
+                                    <ShareIcon fontSize='small' style={{ marginRight: 16 }} />
+                                    <Link className={classes.link}>
+                                        Share
+                                                </Link>
+                                </MenuItem>
+                                <MenuItem onClick={props.handleClose}>
+                                    <ArrowDownwardIcon fontSize='small' style={{ marginRight: 16 }} />
+                                    <Link className={classes.link}>
+                                        Import Data
+                                                </Link>
+                                </MenuItem>
+                                <MenuItem onClick={props.handleClose}>
+                                    <ArrowUpwardIcon fontSize='small' style={{ marginRight: 16 }} />
+                                    <Button 
+                                        href={`data:text/json;charset=utf-8,${encodeURIComponent(
+                                            JSON.stringify(data)
+                                        )}`}
+                                        download="filename.json"
+                                        className={classes.link}>
+                                        Export Data as Json
+                                    </Button>
+                                </MenuItem>
+                            </SimpleMenu>
+                        </div>
                         <p>by:{data.creator}</p>
-                        <p>tags:{data.tags}</p>
-                        
-                        
+                        <p className={classes.link}>Tags:{data.tags}</p>
                     </div>
                     
                     
@@ -195,15 +224,7 @@ const TimelineDetail = (props) => {
                         className={classes.link}>
                         Import Data
                     </Button>
-                    <Button
-                        href={`data:text/json;charset=utf-8,${encodeURIComponent(
-                            JSON.stringify(data)
-                        )}`}
-                        download="filename.json"
-                        className={classes.link}
-                    >
-                        Export Data as Json
-                    </Button>
+                    
                     {isLoading && <h2 style={{ margin: '60px auto' }}>Loading....</h2>}
                 </div>
                 <div className={classes.timelineContainer}>
@@ -253,7 +274,6 @@ const TimelineDetail = (props) => {
                                                 component='img'
                                                 image={item.imageUrl}
                                                 alt=''
-                                                onClick={() => clickImageHandler(item.imageUrl)}
                                             />
                                         }
                                     </div>
@@ -267,12 +287,6 @@ const TimelineDetail = (props) => {
                                     </CardContent>
 
                                     <CardContent>
-
-                                        {/* {item.tags.map(tag => (
-                                    <Typography className={classes.tags}>
-                                        {tag}
-                                    </Typography>
-                                    ))} */}
 
                                     </CardContent>
 
