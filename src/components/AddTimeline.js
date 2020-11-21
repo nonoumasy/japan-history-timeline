@@ -55,7 +55,7 @@ export default function AddTimeline() {
             const { name, imageUrl, tags} = data
 
             // posting to database
-            axios.post("http://localhost:5000/timeline", {
+            axios.post("https://japan-history-timeline-api.herokuapp.com/timeline", {
                 timelineTitle: name,
                 timelineImageUrl: imageUrl,
                 tags,
