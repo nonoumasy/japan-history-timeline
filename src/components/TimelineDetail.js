@@ -221,14 +221,14 @@ const TimelineDetail = (props) => {
                                 </MenuItem>
                                 <MenuItem onClick={props.handleClose}>
                                     <ArrowUpwardIcon fontSize='small' style={{ marginRight: 16 }} />
-                                    <Button 
+                                    <a 
                                         href={`data:text/json;charset=utf-8,${encodeURIComponent(
                                             JSON.stringify(data)
                                         )}`}
                                         download="filename.json"
                                         className={classes.link}>
                                         Export Data as Json
-                                    </Button>
+                                    </a>
                                 </MenuItem>
                             </SimpleMenu>
                         </div>
