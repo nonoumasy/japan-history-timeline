@@ -41,11 +41,6 @@ const NavBar = (props) =>  {
                         </Link>
                     </Typography>
 
-                    <Tooltip title="Add New Event">
-                        <IconButton color='secondary' onClick={handleMenuClick}>
-                            <AddCircleIcon fontSize='small' />
-                        </IconButton>
-                    </Tooltip>
                     <Link
                         to="/signup"
                         style={{ textDecoration: 'none', color: '#fff' }}
