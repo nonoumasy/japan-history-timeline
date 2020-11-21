@@ -69,9 +69,11 @@ const useStyles = makeStyles((theme) => ({
     },
     timelineContainer: {
         marginTop: 40,
+        marginLeft: -240
+
     },
     timelineLine: {
-        backgroundColor: '#BC002D',
+        backgroundColor: '#999',
         width: '1px'
     },
     dialogImage: {
@@ -240,6 +242,7 @@ const TimelineDetail = (props) => {
                             key={item._id}
                             align="alternate"
                             ref={props.addToRefs}
+                            className={classes.timelineItem}
                         >
 
                             <TimelineOppositeContent>
@@ -290,10 +293,6 @@ const TimelineDetail = (props) => {
                                         >
                                             {item.description}
                                         </Typography>
-                                    </CardContent>
-
-                                    <CardContent>
-
                                     </CardContent>
 
                                     <CardActions className={classes.actions}>
