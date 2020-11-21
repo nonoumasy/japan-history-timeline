@@ -87,8 +87,8 @@ function App() {
         />
 
         <Route exact path='/'>
-          <div style={{ margin: '120px'}}>
-            <Home addToRefs={addToRefs} />
+          <div style={{ margin: '120px auto'}}>
+            <Home />
           </div>
         </Route>
 

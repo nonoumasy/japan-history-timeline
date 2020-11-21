@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
         color: '#333'
     },
     card: {
+        width: '100%',
         objectFit: 'cover',
     },
     gridContainer: {
@@ -88,7 +89,7 @@ const Home = () => {
             <Grid
                 container
                 spacing={2}
-                className={classes.gridContainer}
+                // dclassName={classes.gridContainer}
                 justify='start'>
                     
 
