@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect} from 'react'
 import { useHistory, useParams, Link} from 'react-router-dom'
 import axios from 'axios'
-import { ProgressBar } from 'scrolling-based-progressbar';
 import clsx from 'clsx';
 
 import Container from '@material-ui/core/Container';
@@ -16,7 +15,6 @@ import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import Collapse from '@material-ui/core/Collapse';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import CardMedia from '@material-ui/core/CardMedia';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -34,7 +32,6 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -88,7 +85,8 @@ const useStyles = makeStyles((theme) => ({
     },
     imageContainer: {
         margin: 0,
-        padding: 0
+        padding: 0,
+        overflow: 'hidden'
     },
     video: {
         outline: 0,
@@ -143,7 +141,7 @@ const TimelineDetail = (props) => {
     const [isLoading, setIsLoading] = useState(false)
 
     const {id} = useParams()
-
+   
     useEffect(() => {
         setIsLoading(true)
         fetch(`http://localhost:5000/timeline/${id}`)
