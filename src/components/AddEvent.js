@@ -13,18 +13,17 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Tooltip from '@material-ui/core/Tooltip';
 
-
 const schema = yup.object().shape({
-    year: yup
+    eventYear: yup
     .number()
     .required('Year is a required field.'),
-    description: yup
+    eventDescription: yup
     .string()
     .max(140)
     .required('Description is a required field.'),
-    imageUrl: yup
+    eventImageUrl: yup
     .string(),
-    link: yup
+    eventLink: yup
     .string()
     
 })
@@ -45,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Adds() {
+export default function AddEvent(props) {
     const classes = useStyles();
     const history = useHistory()
     const { register, handleSubmit, errors } = useForm({ 
@@ -54,15 +53,23 @@ export default function Adds() {
     })
     const [data, setData] = useState('')
     const { id } = useParams()
-
+    
+    const { eventYear, eventDescription, eventImageUrl, eventLink} = data
     useEffect(() => {
-        axios.post(`/timeline/${id}`)
-        .then(result => console.log(result))
-        .catch(err => console.log(err))
-    })
+        if (data) {
+            axios.put(`http://localhost:5000/timeline/${id}/update`, {
+                eventYear,
+                eventDescription,
+                eventImageUrl,
+                eventLink
+            })
+                .then(() => history.goBack())
+                .catch(err => console.log(err))
+        }
+    }, [data])
 
 
-    const handleClose = () => {
+    const handleCancel = () => {
         history.goBack()
     };
 
@@ -80,15 +87,15 @@ export default function Adds() {
                         margin="normal"
                         required
                         fullWidth
-                        id="year"
-                        label="year"
-                        name="year"
-                        autoComplete="year"
+                        id="eventYear"
+                        label="eventYear"
+                        name="eventYear"
+                        autoComplete="eventYear"
                         type="number"
                         autoFocus
                         inputRef={register}
-                        error={!!errors.year}
-                        helperText={errors?.year?.message}
+                        error={!!errors.eventYear}
+                        helperText={errors?.eventYear?.message}
                     />
                     <TextField
                         variant="outlined"
@@ -97,26 +104,26 @@ export default function Adds() {
                         fullWidth
                         multiline
                         rows={4}
-                        name="description"
-                        label="description"
+                        name="eventDescription"
+                        label="eventDescription"
                         type="text"
-                        id="description"
+                        id="eventDescription"
                         inputRef={register}
-                        error={!!errors.description}
-                        helperText={errors?.description?.message}
+                        error={!!errors.eventDescription}
+                        helperText={errors?.eventDescription?.message}
                     />
                     <Tooltip title='On YouTube, Navigate to the video you wish to embed. Click the Share link below the video, then click the Embed link. The embed link will be highlighted in blue. Copy and paste this link here.'>
                         <TextField
                             variant="outlined"
                             margin="normal"
                             fullWidth
-                            name="imageUrl"
-                            label="imageUrl"
+                            name="eventImageUrl"
+                            label="eventImageUrl"
                             type="text"
-                            id="imageUrl"
+                            id="eventImageUrl"
                             inputRef={register}
-                            error={!!errors.imageUrl}
-                            helperText={errors?.imageUrl?.message}
+                            error={!!errors.eventImageUrl}
+                            helperText={errors?.eventImageUrl?.message}
                         />
                     </Tooltip>
                     
@@ -124,32 +131,22 @@ export default function Adds() {
                         variant="outlined"
                         margin="normal"
                         fullWidth
-                        name="link"
-                        label="link"
+                        name="eventLink"
+                        label="eventLink"
                         type="text"
-                        id="link"
+                        id="eventLink"
                         inputRef={register}
                     />
                     <TextField
                         variant="outlined"
                         margin="normal"
                         fullWidth
-                        name="coordinates"
-                        label="coordinates"
+                        name="eventCoordinates"
+                        label="eventCoordinates"
                         type="number"
-                        id="coordinates"
+                        id="eventCoordinates"
                         min="-90" 
                         max="90" 
-                        inputRef={register}
-                    />
-
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        id="tags"
-                        name="tags"
-                        label="tags"
                         inputRef={register}
                     />
 
@@ -158,7 +155,7 @@ export default function Adds() {
                         fullWidth
                         variant="outlined"
                         color="default"
-                        onClick={handleClose}
+                        onClick={handleCancel}
                         className={classes.submit}
                     >
                         Cancel

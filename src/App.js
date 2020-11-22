@@ -92,7 +92,8 @@ function App() {
           </div>
         </Route>
 
-        <Route exact path='/timeline/addEvent'>
+        <Route 
+          exact path='/timeline/:id/addEvent'>
           <AddEvent />
         </Route>
 

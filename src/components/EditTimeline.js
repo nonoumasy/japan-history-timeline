@@ -53,39 +53,45 @@ export default function EditTimeline(props) {
     const [timelineTitle, setTimelineTitle] = useState('')
     const [timelineImageUrl, setTimelineImageUrl] = useState('')
     const [tags, setTags] = useState('')
-    const [event, setEvent] = useState([])
 
     useEffect(() => {
 
-        axios.get(`http://localhost:5000/timeline/${props.match.params.id}`)
-            .then(res =>
-                [
-                    setTimelineTitle(res.data.timelineTitle),
-                    setTimelineImageUrl(res.data.timelineImageUrl),
-                    setTags(res.data.tags),
-                    setEvent(res.data.event)
-                ]
-            )
+        fetch(`http://localhost:5000/timeline/${props.match.params.id}`, {
+            headers: {'Content-Type': 'application/json'}})
+            .then(res => res.json())
+            .then(data => {
+                // console.log(' asdfs',data)
+
+                setTimelineTitle(data.timelineTitle)
+                setTimelineImageUrl(data.timelineImageUrl)
+                setTags(data.tags)
+
+            })
             .then({ new: true })
     }, [])
 
+    // updates if data gets updated
     useEffect(() => {
         if (data) {
-            const { timelineTitle, timelineImageUrl, tags, event} = data
+            const { timelineTitle, timelineImageUrl, tags} = data
 
             // posting to database
-            axios.put(`http://localhost:5000/timeline/${props.match.params.id}`, {
-                timelineTitle,
-                timelineImageUrl,
-                tags,
-                event
+            fetch(`http://localhost:5000/timeline/${props.match.params.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                    timelineTitle,
+                    timelineImageUrl,
+                    tags
+                )
             })
                 .then((data) => {
                     if (data.error) {
                         console.log(data.error)
                     }
                     else {
-                        console.log(data)
                         setData('')
                         history.push(`/timeline/${props.match.params.id}`)
                     }

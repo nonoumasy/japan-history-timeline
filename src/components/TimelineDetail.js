@@ -146,14 +146,14 @@ const TimelineDetail = (props) => {
 
     useEffect(() => {
         setIsLoading(true)
-        fetch(`https://japan-history-timeline-api.herokuapp.com/timeline/${id}`)
+        fetch(`http://localhost:5000/timeline/${id}`)
         .then(res => res.json())
         .then(data =>{
+            // console.log(data)
             setData(data)
             setIsLoading(false)
-        } ) 
+        })
     }, [])
-
 
     const deleteHandler = (id) => {
         axios.delete(`/timeline/${id}`)
@@ -166,8 +166,8 @@ const TimelineDetail = (props) => {
         setExpanded(!expanded);
     };
 
-    const eventHandler = () => {
-        history.push(`/timeline/addEvent`)
+    const eventHandler = (id) => {
+        history.push(`/timeline/${id}/addEvent`)
     }
     
     return (
@@ -177,7 +177,7 @@ const TimelineDetail = (props) => {
                     <Fab
                         color="primary"
                         aria-label="add"
-                        onClick={eventHandler}
+                        onClick={() => eventHandler(id)}
                         className={classes.fab}
                     >
                         <AddIcon />
@@ -250,7 +250,7 @@ const TimelineDetail = (props) => {
 
                             <TimelineOppositeContent>
                                 <Typography variant="body2" color="textSecondary">
-                                    {item.year}
+                                    {item.eventYear}
                                 </Typography>
                             </TimelineOppositeContent>
 
@@ -263,12 +263,12 @@ const TimelineDetail = (props) => {
                             <TimelineContent>
                                 <Card className={classes.root}>
                                     <div className={classes.imageContainer}>
-                                        {item.imageUrl.includes('youtube.com') ?
+                                        {item.eventImageUrl.includes('youtube.com') ?
                                             <iframe
                                                 // component='video'
                                                 // controls
                                                 className={classes.video}
-                                                src={item.imageUrl}
+                                                src={item.eventImageUrl}
                                                 allowFullScreen
                                                 mozallowfullscreen="mozallowfullscreen"
                                                 msallowfullscreen="msallowfullscreen"
@@ -284,7 +284,7 @@ const TimelineDetail = (props) => {
                                             <CardMedia
                                                 className={classes.media}
                                                 component='img'
-                                                image={item.imageUrl}
+                                                image={item.eventImageUrl}
                                                 alt=''
                                             />
                                         }
@@ -294,7 +294,7 @@ const TimelineDetail = (props) => {
                                         <Typography
                                             className={classes.event}
                                         >
-                                            {item.description}
+                                            {item.eventDescription}
                                         </Typography>
                                     </CardContent>
 
@@ -303,7 +303,7 @@ const TimelineDetail = (props) => {
                                         <Link
                                             target='_blank'
                                             className={classes.link}
-                                            onClick={() => window.open(item.link, "_blank")}
+                                            onClick={() => window.open(item.eventLink, "_blank")}
                                         >
                                             More Details
                                     </Link>
