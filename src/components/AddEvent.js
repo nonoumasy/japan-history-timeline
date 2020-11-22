@@ -24,7 +24,9 @@ const schema = yup.object().shape({
     eventImageUrl: yup
     .string(),
     eventLink: yup
-    .string()
+    .string(),
+    eventCoordinates: yup
+    .number()
     
 })
 
@@ -54,14 +56,15 @@ export default function AddEvent(props) {
     const [data, setData] = useState('')
     const { id } = useParams()
     
-    const { eventYear, eventDescription, eventImageUrl, eventLink} = data
+    const { eventYear, eventDescription, eventImageUrl, eventLink, eventCoordinates} = data
     useEffect(() => {
         if (data) {
             axios.put(`http://localhost:5000/timeline/${id}/update`, {
                 eventYear,
                 eventDescription,
                 eventImageUrl,
-                eventLink
+                eventLink,
+                eventCoordinates
             })
                 .then(() => history.goBack())
                 .catch(err => console.log(err))

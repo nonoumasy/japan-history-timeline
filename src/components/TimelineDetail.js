@@ -193,7 +193,7 @@ const TimelineDetail = (props) => {
                                     <EditIcon fontSize='small' style={{ marginRight: 16 }}/>
                                     <Link
                                         className={classes.link}
-                                        to={`/edit/${id}`}
+                                        to={`/editTimeline/${id}`}
                                     >
                                         Edit
                                                 </Link>
@@ -324,7 +324,7 @@ const TimelineDetail = (props) => {
                                                 <EditIcon fontSize='small' style={{ marginRight: 16 }} />
                                                 <Link
                                                     className={classes.link}
-                                                    to={`/update/${item._id}`}
+                                                    to={`/editEvent/${item._id}`}
                                                 >
                                                     Edit
                                                 </Link>

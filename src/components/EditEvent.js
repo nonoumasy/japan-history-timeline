@@ -14,17 +14,20 @@ import Container from '@material-ui/core/Container';
 import Tooltip from '@material-ui/core/Tooltip';
 
 const schema = yup.object().shape({
-    year: yup
+    eventYear: yup
         .number()
         .required('Year is a required field.'),
-    event: yup
+    eventDescription: yup
         .string()
         .max(140)
         .required('Event is a required field.'),
-    imageUrl: yup
+    eventImageUrl: yup
         .string(),
-    link: yup
-        .string()
+    eventLink: yup
+        .string(),
+    eventCoordinates: yup
+        .number()
+
 })
 
 const useStyles = makeStyles((theme) => ({
@@ -52,36 +55,39 @@ export default function EditEvent(props) {
     })
 
     const [data, setData] = useState('')
-    const [year, setYear] = useState('')
-    const [event, setEvent] = useState('')
-    const [imageUrl, setImageUrl] = useState('')
-    const [link, setLink] = useState('')
-    const [coordinates, setCoordinates] = useState('')
+    const [eventYear, setEventYear] = useState('')
+    const [eventDescription, setEventDescription] = useState('')
+    const [eventImageUrl, setEventImageUrl] = useState('')
+    const [eventLink, setEventLink] = useState('')
+    const [eventCoordinates, setEventCoordinates] = useState('')
+
+    console.log('asdf', props)
 
     useEffect(() => {
+        if (data)
         axios.get(`http://localhost:5000/event/${props.match.params.id}`)
             .then(res =>
                 [
-                    setYear(res.data.year),
-                    setEvent(res.data.event),
-                    setImageUrl(res.data.imageUrl),
-                    setLink(res.data.link),
-                    setCoordinates(res.data.coordinates)
+                    setEventYear(res.data.eventYear),
+                    setEventDescription(res.data.eventDescription),
+                    setEventImageUrl(res.data.eventImageUrl),
+                    setEventLink(res.data.eventLink),
+                    setEventCoordinates(res.data.eventCoordinates)
                 ]
             )
             .then({new: true})
-    }, [])
+    }, [data])
 
     useEffect(() => {
         if (data) {
-            const { year, event, imageUrl, link, coordinates } = data
+            const { eventYear, eventDescription, eventImageUrl, eventLink, eventCoordinates } = data
             // posting to database
-            axios.put(`https://japan-history-timeline-api.herokuapp.com/event/${props.match.params.id}`, {
-                year,
-                event, 
-                imageUrl,
-                link,
-                coordinates
+            axios.put(`http://localhost:5000/event/${props.match.params.id}/`, {
+                eventYear,
+                eventDescription,
+                eventImageUrl,
+                eventLink,
+                eventCoordinates
             })
                 .then(data => {
                     if (data.error) {
@@ -101,7 +107,7 @@ export default function EditEvent(props) {
     };
 
     return (
-        <Container component="main" maxWidth="sm">
+        <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
                 <Typography>
@@ -114,17 +120,17 @@ export default function EditEvent(props) {
                         margin="normal"
                         required
                         fullWidth
-                        id="year"
-                        label="year"
-                        name="year"
-                        autoComplete="year"
+                        id="eventYear"
+                        label="eventYear"
+                        name="eventYear"
+                        autoComplete="eventYear"
                         type="number"
-                        value={year}
-                        onChange={e => setYear(e.target.value)}
+                        value={eventYear}
+                        onChange={e => setEventYear(e.target.value)}
                         autoFocus
                         inputRef={register}
-                        error={!!errors.year}
-                        helperText={errors?.year?.message}
+                        error={!!errors.eventYear}
+                        helperText={errors?.eventYear?.message}
                     />
                     <TextField
                         variant="outlined"
@@ -133,30 +139,30 @@ export default function EditEvent(props) {
                         fullWidth
                         multiline
                         rows={4}
-                        name="event"
-                        label="event"
+                        name="eventDescription"
+                        label="eventDescription"
                         type="text"
-                        value={event}
-                        onChange={e => setEvent(e.target.value)}
-                        id="event"
+                        value={eventDescription}
+                        onChange={e => setEventDescription(e.target.value)}
+                        id="eventDescription"
                         inputRef={register}
-                        error={!!errors.event}
-                        helperText={errors?.event?.message}
+                        error={!!errors.eventDescription}
+                        helperText={errors?.eventDescription?.message}
                     />
                     <Tooltip title='Go to YouTube. Navigate to the video you wish to embed. Click the Share link below the video, then click the Embed link. The embed link will be highlighted in blue. You will need to copy this link in order to add it to your page in the Employer Center.'>
                         <TextField
                             variant="outlined"
                             margin="normal"
                             fullWidth
-                            name="imageUrl"
-                            label="imageUrl"
+                            name="eventImageUrl"
+                            label="eventImageUrl"
                             type="text"
-                            value={imageUrl}
-                            onChange={e => setImageUrl(e.target.value)}
-                            id="imageUrl"
+                            value={eventImageUrl}
+                            onChange={e => setEventImageUrl(e.target.value)}
+                            id="eventImageUrl"
                             inputRef={register}
-                            error={!!errors.imageUrl}
-                            helperText={errors?.imageUrl?.message}
+                            error={!!errors.eventImageUrl}
+                            helperText={errors?.eventImageUrl?.message}
                         />
                     </Tooltip>
                     
@@ -164,24 +170,24 @@ export default function EditEvent(props) {
                         variant="outlined"
                         margin="normal"
                         fullWidth
-                        name="link"
-                        label="link"
+                        name="eventLink"
+                        label="eventLink"
                         type="text"
-                        value={link}
-                        onChange={e => setLink(e.target.value)}
-                        id="link"
+                        value={eventLink}
+                        onChange={e => setEventLink(e.target.value)}
+                        id="eventLink"
                         inputRef={register}
                     />
                     <TextField
                         variant="outlined"
                         margin="normal"
                         fullWidth
-                        name="coordinates"
-                        label="coordinates"
+                        name="eventCoordinates"
+                        label="eventCoordinates"
                         type="number"
-                        value={coordinates}
-                        onChange={e => setCoordinates(e.target.value)}
-                        id="coordinates"
+                        value={eventCoordinates}
+                        onChange={e => setEventCoordinates(e.target.value)}
+                        id="eventCoordinates"
                         min="-90"
                         max="90"
                         inputRef={register}

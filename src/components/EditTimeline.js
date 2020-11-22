@@ -54,13 +54,13 @@ export default function EditTimeline(props) {
     const [timelineImageUrl, setTimelineImageUrl] = useState('')
     const [tags, setTags] = useState('')
 
+    // fills in form with existing value
     useEffect(() => {
-
         fetch(`http://localhost:5000/timeline/${props.match.params.id}`, {
             headers: {'Content-Type': 'application/json'}})
             .then(res => res.json())
             .then(data => {
-                // console.log(' asdfs',data)
+                console.log(' asdfs',data)
 
                 setTimelineTitle(data.timelineTitle)
                 setTimelineImageUrl(data.timelineImageUrl)
@@ -70,23 +70,20 @@ export default function EditTimeline(props) {
             .then({ new: true })
     }, [])
 
+    console.log('updated data', data)
+
     // updates if data gets updated
     useEffect(() => {
         if (data) {
             const { timelineTitle, timelineImageUrl, tags} = data
 
             // posting to database
-            fetch(`http://localhost:5000/timeline/${props.match.params.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(
+            axios.put(`http://localhost:5000/timeline/${props.match.params.id}`, 
+                {
                     timelineTitle,
                     timelineImageUrl,
                     tags
-                )
-            })
+                })
                 .then((data) => {
                     if (data.error) {
                         console.log(data.error)
