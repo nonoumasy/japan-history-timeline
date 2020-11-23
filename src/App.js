@@ -15,6 +15,7 @@ import AddTimeline from './components/AddTimeline'
 import TimelineDetail from './components/TimelineDetail'
 
 import Box from '@material-ui/core/Box';
+import ImportData from './components/ImportData'
 
 const theme = createMuiTheme({
   palette: {
@@ -48,6 +49,12 @@ function App() {
         </Route>
         <Route path='/login'>
           <Login />
+        </Route>
+
+        <Route path='/import'>
+          <div style={{ margin: '80px auto' }}>
+            <ImportData />
+          </div>
         </Route>
 
         <Route 

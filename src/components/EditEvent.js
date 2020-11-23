@@ -24,9 +24,7 @@ const schema = yup.object().shape({
     eventImageUrl: yup
         .string(),
     eventLink: yup
-        .string(),
-    eventCoordinates: yup
-        .number()
+        .string()
 
 })
 
@@ -61,18 +59,20 @@ export default function EditEvent(props) {
     const [eventLink, setEventLink] = useState('')
     const [eventCoordinates, setEventCoordinates] = useState('')
 
-    console.log('props', props)
+    // console.log(props)
 
+    // fills in form with existing value
     useEffect(() => {
-        fetch(`http://localhost:5000/timeline/${props.match.params.id}`,{
+        fetch(`http://localhost:5000/timeline/event/${props.match.params.id}`,{
             headers: { 'Content-Type': 'application/json' }})
             .then(res => res.json())
             .then(data => {
-                // setEventYear(data.eventYear)
-                // setEventDescription(data.eventDescription)
-                // setEventImageUrl(data.eventImageUrl)
-                // setEventLink(data.eventLink)
-                // setEventCoordinates(data.eventCoordinates)
+                // console.log('sd',data);
+                setEventYear(data.eventYear)
+                setEventDescription(data.eventDescription)
+                setEventImageUrl(data.eventImageUrl)
+                setEventLink(data.eventLink)
+                setEventCoordinates(data.eventCoordinates)
             })
             .then({ new: true })
     }, [])
@@ -81,7 +81,7 @@ export default function EditEvent(props) {
         if (data) {
             const { eventYear, eventDescription, eventImageUrl, eventLink, eventCoordinates } = data
             // posting to database
-            axios.put(`http://localhost:5000/event/${props.match.params.id}/`, {
+            axios.put(`http://localhost:5000/timeline/event/${props.match.params.id}`, {
                 eventYear,
                 eventDescription,
                 eventImageUrl,
@@ -94,7 +94,7 @@ export default function EditEvent(props) {
                     }
                     else {
                         setData('')
-                        history.push('/')
+                        history.goBack()
                     }
                 })
                 .catch(err => console.log(err))
@@ -177,7 +177,7 @@ export default function EditEvent(props) {
                         id="eventLink"
                         inputRef={register}
                     />
-                    
+
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -206,7 +206,6 @@ export default function EditEvent(props) {
                     <Button
                         // type="submit"
                         fullWidth
-                        variant="outlined"
                         color="default"
                         onClick={handleClose}
                         className={classes.submit}

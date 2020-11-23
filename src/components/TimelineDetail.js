@@ -151,30 +151,39 @@ const TimelineDetail = (props) => {
     const classes = useStyles();
     const history = useHistory()
     const { id } = useParams()
+    const { register, handleSubmit } = useForm()
 
     const [data, setData] = useState([])
+    const [anchorEl, setAnchorEl] = useState(null);
     const [expanded, setExpanded] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
     const [eventComment, setEventComment] = useState('')
-    const { register, handleSubmit } = useForm()
+    
 
+    // get timeline by id
     useEffect(() => {
         setIsLoading(true)
         fetch(`http://localhost:5000/timeline/${id}`)
-        .then(res => res.json())
-        .then(data =>{
-            // console.log(data)
-            setData(data)
-            setIsLoading(false)
-        })
-    }, [])
+            .then(res => res.json())
+            .then(data => {
+                // console.log(data)
+                setData(data)
+                setIsLoading(false)
+            })
+    }, [setData])
 
-    const deleteHandler = () => {
-        axios.delete(`/timeline/${props.id}`)
-        .then(() => {
-            history.goBack()
-        })
+    const deleteTimelineHandler = (id) => {
+        axios.delete(`http://localhost:5000/timeline/${id}`)
+        history.push('/')
+    }
+
+    const handleClose = () => {
+        setAnchorEl(null);
     };
+
+    const deleteEventHandler = async (id) => {
+        await axios.delete(`http://localhost:5000/timeline/event/${id}`)
+    }
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -183,7 +192,9 @@ const TimelineDetail = (props) => {
     const eventHandler = (id) => {
         history.push(`/timeline/${id}/addEvent`)
     }
-    
+
+
+
     return (
         <Container maxWidth="md"> 
             <ProgressBar height="2px" color="#333" />
@@ -215,16 +226,18 @@ const TimelineDetail = (props) => {
                                             to={`/editTimeline/${id}`}
                                         >
                                             Edit
-                                                </Link>
+                                        </Link>
                                     </MenuItem>
+
                                     <MenuItem onClick={props.handleClose}>
                                         <DeleteIcon fontSize='small' style={{ marginRight: 16 }} />
                                         <Link
                                             className={classes.link}
-                                            onClick={() => deleteHandler(data._id)}
+                                            onClick={() => deleteTimelineHandler(data._id)}
                                         >
                                             Delete
                                     </Link>
+
                                     </MenuItem>
                                     <MenuItem onClick={props.handleClose}>
                                         <ShareIcon fontSize='small' style={{ marginRight: 16 }} />
@@ -234,9 +247,10 @@ const TimelineDetail = (props) => {
                                     </MenuItem>
                                     <MenuItem onClick={props.handleClose}>
                                         <ArrowDownwardIcon fontSize='small' style={{ marginRight: 16 }} />
-                                        <Link className={classes.link}>
+                                        <Link className={classes.link} to={`/import`}>
                                             Import Data
-                                                </Link>
+                                        </Link>
+                                        
                                     </MenuItem>
                                     <MenuItem onClick={props.handleClose}>
                                         <ArrowUpwardIcon fontSize='small' style={{ marginRight: 16 }} />
@@ -257,7 +271,6 @@ const TimelineDetail = (props) => {
                             <p>by:{data.creator}</p>
                             <p className={classes.link}>Tags:{data.tags}</p>
                         </div>
-                       
                     </div>
                     
                     {isLoading && <h2 style={{ margin: '60px auto' }}>Loading....</h2>}
@@ -325,7 +338,7 @@ const TimelineDetail = (props) => {
                                     <CardActions className={classes.actions}>
 
                                         <Link
-                                            target='_blank'
+                                            // target='_blank'
                                             className={classes.link}
                                             onClick={() => window.open(item.eventLink, "_blank")}
                                         >
@@ -357,7 +370,7 @@ const TimelineDetail = (props) => {
                                                 <DeleteIcon fontSize='small' style={{ marginRight: 16 }} />
                                                 <Link
                                                     className={classes.link}
-                                                    onClick={() => deleteHandler(item._id)}
+                                                    onClick={() => deleteEventHandler(item._id)}
                                                 >
                                                     Delete
                                                 </Link>

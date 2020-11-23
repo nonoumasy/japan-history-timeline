@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Home = () => {
+const Home = (props) => {
     const classes = useStyles()
     const [data, setData] = useState([])
     const history = useHistory()
@@ -73,7 +73,7 @@ const Home = () => {
             .then(data => setData(data))
             .catch(err => console.log(err))
 
-    }, [])
+    }, [props.location])
 
     
 

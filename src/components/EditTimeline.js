@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(1),
     },
     submit: {
-        margin: theme.spacing(3, 0, 2),
+        margin: theme.spacing(2, 0, 0),
     },
 }));
 
@@ -68,7 +68,7 @@ export default function EditTimeline(props) {
             .then({ new: true })
     }, [])
 
-    console.log('updated data', data)
+    // console.log('updated data', data)
 
     // updates if data gets updated
     useEffect(() => {
@@ -160,17 +160,6 @@ export default function EditTimeline(props) {
                             helperText={errors?.tags?.message}
                         />
                     </Tooltip>
-                    
-                    <Button
-                        // type="submit"
-                        fullWidth
-                        variant="outlined"
-                        color="default"
-                        onClick={handleClose}
-                        className={classes.submit}
-                    >
-                        Cancel
-                    </Button>
 
                     <Button
                         type="submit"
@@ -180,6 +169,16 @@ export default function EditTimeline(props) {
                         className={classes.submit}
                     >
                         Submit
+                    </Button>
+
+                    <Button
+                        // type="submit"
+                        fullWidth
+                        color="default"
+                        onClick={handleClose}
+                        className={classes.submit}
+                    >
+                        Cancel
                     </Button>
 
                 </form>
