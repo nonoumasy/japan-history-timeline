@@ -170,7 +170,7 @@ const TimelineDetail = (props) => {
                 setData(data)
                 setIsLoading(false)
             })
-    }, [setData])
+    }, [])
 
     const deleteTimelineHandler = (id) => {
         axios.delete(`https://japan-history-timeline-api.herokuapp.com/timeline/${id}`)
