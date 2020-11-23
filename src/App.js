@@ -1,10 +1,9 @@
-import React, {useRef, useEffect} from 'react'
+import React from 'react'
 import NavBar from './components/NavBar'
 import Home from './components/Home'
 import {Route} from 'react-router-dom'
 import Scroll from './components/shared/Scroll'
-import gsap from 'gsap'
-import {ScrollTrigger} from 'gsap/ScrollTrigger'
+
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import AddEvent from './components/AddEvent'
 import EditTimeline from './components/EditTimeline'
@@ -16,9 +15,6 @@ import AddTimeline from './components/AddTimeline'
 import TimelineDetail from './components/TimelineDetail'
 
 import Box from '@material-ui/core/Box';
-
-
-gsap.registerPlugin(ScrollTrigger)
 
 const theme = createMuiTheme({
   palette: {
@@ -40,35 +36,7 @@ const theme = createMuiTheme({
 });
 
 function App() {
-  const revealRefs = useRef([])
-  revealRefs.current =[]
-
-  useEffect(() => {
-    revealRefs.current.forEach((el, index) => {
-      gsap.fromTo(el, {
-        autoAlpha: 0
-      }, {
-        duration: 1,
-        autoAlpha: 1,
-        ease: 'expo',
-        scrollTrigger: {
-          id: `section-${index + 1}`,
-          trigger: el,
-          start: `top center+=100`,
-          toggleActions: 'play none none reverse',
-          scrub: 1,
-          // markers: true
-        }
-      })
-    })
-  }, [])
-
-  const addToRefs = el => {
-    if(el && !revealRefs.current.includes(el)) {
-      revealRefs.current.push(el)
-    }
-  } 
-
+  
   return (
     <>
       <ThemeProvider theme={theme}>

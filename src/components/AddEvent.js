@@ -24,9 +24,7 @@ const schema = yup.object().shape({
     eventImageUrl: yup
     .string(),
     eventLink: yup
-    .string(),
-    eventCoordinates: yup
-    .number()
+    .string()
     
 })
 
@@ -42,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(1),
     },
     submit: {
-        margin: theme.spacing(3, 0, 2),
+        margin: theme.spacing(2, 0, 0),
     },
 }));
 
@@ -146,23 +144,14 @@ export default function AddEvent(props) {
                         fullWidth
                         name="eventCoordinates"
                         label="eventCoordinates"
-                        type="number"
+                        type="text"
                         id="eventCoordinates"
                         min="-90" 
                         max="90" 
                         inputRef={register}
                     />
 
-                    <Button
-                        // type="submit"
-                        fullWidth
-                        variant="outlined"
-                        color="default"
-                        onClick={handleCancel}
-                        className={classes.submit}
-                    >
-                        Cancel
-                    </Button>
+                    
 
                     <Button
                         type="submit"
@@ -172,6 +161,17 @@ export default function AddEvent(props) {
                         className={classes.submit}
                     >
                         Submit
+                    </Button>
+
+                    <Button
+                        // type="submit"
+                        fullWidth
+                        // variant="outlined"
+                        color="default"
+                        onClick={handleCancel}
+                        className={classes.submit}
+                    >
+                        Cancel
                     </Button>
                     
                 </form>

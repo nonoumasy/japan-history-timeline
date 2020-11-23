@@ -59,9 +59,7 @@ export default function EditTimeline(props) {
         fetch(`http://localhost:5000/timeline/${props.match.params.id}`, {
             headers: {'Content-Type': 'application/json'}})
             .then(res => res.json())
-            .then(data => {
-                console.log(' asdfs',data)
-
+            .then(data => { 
                 setTimelineTitle(data.timelineTitle)
                 setTimelineImageUrl(data.timelineImageUrl)
                 setTags(data.tags)

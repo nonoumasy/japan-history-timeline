@@ -67,10 +67,15 @@ const Home = () => {
     const [data, setData] = useState([])
     const history = useHistory()
 
-    fetch('https://japan-history-timeline-api.herokuapp.com/timeline')
-    .then(res => res.json())
-    .then(data => setData(data))
-    .catch(err => console.log(err))
+    useEffect(() => {
+        fetch('https://japan-history-timeline-api.herokuapp.com/timeline')
+            .then(res => res.json())
+            .then(data => setData(data))
+            .catch(err => console.log(err))
+
+    }, [])
+
+    
 
     const clickImageHandler = (id) => {
         history.push(`/timeline/${id}`)
@@ -78,7 +83,7 @@ const Home = () => {
 
 
     return (
-        <Container maxWidth="md">
+        <Container maxWidth="md" >
 
             <Button variant='outlined' style={{marginBottom: 10}}>
                 <Link to={'/addTimeline'} className={classes.link}>
@@ -90,11 +95,11 @@ const Home = () => {
                 container
                 spacing={2}
                 // dclassName={classes.gridContainer}
-                justify='start'>
+                justify='flex-start'>
                     
 
                 {data.map(item => (
-                        <Grid item xs={12} sm={6} md={4} lg={3}>
+                        <Grid item xs={12} sm={6} md={4} lg={3} key={item._id}>
                             <Card className={classes.container}>
                                 <CardMedia
                                     component='img'

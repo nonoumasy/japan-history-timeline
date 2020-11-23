@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(1),
     },
     submit: {
-        margin: theme.spacing(3, 0, 2),
+        margin: theme.spacing(2, 0, 0),
     },
 }));
 
@@ -61,22 +61,21 @@ export default function EditEvent(props) {
     const [eventLink, setEventLink] = useState('')
     const [eventCoordinates, setEventCoordinates] = useState('')
 
-    console.log('asdf', props)
+    console.log('props', props)
 
     useEffect(() => {
-        if (data)
-        axios.get(`http://localhost:5000/event/${props.match.params.id}`)
-            .then(res =>
-                [
-                    setEventYear(res.data.eventYear),
-                    setEventDescription(res.data.eventDescription),
-                    setEventImageUrl(res.data.eventImageUrl),
-                    setEventLink(res.data.eventLink),
-                    setEventCoordinates(res.data.eventCoordinates)
-                ]
-            )
-            .then({new: true})
-    }, [data])
+        fetch(`http://localhost:5000/timeline/${props.match.params.id}`,{
+            headers: { 'Content-Type': 'application/json' }})
+            .then(res => res.json())
+            .then(data => {
+                // setEventYear(data.eventYear)
+                // setEventDescription(data.eventDescription)
+                // setEventImageUrl(data.eventImageUrl)
+                // setEventLink(data.eventLink)
+                // setEventCoordinates(data.eventCoordinates)
+            })
+            .then({ new: true })
+    }, [])
 
     useEffect(() => {
         if (data) {
@@ -178,13 +177,14 @@ export default function EditEvent(props) {
                         id="eventLink"
                         inputRef={register}
                     />
+                    
                     <TextField
                         variant="outlined"
                         margin="normal"
                         fullWidth
                         name="eventCoordinates"
                         label="eventCoordinates"
-                        type="number"
+                        type="text"
                         value={eventCoordinates}
                         onChange={e => setEventCoordinates(e.target.value)}
                         id="eventCoordinates"
@@ -192,6 +192,16 @@ export default function EditEvent(props) {
                         max="90"
                         inputRef={register}
                     />
+
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                    >
+                        Update 
+                    </Button>
 
                     <Button
                         // type="submit"
@@ -202,16 +212,6 @@ export default function EditEvent(props) {
                         className={classes.submit}
                     >
                         Cancel
-                    </Button>
-
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        Update 
                     </Button>
 
                 </form>

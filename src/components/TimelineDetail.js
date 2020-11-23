@@ -2,9 +2,10 @@ import React, { useState, useEffect} from 'react'
 import { useHistory, useParams, Link} from 'react-router-dom'
 import axios from 'axios'
 import clsx from 'clsx';
+import { useForm } from 'react-hook-form'
 
+import { ProgressBar } from 'scrolling-based-progressbar'
 import Container from '@material-ui/core/Container';
-
 import { makeStyles } from '@material-ui/core/styles';
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -32,6 +33,7 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -66,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
     },
     timelineContainer: {
         marginTop: 20,
-        marginLeft: -240
+        marginLeft: '-14rem'
 
     },
     timelineLine: {
@@ -125,23 +127,37 @@ const useStyles = makeStyles((theme) => ({
     },
     fab: {
         position: 'fixed',
-        top: '5rem',
-        right: '1rem',
+        top: '50%',
+        right: '1.6%',
         zIndex: 100
+    },
+    commentForm: {
+        margin: '0px 0px',
+        padding: 0
+    },
+    flexRow: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    headerArea: {
+        maxWidth: 500,
+        marginRight: 0,
+        padding: 0
     }
 }));
 
 const TimelineDetail = (props) => {
     const classes = useStyles();
     const history = useHistory()
+    const { id } = useParams()
 
     const [data, setData] = useState([])
-    const [open, setOpen] = useState(false)
     const [expanded, setExpanded] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
+    const [eventComment, setEventComment] = useState('')
+    const { register, handleSubmit } = useForm()
 
-    const {id} = useParams()
-   
     useEffect(() => {
         setIsLoading(true)
         fetch(`http://localhost:5000/timeline/${id}`)
@@ -153,10 +169,10 @@ const TimelineDetail = (props) => {
         })
     }, [])
 
-    const deleteHandler = (id) => {
-        axios.delete(`/timeline/${id}`)
+    const deleteHandler = () => {
+        axios.delete(`/timeline/${props.id}`)
         .then(() => {
-            history.push('/')
+            history.goBack()
         })
     };
 
@@ -170,6 +186,7 @@ const TimelineDetail = (props) => {
     
     return (
         <Container maxWidth="md"> 
+            <ProgressBar height="2px" color="#333" />
             <Timeline >
                 <Tooltip arrow placement='left' title='Add New Event' >
                     <Fab
@@ -183,55 +200,64 @@ const TimelineDetail = (props) => {
                 </Tooltip>
                 
                 <div style={{ margin: '0px auto', padding: 0}}>
-                    <div>
+                    <div className={classes.headerArea}>
                         <div className={classes.actions2}>
-                            <h2 style={{ marginRight: 24, marginTop: 0, marginBottom: 0 }}>{data.timelineTitle}</h2>
-                            <SimpleMenu props={props}>
-                                <MenuItem onClick={props.handleClose}>
-                                    <EditIcon fontSize='small' style={{ marginRight: 16 }}/>
-                                    <Link
-                                        className={classes.link}
-                                        to={`/editTimeline/${id}`}
-                                    >
-                                        Edit
+                            <div className={classes.flexRow}>
+                                <Avatar alt="Freya" src={data.timelineImageUrl} />
+                                <h2 style={{ marginTop: 0, marginLeft: '1.5rem', marginBottom: 0, marginRight: '3rem' }}>{data.timelineTitle}</h2>
+                            </div>
+                            <div>
+                                <SimpleMenu props={props}>
+                                    <MenuItem onClick={props.handleClose}>
+                                        <EditIcon fontSize='small' style={{ marginRight: 16 }} />
+                                        <Link
+                                            className={classes.link}
+                                            to={`/editTimeline/${id}`}
+                                        >
+                                            Edit
                                                 </Link>
-                                </MenuItem>
-                                <MenuItem onClick={props.handleClose}>
-                                    <DeleteIcon fontSize='small' style={{ marginRight: 16 }} />
-                                    <Link
-                                        className={classes.link}
-                                        onClick={() => deleteHandler(data._id)}
-                                    >
-                                        Delete
+                                    </MenuItem>
+                                    <MenuItem onClick={props.handleClose}>
+                                        <DeleteIcon fontSize='small' style={{ marginRight: 16 }} />
+                                        <Link
+                                            className={classes.link}
+                                            onClick={() => deleteHandler(data._id)}
+                                        >
+                                            Delete
+                                    </Link>
+                                    </MenuItem>
+                                    <MenuItem onClick={props.handleClose}>
+                                        <ShareIcon fontSize='small' style={{ marginRight: 16 }} />
+                                        <Link className={classes.link}>
+                                            Share
                                                 </Link>
-                                </MenuItem>
-                                <MenuItem onClick={props.handleClose}>
-                                    <ShareIcon fontSize='small' style={{ marginRight: 16 }} />
-                                    <Link className={classes.link}>
-                                        Share
+                                    </MenuItem>
+                                    <MenuItem onClick={props.handleClose}>
+                                        <ArrowDownwardIcon fontSize='small' style={{ marginRight: 16 }} />
+                                        <Link className={classes.link}>
+                                            Import Data
                                                 </Link>
-                                </MenuItem>
-                                <MenuItem onClick={props.handleClose}>
-                                    <ArrowDownwardIcon fontSize='small' style={{ marginRight: 16 }} />
-                                    <Link className={classes.link}>
-                                        Import Data
-                                                </Link>
-                                </MenuItem>
-                                <MenuItem onClick={props.handleClose}>
-                                    <ArrowUpwardIcon fontSize='small' style={{ marginRight: 16 }} />
-                                    <a 
-                                        href={`data:text/json;charset=utf-8,${encodeURIComponent(
-                                            JSON.stringify(data)
-                                        )}`}
-                                        download="filename.json"
-                                        className={classes.link}>
-                                        Export Data as Json
+                                    </MenuItem>
+                                    <MenuItem onClick={props.handleClose}>
+                                        <ArrowUpwardIcon fontSize='small' style={{ marginRight: 16 }} />
+                                        <a
+                                            href={`data:text/json;charset=utf-8,${encodeURIComponent(
+                                                JSON.stringify(data)
+                                            )}`}
+                                            download="filename.json"
+                                            className={classes.link}>
+                                            Export Data as Json
                                     </a>
-                                </MenuItem>
-                            </SimpleMenu>
+                                    </MenuItem>
+                                </SimpleMenu>
+                            </div>
                         </div>
-                        <p>by:{data.creator}</p>
-                        <p className={classes.link}>Tags:{data.tags}</p>
+
+                        <div style={{marginLeft: '4rem'}}>
+                            <p>by:{data.creator}</p>
+                            <p className={classes.link}>Tags:{data.tags}</p>
+                        </div>
+                       
                     </div>
                     
                     {isLoading && <h2 style={{ margin: '60px auto' }}>Loading....</h2>}
@@ -347,7 +373,7 @@ const TimelineDetail = (props) => {
                                     </CardActions>
                                     <Divider light />
                                     <Collapse in={expanded} timeout="auto" unmountOnExit>
-                                        <CardContent className={classes.actions} style={{ marginTop: 20 }}>
+                                        <CardContent className={classes.actions} style={{ marginTop: 20, marginBottom: 0 }}>
                                             <div >
                                                 <Avatar alt="Freya" src="https://pbs.twimg.com/media/B-d6yG4IIAAM7Wt.png" />
                                             </div>
@@ -356,8 +382,30 @@ const TimelineDetail = (props) => {
                                                     I love Japanese History.
                                                 </Typography>
                                             </div>
-
-
+                                        </CardContent>
+                                        <CardContent className={classes.actions} style={{ marginTop: 0}}>
+                                            <div >
+                                                <Avatar alt="Freya" src="https://vhx.imgix.net/criterionchannelchartersu/assets/6d3d0ab1-77a0-4520-a6b4-b2703f80f78f-a81c655b.jpg?auto=format%2Ccompress&fit=crop&h=360&q=70&w=640" />
+                                            </div>
+                                            <div>
+                                                <Typography gutterBottom>
+                                                    Thanks. I will.
+                                                </Typography>
+                                            </div>
+                                        </CardContent>
+                                        <CardContent>
+                                                <TextField
+                                                    margin="normal"
+                                                    fullWidth
+                                                    name="eventComment"
+                                                    label="eventComment"
+                                                    type="text"
+                                                    value={eventComment}
+                                                    onChange={e => setEventComment(e.target.value)}
+                                                    id="eventComment"
+                                                    inputRef={register}
+                                                    className={classes.commentForm}
+                                                />
                                         </CardContent>
                                     </Collapse>
                                 </Card>
