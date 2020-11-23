@@ -56,7 +56,7 @@ export default function EditTimeline(props) {
 
     // fills in form with existing value
     useEffect(() => {
-        fetch(`http://localhost:5000/timeline/${props.match.params.id}`, {
+        fetch(`https://japan-history-timeline-api.herokuapp.com/timeline/${props.match.params.id}`, {
             headers: {'Content-Type': 'application/json'}})
             .then(res => res.json())
             .then(data => { 

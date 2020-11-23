@@ -63,7 +63,7 @@ export default function EditEvent(props) {
 
     // fills in form with existing value
     useEffect(() => {
-        fetch(`http://localhost:5000/timeline/event/${props.match.params.id}`,{
+        fetch(`https://japan-history-timeline-api.herokuapp.com/timeline/event/${props.match.params.id}`,{
             headers: { 'Content-Type': 'application/json' }})
             .then(res => res.json())
             .then(data => {
@@ -81,7 +81,7 @@ export default function EditEvent(props) {
         if (data) {
             const { eventYear, eventDescription, eventImageUrl, eventLink, eventCoordinates } = data
             // posting to database
-            axios.put(`http://localhost:5000/timeline/event/${props.match.params.id}`, {
+            axios.put(`https://japan-history-timeline-api.herokuapp.com/timeline/event/${props.match.params.id}`, {
                 eventYear,
                 eventDescription,
                 eventImageUrl,

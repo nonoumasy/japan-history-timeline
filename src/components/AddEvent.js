@@ -57,7 +57,7 @@ export default function AddEvent(props) {
     const { eventYear, eventDescription, eventImageUrl, eventLink, eventCoordinates} = data
     useEffect(() => {
         if (data) {
-            axios.put(`http://localhost:5000/timeline/${id}/update`, {
+            axios.put(`https://japan-history-timeline-api.herokuapp.com/timeline/${id}/update`, {
                 eventYear,
                 eventDescription,
                 eventImageUrl,
