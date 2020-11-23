@@ -163,7 +163,7 @@ const TimelineDetail = (props) => {
     // get timeline by id
     useEffect(() => {
         setIsLoading(true)
-        fetch(`http://localhost:5000/timeline/${id}`)
+        fetch(`https://japan-history-timeline-api.herokuapp.com/timeline/${id}`)
             .then(res => res.json())
             .then(data => {
                 // console.log(data)
@@ -173,7 +173,7 @@ const TimelineDetail = (props) => {
     }, [setData])
 
     const deleteTimelineHandler = (id) => {
-        axios.delete(`http://localhost:5000/timeline/${id}`)
+        axios.delete(`https://japan-history-timeline-api.herokuapp.com/timeline/${id}`)
         history.push('/')
     }
 
@@ -182,7 +182,7 @@ const TimelineDetail = (props) => {
     };
 
     const deleteEventHandler = async (id) => {
-        await axios.delete(`http://localhost:5000/timeline/event/${id}`)
+        await axios.delete(`https://japan-history-timeline-api.herokuapp.com/timeline/event/${id}`)
     }
 
     const handleExpandClick = () => {
