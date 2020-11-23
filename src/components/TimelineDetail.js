@@ -163,7 +163,7 @@ const TimelineDetail = (props) => {
     // get timeline by id
     useEffect(() => {
         setIsLoading(true)
-        fetch(`https://japan-history-timeline-api.herokuapp.com/timeline/${id}`)
+        fetch(`http://localhost:5000/timeline/${id}`)
             .then(res => res.json())
             .then(data => {
                 // console.log(data)
@@ -173,7 +173,7 @@ const TimelineDetail = (props) => {
     }, [setData])
 
     const deleteTimelineHandler = (id) => {
-        axios.delete(`https://japan-history-timeline-api.herokuapp.com/timeline/${id}`)
+        axios.delete(`http://localhost:5000/timeline/${id}`)
         history.push('/')
     }
 
@@ -300,7 +300,7 @@ const TimelineDetail = (props) => {
                             <TimelineContent>
                                 <Card className={classes.root}>
                                     <div className={classes.imageContainer}>
-                                        {item.  .includes('youtube.com') ?
+                                        {item.eventImageUrl.includes('youtube.com') ?
                                             <iframe
                                                 // component='video'
                                                 // controls
