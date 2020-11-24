@@ -7,7 +7,7 @@ const Map = (props) => {
         longitude: 103.8467,
         zoom: 3,
         bearing: 0,
-        pitch: 0,
+        pitch: 45,
         width: "100vw",
         height: "100vh"
     })
@@ -19,12 +19,13 @@ const Map = (props) => {
             <ReactMapGL
                 {...viewport}
                 mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-                mapStyle="mapbox://styles/mapbox/light-v9"
+                // mapStyle="mapbox://styles/mapbox/light-v9"
+                mapStyle="mapbox://styles/nonoumasy/ckfbuedoy4pwp19t9sdx07c0o"
                 onViewportChange={viewport => setViewport(viewport)}>
 
                 <div style={{
                     position: 'absolute',
-                    top: 36,
+                    top: 10,
                     right: 0,
                     padding: '10px'
                 }}>
@@ -33,7 +34,7 @@ const Map = (props) => {
 
                 <div style={{
                     position: 'absolute',
-                    top: 72,
+                    top: 46,
                     right: 0,
                     padding: '10px'
                 }}>
