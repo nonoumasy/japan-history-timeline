@@ -59,7 +59,8 @@ const useStyles = makeStyles((theme) => ({
         width: '30vw',
         overflow: 'auto',
         padding: '40px 40px',
-        backgroundColor: '#efefef',
+        backgroundColor: 'rgba(255,255,255,0.75)',
+
         zIndex:100
     },
     map: {
