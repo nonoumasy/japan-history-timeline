@@ -151,9 +151,7 @@ export default function AddEvent(props) {
                         inputRef={register}
                         error={!!errors.eventImageUrl}
                         helperText={errors?.eventImageUrl?.message}
-                    />
-                                
-                                
+                    /> 
                     <Collapse in={expanded} timeout="auto" unmountOnExit>
                         <p>Pls paste either an image or video url link here.</p>
                         <p>If you are using a YouTube link: Navigate to the video you wish to embed. Click the Share link below the video, then click the Embed link. The embed link will be highlighted in blue. Copy and paste this link here.
