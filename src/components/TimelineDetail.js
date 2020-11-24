@@ -36,6 +36,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
+import zIndex from '@material-ui/core/styles/zIndex';
 
 const useStyles = makeStyles((theme) => ({
     mainContainer: {
@@ -55,18 +56,20 @@ const useStyles = makeStyles((theme) => ({
         top: 0,
         left: 0,
         height: '100vh',
-        width: '35vw',
+        width: '30vw',
         overflow: 'auto',
         padding: '40px 40px',
+        backgroundColor: '#efefef',
+        zIndex:100
     },
     map: {
         position: 'absolute',
         top: 0,
-        left: '35vw',
+        left: '30vw',
         height: '100vh',
-        width: '65vw',
+        width: '70vw',
         backgroundColor: '#333',
-        zIndex: -1000 
+        // zIndex: 1000 
     
     },
     root: {
@@ -102,7 +105,7 @@ const useStyles = makeStyles((theme) => ({
     timelineContainer: {
         marginTop: 20,
         marginBottom: 120,
-        marginLeft: '-26rem'
+        marginLeft: '-22rem'
     },
     timelineItem: {
         margin: 0,
@@ -157,7 +160,7 @@ const useStyles = makeStyles((theme) => ({
         color: '#fff'
     },
     actions2: {
-        width: '82%',
+        width: '90%',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -174,7 +177,7 @@ const useStyles = makeStyles((theme) => ({
         marginRight: 20,
     },
     headerArea: {
-        maxWidth: 500,
+        maxWidth: 450,
         marginRight: 0,
         padding: 0
     },
