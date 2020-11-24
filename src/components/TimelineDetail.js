@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     map: {
         position: 'absolute',
         top: 0,
-        left: '30vw',
+        left: 0,
         height: '100vh',
         width: '70vw',
         backgroundColor: '#333'

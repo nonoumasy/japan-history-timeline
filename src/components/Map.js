@@ -26,8 +26,7 @@ const Map = (props) => {
                     position: 'absolute',
                     top: 36,
                     right: 0,
-                    padding: '10px',
-                    zIndex:500
+                    padding: '10px'
                 }}>
                     <FullscreenControl />
                 </div>
@@ -36,8 +35,7 @@ const Map = (props) => {
                     position: 'absolute',
                     top: 72,
                     right: 0,
-                    padding: '10px',
-                    zIndex: 500
+                    padding: '10px'
                 }}>
                     <NavigationControl />
                 </div>
