@@ -71,7 +71,7 @@ const Signup = () => {
 
     //formdata
     const { register, handleSubmit, errors } = useForm({
-        mode: 'onBlur',
+        // mode: 'onBlur',
         resolver: yupResolver(schema)
     })
 

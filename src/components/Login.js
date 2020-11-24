@@ -59,7 +59,7 @@ const Login = () => {
     const history = useHistory()
     // const { state, dispatch } = useContext(UserContext)
     const { register, handleSubmit, errors } = useForm({
-        mode: 'onBlur',
+        // mode: 'onBlur',
         resolver: yupResolver(schema)
     })
 

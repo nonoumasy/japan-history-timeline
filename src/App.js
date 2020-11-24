@@ -28,10 +28,10 @@ const theme = createMuiTheme({
   },
   text: {
     primary: {
-      main: '#111111',
+      main: '#111',
     },
     secondary: {
-      main: '#BC002D',
+      main: 'red',
     },
   }
 });
@@ -51,7 +51,7 @@ function App() {
           <Login />
         </Route>
 
-        <Route path='/import'>
+        <Route path='/import/:id'>
           <div style={{ margin: '80px auto' }}>
             <ImportData />
           </div>

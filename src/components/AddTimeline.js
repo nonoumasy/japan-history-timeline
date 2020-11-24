@@ -46,7 +46,7 @@ export default function AddTimeline() {
     const classes = useStyles();
     const history = useHistory()
     const { register, handleSubmit, errors } = useForm({
-        mode: 'onBlur',
+        // mode: 'onBlur',
         resolver: yupResolver(schema)
     })
     const [data, setData] = useState('')
@@ -103,7 +103,7 @@ export default function AddTimeline() {
                         error={!!errors.timelineTitle}
                         helperText={errors?.timelineTitle?.message}
                     />
-                    <Tooltip title='This will be the cover image for your Timeline.'>
+                    <Tooltip title='This will be the cover image for your Timeline. For eg. https://image.jpg'>
                         <TextField
                             variant="outlined"
                             margin="normal"

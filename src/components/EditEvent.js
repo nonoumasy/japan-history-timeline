@@ -19,7 +19,7 @@ const schema = yup.object().shape({
         .required('Year is a required field.'),
     eventDescription: yup
         .string()
-        .max(140)
+        .max(300)
         .required('Event is a required field.'),
     eventImageUrl: yup
         .string(),
@@ -48,7 +48,7 @@ export default function EditEvent(props) {
     const classes = useStyles();
     const history = useHistory()
     const { register, handleSubmit, errors } = useForm({
-        mode: 'onBlur',
+        // mode: 'onBlur',
         resolver: yupResolver(schema)
     })
 

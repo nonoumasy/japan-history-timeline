@@ -4,6 +4,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import * as yup from 'yup'
 import { yupResolver } from "@hookform/resolvers/yup"
 import axios from 'axios'
+import clsx from 'clsx';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +13,10 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Tooltip from '@material-ui/core/Tooltip';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import InfoIcon from '@material-ui/icons/Info';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 const schema = yup.object().shape({
     eventYear: yup
@@ -19,7 +24,7 @@ const schema = yup.object().shape({
     .required('Year is a required field.'),
     eventDescription: yup
     .string()
-    .max(140)
+    .max(300)
     .required('Description is a required field.'),
     eventImageUrl: yup
     .string(),
@@ -48,11 +53,17 @@ export default function AddEvent(props) {
     const classes = useStyles();
     const history = useHistory()
     const { register, handleSubmit, errors } = useForm({ 
-        mode: 'onBlur',
+        // mode: 'onBlur',
         resolver: yupResolver(schema)
     })
-    const [data, setData] = useState('')
     const { id } = useParams()
+
+    const [data, setData] = useState('')
+    const [expanded, setExpanded] = useState(false);
+
+    const handleExpandClick = () => {
+        setExpanded(!expanded);
+    };
     
     const { eventYear, eventDescription, eventImageUrl, eventLink, eventCoordinates} = data
     useEffect(() => {
@@ -113,20 +124,41 @@ export default function AddEvent(props) {
                         error={!!errors.eventDescription}
                         helperText={errors?.eventDescription?.message}
                     />
-                    <Tooltip title='On YouTube, Navigate to the video you wish to embed. Click the Share link below the video, then click the Embed link. The embed link will be highlighted in blue. Copy and paste this link here.'>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            fullWidth
-                            name="eventImageUrl"
-                            label="eventImageUrl"
-                            type="text"
-                            id="eventImageUrl"
-                            inputRef={register}
-                            error={!!errors.eventImageUrl}
-                            helperText={errors?.eventImageUrl?.message}
-                        />
-                    </Tooltip>
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        name="eventImageUrl"
+                        label="eventImageUrl"
+                        type="text"
+                        id="eventImageUrl"
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        className={clsx(classes.expand, {
+                                            [classes.expandOpen]: expanded,
+                                        })}
+                                        onClick={handleExpandClick}
+                                        aria-expanded={expanded}
+                                        aria-label="show more"
+                                    >
+                                        <InfoIcon size='sm' />
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
+                        inputRef={register}
+                        error={!!errors.eventImageUrl}
+                        helperText={errors?.eventImageUrl?.message}
+                    />
+                                
+                                
+                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                        <p>Pls paste either an image or video url link here.</p>
+                        <p>If you are using a YouTube link: Navigate to the video you wish to embed. Click the Share link below the video, then click the Embed link. The embed link will be highlighted in blue. Copy and paste this link here.
+                        </p>
+                    </Collapse>
                     
                     <TextField
                         variant="outlined"

@@ -46,7 +46,7 @@ export default function EditTimeline(props) {
     const classes = useStyles();
     const history = useHistory()
     const { register, handleSubmit, errors } = useForm({
-        mode: 'onBlur',
+        // mode: 'onBlur',
         resolver: yupResolver(schema)
     })
     const [data, setData] = useState('')

@@ -34,6 +34,7 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -139,11 +140,20 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+        marginRight: 20,
     },
     headerArea: {
         maxWidth: 500,
         marginRight: 0,
         padding: 0
+    },
+    smallAvatar: {
+        width: theme.spacing(3),
+        height: theme.spacing(3),
+    },
+    metadata: {
+        marginLeft: '4rem',
+        display: 'flex',
     }
 }));
 
@@ -214,9 +224,10 @@ const TimelineDetail = (props) => {
                     <div className={classes.headerArea}>
                         <div className={classes.actions2}>
                             <div className={classes.flexRow}>
-                                <Avatar alt="Freya" src={data.timelineImageUrl} />
+                                <Avatar alt="" src={data.timelineImageUrl} />
                                 <h2 style={{ marginTop: 0, marginLeft: '1.5rem', marginBottom: 0, marginRight: '3rem' }}>{data.timelineTitle}</h2>
                             </div>
+
                             <div>
                                 <SimpleMenu props={props}>
                                     <MenuItem onClick={props.handleClose}>
@@ -247,10 +258,11 @@ const TimelineDetail = (props) => {
                                     </MenuItem>
                                     <MenuItem onClick={props.handleClose}>
                                         <ArrowDownwardIcon fontSize='small' style={{ marginRight: 16 }} />
-                                        <Link className={classes.link} to={`/import`}>
+                                        <Link 
+                                            className={classes.link} 
+                                            to={`/import/${data._id}`}>
                                             Import Data
                                         </Link>
-                                        
                                     </MenuItem>
                                     <MenuItem onClick={props.handleClose}>
                                         <ArrowUpwardIcon fontSize='small' style={{ marginRight: 16 }} />
@@ -266,11 +278,15 @@ const TimelineDetail = (props) => {
                                 </SimpleMenu>
                             </div>
                         </div>
-
-                        <div style={{marginLeft: '4rem'}}>
-                            <p>by:{data.creator}</p>
+                        <div style={{ marginLeft: '4rem' }}>
+                            <div className={classes.flexRow} >
+                                <div><p>{data.event && data.event.length} items</p></div>
+                                <div style={{marginLeft: 20}} className={classes.flexRow}><ThumbUpAltIcon /><p>2k</p></div>
+                                <div><p>nonoumasy</p></div>
+                            </div>
                             <p className={classes.link}>Tags:{data.tags}</p>
                         </div>
+                        
                     </div>
                     
                     {isLoading && <h2 style={{ margin: '60px auto' }}>Loading....</h2>}
@@ -300,7 +316,7 @@ const TimelineDetail = (props) => {
                             <TimelineContent>
                                 <Card className={classes.root}>
                                     <div className={classes.imageContainer}>
-                                        {item.eventImageUrl.includes('youtube.com') ?
+                                        {item.eventImageUrl && item.eventImageUrl.includes('youtube.com') ?
                                             <iframe
                                                 // component='video'
                                                 // controls
@@ -318,6 +334,7 @@ const TimelineDetail = (props) => {
                                             // type="*"
                                             ></iframe>
                                             :
+                                            item.eventImageUrl &&
                                             <CardMedia
                                                 className={classes.media}
                                                 component='img'
@@ -426,6 +443,8 @@ const TimelineDetail = (props) => {
                         </TimelineItem>
                     ))}
                 </div>
+                
+                      
             </Timeline>
         </Container>
         
