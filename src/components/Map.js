@@ -1,32 +1,62 @@
 import React, {useState} from 'react'
 import ReactMapGL, {Marker} from 'react-map-gl';
 
+import Avatar from '@material-ui/core/Avatar';
+
+const ICON = `M20.2,15.7L20.2,15.7c1.1-1.6,1.8-3.6,1.8-5.7c0-5.6-4.5-10-10-10S2,4.5,2,10c0,2,0.6,3.9,1.6,5.4c0,0.1,0.1,0.2,0.2,0.3
+  c0,0,0.1,0.1,0.1,0.2c0.2,0.3,0.4,0.6,0.7,0.9c2.6,3.1,7.4,7.6,7.4,7.6s4.8-4.5,7.4-7.5c0.2-0.3,0.5-0.6,0.7-0.9
+  C20.1,15.8,20.2,15.8,20.2,15.7z`;
+
+const SIZE = 20;
+
 const Map = (props) => {
     const [viewport, setViewport] = useState({
         latitude: 46.8625,
         longitude: 103.8467,
         zoom: 4,
         bearing: 0,
-        pitch: 0
-    });
+        pitch: 0,
+        width: "100vw",
+        height: "100vh"
+    })
+    const { data, onClick } = props
+    // console.log(props)
 
     return (
         <ReactMapGL
             {...viewport}
-            width="100vw"
-            height="100vh"
-            mapStyle="mapbox://styles/nonoumasy/ckfbuedoy4pwp19t9sdx07c0o"
-            onViewportChange={nextViewport => setViewport(nextViewport)}
             mapboxApiAccessToken={'pk.eyJ1Ijoibm9ub3VtYXN5IiwiYSI6ImNrMTBmY3MycTA1YTEzY3F3ZHZ3eHNsdTAifQ.7r-ppKeBALXFid9Vmpa9Pw'}
+            mapStyle="mapbox://styles/mapbox/light-v9"
+            onViewportChange={viewport => setViewport(viewport)}
+            
         >
             {props.event && props.event.map(item => (
+                <>
+
+                <h2>{item.eventLongitude}</h2>
+                <h2>{item.eventLatitude}</h2>
+
                 <Marker 
                     key={item._id}
-                    latitude={item.eventLatitude}
-                    longitude={item.eventLongitude}>
-                    <h2>{item.eventYear}</h2>
+                    longitude={item.eventLongitude}
+                    latitude={item.eventLatitude}>
+                    
+                        <svg
+                            height={SIZE}
+                            viewBox="0 0 24 24"
+                            style={{
+                                cursor: 'pointer',
+                                fill: '#d00',
+                                stroke: 'none',
+                                transform: `translate(${-SIZE / 2}px,${-SIZE}px)`
+                            }}
+                            onClick={() => onClick(item)}
+                        >
+                            <path d={ICON} />
+                        </svg>
 
                 </Marker>
+                </>
         ))}
 
             

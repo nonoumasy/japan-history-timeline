@@ -6,7 +6,6 @@
 .pnp.js
 /src/data.json
 .env
-.env.local
 
 # testing
 /coverage
