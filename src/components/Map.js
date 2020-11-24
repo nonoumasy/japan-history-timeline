@@ -1,7 +1,5 @@
 import React, {useState} from 'react'
-import ReactMapGL, {Marker} from 'react-map-gl';
-
-import Avatar from '@material-ui/core/Avatar';
+import ReactMapGL, { Marker, NavigationControl, FullscreenControl} from 'react-map-gl';
 
 const Map = (props) => {
     const [viewport, setViewport] = useState({
@@ -24,7 +22,27 @@ const Map = (props) => {
                 mapStyle="mapbox://styles/mapbox/light-v9"
                 onViewportChange={viewport => setViewport(viewport)}>
 
-                {props.event && props.event.map(item => (
+                <div style={{
+                    position: 'absolute',
+                    top: 36,
+                    right: 0,
+                    padding: '10px',
+                    zIndex:500
+                }}>
+                    <FullscreenControl />
+                </div>
+
+                <div style={{
+                    position: 'absolute',
+                    top: 72,
+                    right: 0,
+                    padding: '10px',
+                    zIndex: 500
+                }}>
+                    <NavigationControl />
+                </div>
+
+                {props.event && (props.event.map(item => (
                         <Marker
                             key={item._id}
                             longitude={item.eventLongitude}
@@ -32,9 +50,12 @@ const Map = (props) => {
                             offsetLeft={-20} offsetTop={-10}>
                             <div>askldflkdflajsfl</div>
                         </Marker>
-                    ))
+                    )))
                 }
+                
             </ReactMapGL>
+
+            
         </>
     )
 }

@@ -68,8 +68,7 @@ const useStyles = makeStyles((theme) => ({
         left: '30vw',
         height: '100vh',
         width: '70vw',
-        backgroundColor: '#333',
-        // zIndex: 1000 
+        backgroundColor: '#333'
     
     },
     root: {
