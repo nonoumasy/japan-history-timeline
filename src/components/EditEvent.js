@@ -29,7 +29,11 @@ const schema = yup.object().shape({
     eventImageUrl: yup
         .string(),
     eventLink: yup
-        .string()
+        .string(),
+    eventLatitude: yup
+        .number(),
+    eventLongitude: yup
+        .number()
 
 })
 
@@ -62,7 +66,8 @@ export default function EditEvent(props) {
     const [eventDescription, setEventDescription] = useState('')
     const [eventImageUrl, setEventImageUrl] = useState('')
     const [eventLink, setEventLink] = useState('')
-    const [eventCoordinates, setEventCoordinates] = useState('')
+    const [eventLatitude, setEventLatitude] = useState('')
+    const [eventLongitude, setEventLongitude] = useState('')
     const [expanded, setExpanded] = useState(false);
 
     const handleExpandClick = () => {
@@ -82,21 +87,23 @@ export default function EditEvent(props) {
                 setEventDescription(data.eventDescription)
                 setEventImageUrl(data.eventImageUrl)
                 setEventLink(data.eventLink)
-                setEventCoordinates(data.eventCoordinates)
+                setEventLatitude(data.eventLatitude)
+                setEventLongitude(data.eventLongitude)
             })
-            .then({ new: true })
+            // .then({ new: true })
     }, [])
 
     useEffect(() => {
         if (data) {
-            const { eventYear, eventDescription, eventImageUrl, eventLink, eventCoordinates } = data
+            const { eventYear, eventDescription, eventImageUrl, eventLink, eventLatitude, eventLongitude } = data
             // posting to database
             axios.put(`https://japan-history-timeline-api.herokuapp.com/timeline/event/${props.match.params.id}`, {
                 eventYear,
                 eventDescription,
                 eventImageUrl,
                 eventLink,
-                eventCoordinates
+                eventLatitude,
+                eventLongitude
             })
                 .then(data => {
                     if (data.error) {
@@ -211,14 +218,29 @@ export default function EditEvent(props) {
                         variant="outlined"
                         margin="normal"
                         fullWidth
-                        name="eventCoordinates"
-                        label="eventCoordinates"
-                        type="text"
-                        value={eventCoordinates}
-                        onChange={e => setEventCoordinates(e.target.value)}
-                        id="eventCoordinates"
+                        name="eventLatitude"
+                        label="eventLatitude"
+                        type="number"
+                        value={eventLatitude}
+                        onChange={e => setEventLatitude(e.target.value)}
+                        id="eventLatitude"
                         min="-90"
                         max="90"
+                        inputRef={register}
+                    />
+
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        name="eventLongitude"
+                        label="eventLongitude"
+                        type="number"
+                        value={eventLongitude}
+                        onChange={e => setEventLongitude(e.target.value)}
+                        id="eventLongitude"
+                        min="-180"
+                        max="180"
                         inputRef={register}
                     />
 

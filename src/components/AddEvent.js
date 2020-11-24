@@ -29,7 +29,12 @@ const schema = yup.object().shape({
     eventImageUrl: yup
     .string(),
     eventLink: yup
-    .string()
+    .string(),
+    eventLatitude: yup
+    .number(),
+    eventLongitude: yup
+    .number()
+    
     
 })
 
@@ -65,7 +70,8 @@ export default function AddEvent(props) {
         setExpanded(!expanded);
     };
     
-    const { eventYear, eventDescription, eventImageUrl, eventLink, eventCoordinates} = data
+    const { eventYear, eventDescription, eventImageUrl, eventLink, eventLatitude,
+        eventLongitude} = data
     useEffect(() => {
         if (data) {
             axios.put(`https://japan-history-timeline-api.herokuapp.com/timeline/${id}/update`, {
@@ -73,7 +79,8 @@ export default function AddEvent(props) {
                 eventDescription,
                 eventImageUrl,
                 eventLink,
-                eventCoordinates
+                eventLatitude,
+                eventLongitude
             })
                 .then(() => history.goBack())
                 .catch(err => console.log(err))
@@ -172,12 +179,25 @@ export default function AddEvent(props) {
                         variant="outlined"
                         margin="normal"
                         fullWidth
-                        name="eventCoordinates"
-                        label="eventCoordinates"
-                        type="text"
-                        id="eventCoordinates"
+                        name="eventLatitude"
+                        label="eventLatitude"
+                        type="number"
+                        id="eventLatitude"
                         min="-90" 
                         max="90" 
+                        inputRef={register}
+                    />
+
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        name="eventLongitude"
+                        label="eventLongitude"
+                        type="number"
+                        id="eventLongitude"
+                        min="-180" 
+                        max="180" 
                         inputRef={register}
                     />
 

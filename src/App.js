@@ -52,7 +52,7 @@ function App() {
         </Route>
 
         <Route path='/import/:id'>
-          <div style={{ margin: '80px auto' }}>
+          <div style={{ margin: '60px auto' }}>
             <ImportData />
           </div>
         </Route>
@@ -68,7 +68,7 @@ function App() {
         />
 
         <Route exact path='/'>
-          <div style={{ margin: '80px auto'}}>
+          <div style={{ margin: '60px auto'}}>
             <Home />
           </div>
         </Route>
@@ -79,23 +79,22 @@ function App() {
         </Route>
 
         <Route exact path='/timeline/:id'>
-          <div style={{ margin: '80px auto'}}>
+          <div style={{ margin: '60px auto'}}>
             <TimelineDetail />
           </div>
         </Route>
 
 
         <Route exact path='/addTimeline'>
-          <div style={{ margin: '80px auto' }}>
+          <div style={{ margin: '60px auto' }}>
             <AddTimeline />
           </div>
         </Route>
 
-        <Box mt={8} mb={4}>
+        {/* <Box mt={8} mb={4}>
           <Footer />
-        </Box>
+        </Box> */}
         
-
       </ThemeProvider>
     </>
   );

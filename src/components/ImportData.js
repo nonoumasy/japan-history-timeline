@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import { useHistory } from 'react-router-dom'
+import axios from 'axios'
 
 import {makeStyles} from '@material-ui/core/styles'
 import FileCopyIcon from '@material-ui/icons/FileCopy';
@@ -25,7 +26,7 @@ const ImportData = ({id}) => {
     }
 
     const submitHandler = () => {
-        // axios.put(fileToUpload)
+        // axios.put(`/${id}/import`, fileToUpload)
         alert('File Submitted.')
     }
 

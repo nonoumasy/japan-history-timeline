@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import * as yup from 'yup'
 import { yupResolver } from "@hookform/resolvers/yup"
 import axios from 'axios'
+import clsx from 'clsx';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +13,10 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Tooltip from '@material-ui/core/Tooltip';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import InfoIcon from '@material-ui/icons/Info';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 
 const schema = yup.object().shape({
@@ -50,6 +55,16 @@ export default function AddTimeline() {
         resolver: yupResolver(schema)
     })
     const [data, setData] = useState('')
+    const [expanded, setExpanded] = useState(false);
+    const [expandedTwo, setExpandedTwo] = useState(false);
+
+    const handleExpandClick = () => {
+        setExpanded(!expanded);
+    };
+
+    const handleExpandClickTwo = () => {
+        setExpandedTwo(!expandedTwo);
+    };
 
     useEffect(() => {
         if (data) {
@@ -103,23 +118,40 @@ export default function AddTimeline() {
                         error={!!errors.timelineTitle}
                         helperText={errors?.timelineTitle?.message}
                     />
-                    <Tooltip title='This will be the cover image for your Timeline. For eg. https://image.jpg'>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="timelineImageUrl"
-                            label="timelineImageUrl"
-                            type="text"
-                            id="timelineImageUrl"
-                            inputRef={register}
-                            error={!!errors.timelineImageUrl}
-                            helperText={errors?.timelineImageUrl?.message}
-                        />
-                    </Tooltip>
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="timelineImageUrl"
+                        label="timelineImageUrl"
+                        type="text"
+                        id="timelineImageUrl"
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        className={clsx(classes.expand, {
+                                            [classes.expandOpen]: expanded,
+                                        })}
+                                        onClick={handleExpandClick}
+                                        aria-expanded={expanded}
+                                        aria-label="show more"
+                                    >
+                                        <InfoIcon size='sm' />
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
+                        inputRef={register}
+                        error={!!errors.timelineImageUrl}
+                        helperText={errors?.timelineImageUrl?.message}
+                    />
+                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                        <p>This will be the cover image for your Timeline. For eg. https://image.jpg</p>
+                    </Collapse>
 
-                    <Tooltip title='Add some tags to identify your Timeline. For eg, "Japan", "Battle", etc.'>
+                    
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -130,10 +162,28 @@ export default function AddTimeline() {
                             autoComplete="tags"
                             type="text"
                             inputRef={register}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            className={clsx(classes.expand, {
+                                                [classes.expandOpen]: expanded,
+                                            })}
+                                            onClick={handleExpandClickTwo}
+                                            aria-expanded={expandedTwo}
+                                            aria-label="show more"
+                                        >
+                                            <InfoIcon size='sm' />
+                                        </IconButton>
+                                    </InputAdornment>
+                            ),
+                            }}
                             error={!!errors.tags}
                             helperText={errors?.tags?.message}
                         />
-                    </Tooltip>
+                        <Collapse in={expandedTwo} timeout="auto" unmountOnExit>
+                        <p>Add some tags to identify your Timeline. For eg, "Japan", "Battle", etc.</p>
+                        </Collapse>
 
                     <Button
                         type="submit"
