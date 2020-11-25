@@ -15,37 +15,37 @@ const useStyles = makeStyles((theme) => ({
 
 const Map = (props) => {
 
-    const applyToArray = (func, array) => func.apply(Math, array) 
-    const getBounds = (props) => {
+    // const applyToArray = (func, array) => func.apply(Math, array) 
+    // const getBounds = (props) => {
             
-        // Calculate corner values of bounds
-        const eventLong = props.props.event && props.props.event.map(item => item.eventLongitude && item.eventLongitude)
-        const eventLat = props.props.event && props.props.event.map(item => item.eventLatitude && item.eventLatitude)
-        const cornersLongLat = [
-            [applyToArray(Math.min, eventLong), applyToArray(Math.min, eventLat)],
-            [applyToArray(Math.max, eventLong), applyToArray(Math.max, eventLat)]
-        ]
+    //     // Calculate corner values of bounds
+    //     const eventLong = props.props.event && props.props.event.map(item => item.eventLongitude && item.eventLongitude)
+    //     const eventLat = props.props.event && props.props.event.map(item => item.eventLatitude && item.eventLatitude)
+    //     const cornersLongLat = [
+    //         [applyToArray(Math.min, eventLong), applyToArray(Math.min, eventLat)],
+    //         [applyToArray(Math.max, eventLong), applyToArray(Math.max, eventLat)]
+    //     ]
         
-        console.log(cornersLongLat[0], cornersLongLat[1])
-        // Use WebMercatorViewport to get center longitude/latitude and zoom
-        const viewport = new WebMercatorViewport({ width: 1440, height: 900 })
-            .fitBounds([[12.3, 31.7683], [35.2137, 43]], { padding: 100 } ) 
+    //     console.log(cornersLongLat[0], cornersLongLat[1])
+    //     // Use WebMercatorViewport to get center longitude/latitude and zoom
+    //     const viewport = new WebMercatorViewport({ width: 1440, height: 900 })
+    //         .fitBounds([[12.3, 31.7683], [35.2137, 43]], { padding: 100 } ) 
 
-        const { longitude, latitude, zoom } = viewport
-        return { longitude, latitude, zoom }
-    }
+    //     const { longitude, latitude, zoom } = viewport
+    //     return { longitude, latitude, zoom }
+    // }
 
-    const bounds = getBounds(props)
+    // const bounds = getBounds(props)
 
     const [viewport, setViewport] = useState({
-        latitude: 40.5625,
-        longitude: 15.4067,
-        zoom: 3,
+        latitude: 36.2048,
+        longitude: 138.2529,
+        zoom: 5.5,
         bearing: 0,
         pitch: 30,
         width: "100vw",
         height: "100vh",
-        ...bounds
+        // ...bounds
     })
 
     const classes = useStyles()
