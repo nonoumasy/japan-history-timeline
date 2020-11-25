@@ -36,7 +36,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
-import zIndex from '@material-ui/core/styles/zIndex';
+import Footer from './Footer'
 
 const useStyles = makeStyles((theme) => ({
     mainContainer: {
@@ -52,19 +52,19 @@ const useStyles = makeStyles((theme) => ({
         zIndex: 100
     },
     sidebar: {
-        position: 'absolute',
+        position: 'relative',
         top: 0,
         left: 0,
         height: '100vh',
         width: '30vw',
         overflow: 'auto',
-        padding: '40px 40px',
+        padding: '30px 30px',
         backgroundColor: 'rgba(255,255,255,0.9)',
 
         zIndex:100
     },
     map: {
-        position: 'absolute',
+        position: 'relative',
         top: 0,
         left: 0,
         height: '100vh',
@@ -481,8 +481,10 @@ const TimelineDetail = (props) => {
                                             </Card>
                                         </TimelineContent>
                                     </TimelineItem>
+                                    
                             </Timeline>
                             ))}
+                            <Footer />
                         </div>
                     </div>
                 </div>
