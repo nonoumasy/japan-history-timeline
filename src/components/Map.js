@@ -1,16 +1,27 @@
 import React, {useState, useEffect} from 'react'
-import ReactMapGL, { Marker, NavigationControl, FullscreenControl, WebMercatorViewport, Popup} from 'react-map-gl';
+import ReactMapGL, { Marker, NavigationControl, FullscreenControl, WebMercatorViewport, Popup, FlyToInterpolator} from 'react-map-gl';
 
 import {makeStyles} from '@material-ui/styles'
 
 const useStyles = makeStyles((theme) => ({
     marker: {
         width: 'auto',
-        height: '50px',
+        height: '60px',
         objectFit: 'cover',
         borderRadius: '5px',
         boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
         margin: '0 auto'
+    },
+    markerVideo: {
+        width: '100px',
+        height: '60px',
+        objectFit: 'cover',
+        borderRadius: '5px',
+        boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
+        margin: '0 auto',
+        outline: 0,
+        border: 0,
+        padding: 0,
     },
     button: {
         border: 'none',
@@ -42,7 +53,8 @@ const Map = (props) => {
         } 
 
     const bounds = getBounds()
-    
+    const classes = useStyles()
+
     const [popup, setPopup] = useState(null)
     // const [showUserPopup, setShowUserPopup] = useState({})
     const [viewport, setViewport] = useState({
@@ -55,7 +67,7 @@ const Map = (props) => {
         height: "100vh",
         ...bounds
     })
-    const classes = useStyles()
+    
 
     useEffect(() => {
         const listener = e => {
@@ -70,13 +82,23 @@ const Map = (props) => {
         }
     }, [])
 
+    const flyTo = (item) => {
+        setViewport({
+            longitude: item.eventLongitude,
+            latitude: item.eventLatitude,
+            zoom: 11,
+            transitionInterpolator: new FlyToInterpolator({ speed: 1.2 }),
+            transitionDuration: 'auto'
+        });
+    };
+
     return (
         <>
             <ReactMapGL
                 {...viewport}
                 mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
                 // mapStyle="mapbox://styles/mapbox/light-v9"
-                mapStyle="mapbox://styles/mapbox/light-v9"
+                mapStyle="mapbox://styles/mapbox/outdoors-v11"
                 onViewportChange={viewport => setViewport(viewport)}>
 
                 <div style={{
@@ -113,9 +135,39 @@ const Map = (props) => {
                                 onClick={e => {
                                     e.preventDefault()
                                     setPopup(item)
+                                    flyTo(item)
                                 }}>
-                                <img src={item.eventImageUrl} alt='' className={classes.marker} /> 
+
+                                <div >
+                                    {item.eventImageUrl && item.eventImageUrl.includes('youtube.com') ?
+                                        <iframe
+                                            // component='video'
+                                            // controls
+                                            className={classes.markerVideo}
+                                            src={item.eventImageUrl}
+                                            allowFullScreen
+                                            mozallowfullscreen="mozallowfullscreen"
+                                            msallowfullscreen="msallowfullscreen"
+                                            oallowfullscreen="oallowfullscreen"
+                                            webkitallowfullscreen="webkitallowfullscreen"
+                                            // width='140'
+                                            // height='100'
+                                            allow="accelerometer"
+                                            title={item.year}
+                                        // type="*"
+                                        ></iframe>
+                                        :
+                                        item.eventImageUrl &&
+                                        <div>
+                                            <img src={item.eventImageUrl} alt='' className={classes.marker} /> 
+                                        </div>
+                                    }
+                                </div>
                             </div>
+
+                            
+                                    
+                                
                             
                     </Marker>}
 
@@ -128,8 +180,8 @@ const Map = (props) => {
                                 closeOnClick={true}
                                 onClose={() => setPopup(false)}
                                 className={classes.popup}
-                                offsetLeft={300}
-                                anchor="right"
+                                offsetTop={-100}
+                                anchor="top"
                                 tipSize={0}
                             >
                                 <div>
