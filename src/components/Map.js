@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import ReactMapGL, { Marker, NavigationControl, FullscreenControl, WebMercatorViewport, Popup} from 'react-map-gl';
 
 import {makeStyles} from '@material-ui/styles'
@@ -57,6 +57,19 @@ const Map = (props) => {
     })
     const classes = useStyles()
 
+    useEffect(() => {
+        const listener = e => {
+            if (e.key === 'Escape') {
+                setPopup(null)
+            }
+        }
+        window.addEventListener('keydown', listener)
+
+        return () => {
+            window.removeEventListener('keydown', listener)
+        }
+    }, [])
+
     return (
         <>
             <ReactMapGL
@@ -111,8 +124,8 @@ const Map = (props) => {
                                 id={popup._id}
                                 latitude={popup.eventLatitude}
                                 longitude={popup.eventLongitude}
-                                closeButton={true}
-                                closeOnClick={false}
+                                closeButton={false}
+                                closeOnClick={true}
                                 onClose={() => setPopup(false)}
                                 className={classes.popup}
                                 offsetLeft={300}
