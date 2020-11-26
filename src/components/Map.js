@@ -63,7 +63,7 @@ const Map = (props) => {
         zoom: 5.5,
         bearing: 0,
         pitch: 30,
-        width: "100vw",
+        width: "70vw",
         height: "100vh",
         ...bounds
     })
