@@ -5,8 +5,8 @@ import clsx from 'clsx';
 import { useForm } from 'react-hook-form'
 import Map from './Map'
 
+import InfiniteScroll from "react-infinite-scroll-component";
 import { ProgressBar } from 'scrolling-based-progressbar'
-import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -40,9 +40,10 @@ import Footer from './Footer'
 
 const useStyles = makeStyles((theme) => ({
     mainContainer: {
+        position: 'fixed',
         display: 'flex',
         flexDirection: 'row',
-        position: 'fixed',
+        
 
     },
     fab: {
@@ -60,7 +61,6 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'auto',
         padding: '30px 30px',
         backgroundColor: 'rgba(255,255,255,0.9)',
-
         zIndex:100
     },
     map: {
@@ -68,9 +68,8 @@ const useStyles = makeStyles((theme) => ({
         top: 0,
         left: 0,
         height: '100vh',
-        width: '70vw',
-        backgroundColor: '#333'
-    
+        maxWidth: '70vw',
+        backgroundColor: '#fff'
     },
     root: {
         maxWidth: 345,
@@ -203,6 +202,8 @@ const TimelineDetail = (props) => {
     const [expanded, setExpanded] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
     const [eventComment, setEventComment] = useState('')
+    const [eventItems, setEventItems] = useState('')
+
     
 
     // get timeline by id
@@ -237,6 +238,16 @@ const TimelineDetail = (props) => {
     const eventHandler = (id) => {
         history.push(`/timeline/${id}/addEvent`)
     }
+
+    const fetchMoreData = () => {
+        // a fake async api call like which sends
+        // 20 more records in 1.5 secs
+        setTimeout(() => {
+            setEventItems({
+                eventItems: eventItems.concat(Array.from({ length: 20 }))
+            });
+        }, 1500);
+    };
 
     return (
         <>
@@ -329,6 +340,12 @@ const TimelineDetail = (props) => {
                         <div className={classes.timelineContainer}>
                             {data.event && data.event.map((item) => (
                             <Timeline style={{margin: 0}}>
+
+                                <InfiniteScroll
+                                    dataLength={eventItems.length}
+                                    next={fetchMoreData}
+                                    hasMore={true}>
+
                                     <TimelineItem
                                         key={item._id}
                                         align="alternate"
@@ -481,16 +498,20 @@ const TimelineDetail = (props) => {
                                             </Card>
                                         </TimelineContent>
                                     </TimelineItem>
-                                    
+
+                                </InfiniteScroll>     
                             </Timeline>
                             ))}
                             <Footer />
                         </div>
                     </div>
                 </div>
-                <div className={classes.map}>
-                    <Map props={data}/>
+                <div >
+                    <div className={classes.map}>
+                        <Map props={data}/>
+                    </div>
                 </div>
+                
             </div>
         </>
     )
