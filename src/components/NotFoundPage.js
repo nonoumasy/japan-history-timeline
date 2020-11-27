@@ -29,10 +29,10 @@ const NotFoundPage = () => {
 
     return (
         <>
-            <div style={{ position: 'fixed', height: '100vh', width: '100vw', objectFit: 'cover'}}>
+            <div style={{ position: 'fixed', objectFit: 'cover'}}>
                 <div style={{ position: 'absolute', top: '60px', left: '20px'}}>
                     <Button variant='outlined' style={{ marginBottom: 10, marginTop: 20 }} className={classes.button}>
-                        <Link to={'/'} className={classes.link}>
+                        <Link to='/' className={classes.link}>
                             Go Home
                     </Link>
                     </Button>
@@ -40,7 +40,7 @@ const NotFoundPage = () => {
                 
                 <img 
                     src='https://www.nationalgeographic.com/content/dam/travel/photos/000/837/83741.adapt.1900.1.jpg' 
-                    style={{ width: '100vw' }}
+                    style={{ width: '100vw', height: '100vh', objectFit: 'cover' }}
                     alt="" />
                 
             </div>
