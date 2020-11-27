@@ -85,13 +85,13 @@ const Home = (props) => {
     return (
         <Container maxWidth="md" >
                 <Button variant='outlined' style={{ marginBottom: 10, marginTop: 20 }}>
-                    <Link to={'/addTimeline'} className={classes.link}>
+                    <Link to='/addTimeline' className={classes.link}>
                         Create New Timeline
                 </Link>
                 </Button>
 
                 <Button style={{ marginBottom: 10, marginTop: 20, marginLeft: 10}}>
-                    <Link to={'/'} className={classes.link}>
+                    <Link to='/' className={classes.link}>
                         Import Data
                 </Link>
                 </Button>

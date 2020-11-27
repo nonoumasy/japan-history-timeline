@@ -151,7 +151,7 @@ const Login = () => {
                                     </Link>
                                 </Grid>
                                 <Grid item>
-                                    <Link to='Signup'>Don't have an account?</Link>
+                                    <Link to='/Signup'>Don't have an account?</Link>
                                 </Grid>
                             </Grid>
                         </Grid>

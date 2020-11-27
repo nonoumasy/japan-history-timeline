@@ -43,8 +43,6 @@ const useStyles = makeStyles((theme) => ({
         position: 'fixed',
         display: 'flex',
         flexDirection: 'row',
-        
-
     },
     fab: {
         position: 'fixed',
@@ -203,8 +201,6 @@ const TimelineDetail = (props) => {
     const [isLoading, setIsLoading] = useState(false)
     const [eventComment, setEventComment] = useState('')
     const [eventItems, setEventItems] = useState('')
-
-    
 
     // get timeline by id
     useEffect(() => {
