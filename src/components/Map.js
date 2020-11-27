@@ -77,18 +77,19 @@ const Map = (props) => {
             ...viewport,
             longitude: item.eventLongitude,
             latitude: item.eventLatitude,
-            zoom: 18,
+            zoom: 19,
             transitionInterpolator: new FlyToInterpolator({ speed: 1.6 }),
             transitionDuration: 'auto'
         });
     };
 
     const showAll =() => {
+        setPopup(null)
         setViewport({
             ...viewport,
             longitude: 139.736867,
             latitude: 35.661005,
-            zoom: 11,
+            zoom: 10,
             transitionInterpolator: new FlyToInterpolator({ speed: 1.6 }),
             transitionDuration: 'auto'
         });
@@ -96,9 +97,11 @@ const Map = (props) => {
 
     const onClickMarker = (e, item) => {
         e.preventDefault()
-        setPopup(item)
         flyTo(item)
+        window.setTimeout(setPopup(item), 1000)
+        
     }
+
 
     return (
         <>
@@ -156,11 +159,11 @@ const Map = (props) => {
                         <Marker 
                             latitude={item.eventLatitude} 
                             longitude={item.eventLongitude}>
-
+                            
                                 <div 
                                     className={classes.button}
                                     onClick={(e) => onClickMarker(e, item)}>
-
+                                    
                                     <div >
                                         {item.eventImageUrl && item.eventImageUrl.includes('youtube.com') ?
                                             <iframe
@@ -190,12 +193,12 @@ const Map = (props) => {
                                             <div>
                                                 <img src={item.eventImageUrl} alt='' 
                                                 style={{
-                                                    width: `${viewport.zoom ** 1.8}px`,
-                                                    height:`auto`,
-                                                    // height:`${viewport.zoom ** 1.7}px`,
+                                                    //width: `${viewport.zoom ** 1.8}px`,
+                                                    width: `auto`,
+                                                    // height:`auto`,
+                                                    height:`${viewport.zoom ** 1.8}px`,
                                                     objectFit: 'cover',
-                                                    marginLeft: `-${viewport.zoom ** 1.8/2}px`,
-                                                    // marginTop: `-${viewport.zoom ** 1.8/2}px`,
+                                                    marginLeft: `-${viewport.zoom ** 1.9/2}px`,
                                                     borderRadius: '5px',
                                                     boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
                                                     margin: '0 auto'
@@ -215,8 +218,8 @@ const Map = (props) => {
                                 closeOnClick={true}
                                 onClose={() => setPopup(false)}
                                 className={classes.popup}
-                                offsetTop={-50}
-                                anchor="top"
+                                offsetTop={-20}
+                                anchor="bottom"
                                 tipSize={0}
                             >
                                 <div>
