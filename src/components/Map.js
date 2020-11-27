@@ -173,11 +173,12 @@ const Map = (props) => {
                                             <div>
                                                 <img src={item.eventImageUrl} alt='' 
                                                 style={{
-                                                    width: 'auto',
-                                                    height:`${viewport.zoom ** 2.3}px`,
+                                                    width: `${viewport.zoom ** 1.8}px`,
+                                                    height:`auto`,
+                                                    // height:`${viewport.zoom ** 1.7}px`,
                                                     objectFit: 'cover',
-                                                    marginLeft: `-${viewport.zoom ** 2.3/1.4}px`,
-                                                    marginTop: `-${viewport.zoom ** 2.3/2}px`,
+                                                    marginLeft: `-${viewport.zoom ** 2/1.4}px`,
+                                                    marginTop: `-${viewport.zoom ** 2/2}px`,
                                                     borderRadius: '5px',
                                                     boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
                                                     margin: '0 auto'
