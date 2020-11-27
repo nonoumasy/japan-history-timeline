@@ -29,6 +29,7 @@ import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import Footer from './Footer'
+import Scroll from './shared/Scroll'
 
 const useStyles = makeStyles((theme) => ({
     mainContainer: {
@@ -242,6 +243,7 @@ const TimelineDetail = (props) => {
     return (
         <>
             <div className={classes.mainContainer}>
+                <Scroll showBelow={300} />
                 
                 <div className='sidebar'>
                     <Tooltip arrow placement='left' title='Add New Event' >

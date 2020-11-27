@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     },
     image: {
         width: '100%',
-        height: '20rem',
+        height: '13rem',
         objectFit: 'cover',
         margin: 0,
         padding: 0,

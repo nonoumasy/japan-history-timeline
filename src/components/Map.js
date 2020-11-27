@@ -94,7 +94,8 @@ const Map = (props) => {
                 attributionControl='true'
                 mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
                 // mapStyle="mapbox://styles/mapbox/light-v9"
-                mapStyle="mapbox://styles/mapbox/outdoors-v11"
+                //mapStyle="mapbox://styles/mapbox/outdoors-v11"
+                mapStyle="mapbox://styles/nonoumasy/cki05xd2q10jf1ao1owvmkyvo"
                 onViewportChange={viewport => setViewport(viewport)}>
 
                 <div style={{
@@ -149,8 +150,8 @@ const Map = (props) => {
                                             <iframe
                                                 component='video'
                                                 style={{
-                                                    width: `${viewport.zoom ** 2.4}px`,
-                                                    height: `${viewport.zoom ** 2.1}px`,
+                                                    width: `${viewport.zoom ** 1.8}px`,
+                                                    height: `${viewport.zoom ** 1.6}px`,
                                                     objectFit: 'cover',
                                                     borderRadius: '5px',
                                                     boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
