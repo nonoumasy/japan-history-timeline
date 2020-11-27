@@ -18,9 +18,10 @@ import InfoIcon from '@material-ui/icons/Info';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
 const schema = yup.object().shape({
+    eventYear: yup
+        .string(),
     eventDescription: yup
         .string()
-        .max(300)
         .required('Event is a required field.'),
     eventImageUrl: yup
         .string(),

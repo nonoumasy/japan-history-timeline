@@ -90,6 +90,8 @@ const Map = (props) => {
             longitude: 139.736867,
             latitude: 35.661005,
             zoom: 10,
+            bearing: 0,
+            pitch: 30,
             transitionInterpolator: new FlyToInterpolator({ speed: 1.6 }),
             transitionDuration: 'auto'
         });
