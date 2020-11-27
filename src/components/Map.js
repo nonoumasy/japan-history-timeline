@@ -33,10 +33,12 @@ const Map = (props) => {
             [Math.min.apply(Math, (eventLongitude)), Math.min.apply(Math, eventLatitude)],
             [Math.max.apply(Math, eventLongitude), Math.max.apply(Math, eventLatitude)]
         ]
+
+        console.log('sdfsd',cornersLongLat);
         
         // Use WebMercatorViewport to get center longitude/latitude and zoom
         const viewport = cornersLongLat && new WebMercatorViewport({ width: 800, height: 600 })
-            .fitBounds([[12.3, 31.7683], [35.2137, 43]], { padding: 100 })
+            .fitBounds([[139.378484, 35.519149], [139.812484, 35.723422]], { padding: 100 })
             // .fitBounds(cornersLongLat, { padding: 100 })
 
         const { longitude, latitude, zoom } = viewport
@@ -80,6 +82,17 @@ const Map = (props) => {
             transitionDuration: 'auto'
         });
     };
+
+    const showAll =() => {
+        setViewport({
+            ...viewport,
+            longitude: 139.736867,
+            latitude: 35.661005,
+            zoom: 11,
+            transitionInterpolator: new FlyToInterpolator({ speed: 1.6 }),
+            transitionDuration: 'auto'
+        });
+    }
 
     const onClickMarker = (e, item) => {
         e.preventDefault()
@@ -127,9 +140,12 @@ const Map = (props) => {
                     zIndex: 200
                 }}>
                     <Button 
+                        onClick={showAll}
                         variant="contained"
                         color="primary">
-                        <Typography className={classes.link}>Show All</Typography> 
+                        <Typography className={classes.link}>
+                            Show All
+                        </Typography> 
                     </Button>
                 </div>
 
@@ -178,8 +194,8 @@ const Map = (props) => {
                                                     height:`auto`,
                                                     // height:`${viewport.zoom ** 1.7}px`,
                                                     objectFit: 'cover',
-                                                    marginLeft: `-${viewport.zoom ** 2/1.4}px`,
-                                                    marginTop: `-${viewport.zoom ** 2/2}px`,
+                                                    marginLeft: `-${viewport.zoom ** 1.8/2}px`,
+                                                    // marginTop: `-${viewport.zoom ** 1.8/2}px`,
                                                     borderRadius: '5px',
                                                     boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
                                                     margin: '0 auto'
