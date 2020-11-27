@@ -19,7 +19,7 @@ code {
   padding: 20px;
   width: auto;
   max-width: 150px;
-  background-color: #222;
+  background-color: rgba(0, 0, 0, 0.2);
   color: #fff;
   font-size: 10px;
   font-weight: bold;
@@ -51,23 +51,55 @@ code {
   border-radius: 150px;
 }
 
-@media (max-width: 1920px) {
-  .sidebar {
-    width: 55%;
-  }
-  .map {
-    width: 45%;
-    left: 55%;
-  }
+.sidebar {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 30vw;
+  overflow: auto;
+  padding: 30px 30px;
+  background-color: rgba(255, 255, 255, 0.9);
+  z-index: 100;
 }
 
-@media (max-width: 1200px) {
-  .map {
-    width: 100%;
-    left: 0;
-    top: 0;
-  }
+.timelineContainer {
+  margin-top: 20;
+  margin-bottom: 120;
+  margin-left: -22rem;
+}
+
+.map {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  max-width: 70vw;
+  background-color: #fff;
+}
+
+/* @media (max-width: 1024px) {
   .sidebar {
+    width: 30vw;
+  }
+  .map {
+    width: 45vw;
+    left: 55vw;
+  }
+} */
+
+@media (max-width: 600px) {
+  .sidebar {
+    width: 100%;
+    /* left: 0; */
+    /* top: 0; */
+  }
+
+  .timelineContainer {
+    margin-left: -12rem;
+  }
+
+  .map {
     display: none;
   }
 }

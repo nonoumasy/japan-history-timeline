@@ -50,25 +50,6 @@ const useStyles = makeStyles((theme) => ({
         left: '1.5%',
         zIndex: 100
     },
-    sidebar: {
-        position: 'relative',
-        top: 0,
-        left: 0,
-        height: '100vh',
-        width: '30vw',
-        overflow: 'auto',
-        padding: '30px 30px',
-        backgroundColor: 'rgba(255,255,255,0.9)',
-        zIndex:100
-    },
-    map: {
-        position: 'relative',
-        top: 0,
-        left: 0,
-        height: '100vh',
-        maxWidth: '70vw',
-        backgroundColor: '#fff'
-    },
     root: {
         maxWidth: 345,
         margin:0,
@@ -98,11 +79,6 @@ const useStyles = makeStyles((theme) => ({
     },
     cardaction: {
         overflow: 'hidden',
-    },
-    timelineContainer: {
-        marginTop: 20,
-        marginBottom: 120,
-        marginLeft: '-22rem'
     },
     timelineItem: {
         margin: 0,
@@ -249,7 +225,7 @@ const TimelineDetail = (props) => {
         <>
             <div className={classes.mainContainer}>
                 
-                <div className={classes.sidebar}>
+                <div className='sidebar'>
                     <Tooltip arrow placement='left' title='Add New Event' >
                         <Fab
                             color="primary"
@@ -333,7 +309,7 @@ const TimelineDetail = (props) => {
 
                             {isLoading && <h2 style={{ margin: '60px auto' }}>Loading....</h2>}
                         </div>
-                        <div className={classes.timelineContainer}>
+                        <div className='timelineContainer'>
                             {data.event && data.event.map((item) => (
                             <Timeline style={{margin: 0}}>
 
@@ -503,7 +479,7 @@ const TimelineDetail = (props) => {
                     </div>
                 </div>
                 <div >
-                    <div className={classes.map}>
+                    <div className='map'>
                         <Map props={data}/>
                     </div>
                 </div>
