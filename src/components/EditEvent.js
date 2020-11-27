@@ -26,11 +26,7 @@ const schema = yup.object().shape({
     eventImageUrl: yup
         .string(),
     eventLink: yup
-        .string(),
-    eventLatitude: yup
-        .number(),
-    eventLongitude: yup
-        .number()
+        .string()
 
 })
 
@@ -136,7 +132,7 @@ export default function EditEvent(props) {
                         label="eventYear"
                         name="eventYear"
                         autoComplete="eventYear"
-                        type="number"
+                        type="text"
                         value={eventYear}
                         onChange={e => setEventYear(e.target.value)}
                         autoFocus

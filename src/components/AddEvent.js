@@ -19,17 +19,15 @@ import InfoIcon from '@material-ui/icons/Info';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
 const schema = yup.object().shape({
+    eventYear: yup
+    .string(),
     eventDescription: yup
     .string()
     .required('Description is a required field.'),
     eventImageUrl: yup
     .string(),
     eventLink: yup
-    .string(),
-    eventLatitude: yup
-    .number(),
-    eventLongitude: yup
-    .number()
+    .string()
     
     
 })
@@ -106,7 +104,7 @@ export default function AddEvent(props) {
                         label="eventYear"
                         name="eventYear"
                         autoComplete="eventYear"
-                        type="number"
+                        type="text"
                         autoFocus
                         inputRef={register}
                         error={!!errors.eventYear}

@@ -72,19 +72,7 @@ code {
   background-color: #fff;
 }
 
-/* @media (max-width: 900px) {
-  .sidebar {
-    width: 50vw;
-  }
-
-
-  .map {
-    width: 50vw;
-    left: 50vw;
-  }
-} */
-
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   .sidebar {
     width: 100%;
     left: 0;

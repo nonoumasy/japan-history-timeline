@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
     dialog: {
         margin: 'auto',
+        height: 'auto',
     }
 }));
 
@@ -16,7 +17,7 @@ const Modal = ({ open, handleClose, children }) => {
             <Dialog
                 open={open}
                 fullWidth
-                maxWidth={'lg'}
+                maxWidth={'md'}
                 className={classes.dialog}
                 onClose={handleClose}
             >

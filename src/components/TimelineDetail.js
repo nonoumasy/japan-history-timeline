@@ -106,8 +106,8 @@ const useStyles = makeStyles((theme) => ({
     year: {
         display: 'inline',
         borderRadius: 4,
-        padding: '1px 5px',
-        fontSize: '14px',
+        padding: '4px 8px',
+        fontSize: '12px',
         fontWeight: 700,
         color: '#333',
         marginLeft: '1rem',
@@ -116,8 +116,9 @@ const useStyles = makeStyles((theme) => ({
     },
     event: {
         marginLeft: '1rem',
-        marginTop: 5,
+        marginTop: 10,
         marginBottom: 20,
+        color: '#666',
     },
     more: {
         marginLeft: '1rem',
@@ -139,9 +140,6 @@ const useStyles = makeStyles((theme) => ({
     },
     cardaction: {
         overflow: 'hidden',
-    },
-    dialogImage: {
-        objectFit: 'cover'
     },
     actions: {
         display: 'flex',
@@ -181,7 +179,6 @@ const useStyles = makeStyles((theme) => ({
         margin: '0px 0px',
         padding: 0
     },
-    
 }));
 
 const TimelineDetail = (props) => {
@@ -191,11 +188,9 @@ const TimelineDetail = (props) => {
     const { register, handleSubmit } = useForm()
 
     const [data, setData] = useState([])
-    const [anchorEl, setAnchorEl] = useState(null);
     const [expanded, setExpanded] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
     const [eventComment, setEventComment] = useState('')
-    const [eventItems, setEventItems] = useState('')
 
     // get timeline by id
     useEffect(() => {
@@ -214,10 +209,6 @@ const TimelineDetail = (props) => {
         history.push('/')
     }
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
     const deleteEventHandler = async (id) => {
         await axios.delete(`https://japan-history-timeline-api.herokuapp.com/timeline/event/${id}`)
     }
@@ -230,15 +221,6 @@ const TimelineDetail = (props) => {
         history.push(`/timeline/${id}/addEvent`)
     }
 
-    const fetchMoreData = () => {
-        // a fake async api call like which sends
-        // 20 more records in 1.5 secs
-        setTimeout(() => {
-            setEventItems({
-                eventItems: eventItems.concat(Array.from({ length: 20 }))
-            });
-        }, 1500);
-    };
 
     return (
         <>

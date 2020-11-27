@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Map = (props) => {
 
+    
+
+
     const getBounds = () => {
         // Calculate corner values of bounds
         const eventLongitude = props.props.event && props.props.event.map(item => Number(item.eventLongitude))
@@ -34,7 +37,7 @@ const Map = (props) => {
             [Math.max.apply(Math, eventLongitude), Math.max.apply(Math, eventLatitude)]
         ]
 
-        console.log('sdfsd',cornersLongLat);
+        // console.log('sdfsd',cornersLongLat);
         
         // Use WebMercatorViewport to get center longitude/latitude and zoom
         const viewport = cornersLongLat && new WebMercatorViewport({ width: 800, height: 600 })
