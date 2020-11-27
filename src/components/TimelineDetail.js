@@ -59,13 +59,14 @@ const useStyles = makeStyles((theme) => ({
         zIndex: 100
     },
     headerArea: {
-        width: '23rem',
+        width: '20rem',
         margin: '0 auto',
         padding: 0
     },
-    smallAvatar: {
-        width: theme.spacing(3),
-        height: theme.spacing(3),
+    avatar: {
+        marginTop: 10,
+        marginBottom: 30,
+        margin: '0 auto'
     },
     title: {
         margin: 0,
@@ -85,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 120,
     },
     card: {
-        width: '23rem',
+        width: '20rem',
         margin:'0 auto',
         padding: 0,
         marginTop: 20,
@@ -99,15 +100,32 @@ const useStyles = makeStyles((theme) => ({
             transformOrigin: '50% 50%',
             transform: 'scale(1.1)',
         },
+        marginBottom: 20,
     },
     year: {
-        textTransform: 'uppercase',
-        fontSize: '12px',
+        display: 'inline',
+        borderRadius: 4,
+        padding: '1px 5px',
+        fontSize: '14px',
         fontWeight: 700,
-        color: '#333'
+        color: '#333',
+        marginLeft: '1rem',
+        backgroundColor: "#dfdfdf"
+    
     },
     event: {
-        padding: '16px'
+        marginLeft: '1rem',
+        marginTop: 5,
+        marginBottom: 20,
+    },
+    more: {
+        marginLeft: '1rem',
+        textTransform: 'uppercase',
+        fontSize: '12px',
+        fontWeight: 800,
+        textDecoration: 'none',
+        cursor: 'pointer',
+        color: '#333',
     },
     link: {
         // textAlign: 'left',
@@ -116,7 +134,7 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 700,
         textDecoration: 'none',
         cursor: 'pointer',
-        color: '#333'
+        color: '#333',
     },
     cardaction: {
         overflow: 'hidden',
@@ -240,9 +258,9 @@ const TimelineDetail = (props) => {
                         <div style={{ margin: '0px auto', padding: 0 }}>
                             <div className={classes.headerArea}>
                                 <div className={classes.flexCol}>
+                                    <div><Avatar alt="" src={data.timelineImageUrl} className={classes.avatar}/></div>
                                     <div className={classes.flexRowBetween}>
                                         <div>
-                                            {/* <Avatar alt="" src={data.timelineImageUrl} /> */}
                                             <h2 className={classes.title}>{data.timelineTitle}</h2>
                                         </div>
 
@@ -342,7 +360,7 @@ const TimelineDetail = (props) => {
 
                                         <CardContent>
                                             {item.eventYear &&
-                                                    <Typography variant="body2" color="textSecondary" className={classes.event}>
+                                                    <Typography variant="body2" color="textSecondary" className={classes.year}>
                                                     {item.eventYear}
                                                 </Typography>
                                             }
@@ -353,8 +371,7 @@ const TimelineDetail = (props) => {
                                             {item.eventLink &&
                                                 <Link
                                                     // target='_blank'
-                                                    className={classes.link}
-                                                    style={{ padding: '1rem' }}
+                                                    className={classes.more}
                                                     onClick={() => window.open(item.eventLink, "_blank")}>
                                                     More Details
                                                 </Link>

@@ -20,8 +20,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 
 const schema = yup.object().shape({
     eventYear: yup
-    .number()
-    .required('Year is a required field.'),
+    .number(),
     eventDescription: yup
     .string()
     .max(300)
@@ -104,7 +103,7 @@ export default function AddEvent(props) {
                     <TextField
                         variant="outlined"
                         margin="normal"
-                        required
+                        
                         fullWidth
                         id="eventYear"
                         label="eventYear"

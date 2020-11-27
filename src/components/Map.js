@@ -49,10 +49,10 @@ const Map = (props) => {
     const [viewport, setViewport] = useState({
         latitude: 0,
         longitude: 0,
-        zoom: 5.5,
+        zoom: 6,
         bearing: 0,
         pitch: 30,
-        width: "70vw",
+        width: "75vw",
         height: "100vh",
         ...bounds
     })
@@ -149,8 +149,8 @@ const Map = (props) => {
                                             <iframe
                                                 component='video'
                                                 style={{
-                                                    width: `${viewport.zoom ** 2.2}px`,
-                                                    height: `${viewport.zoom ** 2}px`,
+                                                    width: `${viewport.zoom ** 2.4}px`,
+                                                    height: `${viewport.zoom ** 2.1}px`,
                                                     objectFit: 'cover',
                                                     borderRadius: '5px',
                                                     boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
@@ -174,10 +174,10 @@ const Map = (props) => {
                                                 <img src={item.eventImageUrl} alt='' 
                                                 style={{
                                                     width: 'auto',
-                                                    height:`${viewport.zoom ** 2}px`,
+                                                    height:`${viewport.zoom ** 2.3}px`,
                                                     objectFit: 'cover',
-                                                    marginLeft: `-${viewport.zoom ** 2/1.4}px`,
-                                                    marginTop: `-${viewport.zoom ** 2/2}px`,
+                                                    marginLeft: `-${viewport.zoom ** 2.3/1.4}px`,
+                                                    marginTop: `-${viewport.zoom ** 2.3/2}px`,
                                                     borderRadius: '5px',
                                                     boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
                                                     margin: '0 auto'

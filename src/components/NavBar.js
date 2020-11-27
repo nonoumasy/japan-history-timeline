@@ -29,7 +29,7 @@ const NavBar = () =>  {
                             to="/"
                             style={{ textDecoration: 'none', color: '#fff' }}
                         >
-                            Timelines
+                            StoryMaps
                         </Link>
                     </Typography>
 
