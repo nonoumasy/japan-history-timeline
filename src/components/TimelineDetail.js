@@ -5,16 +5,8 @@ import clsx from 'clsx';
 import { useForm } from 'react-hook-form'
 import Map from './Map'
 
-import InfiniteScroll from "react-infinite-scroll-component";
 import { ProgressBar } from 'scrolling-based-progressbar'
 import { makeStyles } from '@material-ui/core/styles';
-import Timeline from '@material-ui/lab/Timeline';
-import TimelineItem from '@material-ui/lab/TimelineItem';
-import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
-import TimelineConnector from '@material-ui/lab/TimelineConnector';
-import TimelineContent from '@material-ui/lab/TimelineContent';
-import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
-import TimelineDot from '@material-ui/lab/TimelineDot';
 import Collapse from '@material-ui/core/Collapse';
 import Typography from '@material-ui/core/Typography';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -44,16 +36,59 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
     },
+    flexCol: {
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    flexRow: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginRight: 20,
+    },
+    flexRowBetween: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
     fab: {
         position: 'fixed',
         top: '90%',
         left: '1.5%',
         zIndex: 100
     },
-    root: {
-        maxWidth: 345,
-        margin:0,
+    headerArea: {
+        width: '23rem',
+        margin: '0 auto',
         padding: 0
+    },
+    smallAvatar: {
+        width: theme.spacing(3),
+        height: theme.spacing(3),
+    },
+    title: {
+        margin: 0,
+    },
+    metadata: {
+        marginLeft: '4rem',
+        display: 'flex',
+    },
+    tags: {
+        margin: 0,
+        textTransform: 'uppercase',
+        fontSize: '12px',
+        fontWeight: 700,
+    },
+    cardsContainer: {
+        marginTop: 40,
+        marginBottom: 120,
+    },
+    card: {
+        width: '23rem',
+        margin:'0 auto',
+        padding: 0,
+        marginTop: 20,
     },
     media: {
         height: 'auto',
@@ -64,6 +99,12 @@ const useStyles = makeStyles((theme) => ({
             transformOrigin: '50% 50%',
             transform: 'scale(1.1)',
         },
+    },
+    year: {
+        textTransform: 'uppercase',
+        fontSize: '12px',
+        fontWeight: 700,
+        color: '#333'
     },
     event: {
         padding: '16px'
@@ -79,14 +120,6 @@ const useStyles = makeStyles((theme) => ({
     },
     cardaction: {
         overflow: 'hidden',
-    },
-    timelineItem: {
-        margin: 0,
-        padding: 0,
-    },
-    timelineLine: {
-        backgroundColor: '#999',
-        width: '1px'
     },
     dialogImage: {
         objectFit: 'cover'
@@ -125,42 +158,9 @@ const useStyles = makeStyles((theme) => ({
     expandOpen: {
         transform: 'rotate(180deg)',
     },
-    tags: {
-        textTransform: 'uppercase',
-        fontSize: '12px',
-        fontWeight: 700,
-        backgroundColor: '#333',
-        color: '#fff'
-    },
-    actions2: {
-        width: '90%',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
     commentForm: {
         margin: '0px 0px',
         padding: 0
-    },
-    flexRow: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginRight: 20,
-    },
-    headerArea: {
-        maxWidth: 450,
-        marginRight: 0,
-        padding: 0
-    },
-    smallAvatar: {
-        width: theme.spacing(3),
-        height: theme.spacing(3),
-    },
-    metadata: {
-        marginLeft: '4rem',
-        display: 'flex',
     },
     
 }));
@@ -239,240 +239,213 @@ const TimelineDetail = (props) => {
                         <ProgressBar height="2px" color="#333" />
                         <div style={{ margin: '0px auto', padding: 0 }}>
                             <div className={classes.headerArea}>
-                                <div className={classes.actions2}>
+                                <div className={classes.flexCol}>
+                                    <div className={classes.flexRowBetween}>
+                                        <div>
+                                            {/* <Avatar alt="" src={data.timelineImageUrl} /> */}
+                                            <h2 className={classes.title}>{data.timelineTitle}</h2>
+                                        </div>
 
-                                    <div className={classes.flexRow}>
-                                        <Avatar alt="" src={data.timelineImageUrl} />
-                                        <h2 style={{ marginTop: 0, marginLeft: '1.5rem', marginBottom: 0, marginRight: '3rem' }}>{data.timelineTitle}</h2>
-                                    </div>
 
-                                    <div>
-                                        <SimpleMenu props={props}>
-                                            <MenuItem onClick={props.handleClose}>
-                                                <EditIcon fontSize='small' style={{ marginRight: 16 }} />
-                                                <Link
-                                                    className={classes.link}
-                                                    to={`/editTimeline/${id}`}
-                                                >
+                                            <SimpleMenu props={props}>
+                                                <MenuItem onClick={props.handleClose}>
+                                                    <EditIcon fontSize='small' style={{ marginRight: 16 }} />
+                                                    <Link
+                                                        className={classes.link}
+                                                        to={`/editTimeline/${id}`}
+                                                    >
                                                     Edit
                                                 </Link>
-                                            </MenuItem>
-                                            <MenuItem onClick={props.handleClose}>
-                                                <DeleteIcon fontSize='small' style={{ marginRight: 16 }} />
-                                                <Link
-                                                    className={classes.link}
-                                                    onClick={() => deleteTimelineHandler(data._id)}
-                                                >
+                                                </MenuItem>
+                                                <MenuItem onClick={props.handleClose}>
+                                                    <DeleteIcon fontSize='small' style={{ marginRight: 16 }} />
+                                                    <Link
+                                                        className={classes.link}
+                                                        onClick={() => deleteTimelineHandler(data._id)}
+                                                    >
                                                     Delete
                                                 </Link>
 
-                                            </MenuItem>
-                                            <MenuItem onClick={props.handleClose}>
-                                                <ShareIcon fontSize='small' style={{ marginRight: 16 }} />
-                                                <Link className={classes.link}>
-                                                    Share
+                                                </MenuItem>
+                                                <MenuItem onClick={props.handleClose}>
+                                                    <ShareIcon fontSize='small' style={{ marginRight: 16 }} />
+                                                    <Link className={classes.link}>
+                                                        Share
                                                 </Link>
-                                            </MenuItem>
-                                            <MenuItem onClick={props.handleClose}>
-                                                <ArrowDownwardIcon fontSize='small' style={{ marginRight: 16 }} />
-                                                <Link
-                                                    className={classes.link}
-                                                    to={`/import/${data._id}`}>
-                                                    Import Data
+                                                </MenuItem>
+                                                <MenuItem onClick={props.handleClose}>
+                                                    <ArrowDownwardIcon fontSize='small' style={{ marginRight: 16 }} />
+                                                    <Link
+                                                        className={classes.link}
+                                                        to={`/import/${data._id}`}>
+                                                        Import Data
                                                 </Link>
-                                            </MenuItem>
-                                            <MenuItem onClick={props.handleClose}>
-                                                <ArrowUpwardIcon fontSize='small' style={{ marginRight: 16 }} />
-                                                <a
-                                                    href={`data:text/json;charset=utf-8,${encodeURIComponent(
-                                                        JSON.stringify(data)
-                                                    )}`}
-                                                    download="filename.json"
-                                                    className={classes.link}>
-                                                    Export Data as Json
-                                                </a>
-                                            </MenuItem>
-                                        </SimpleMenu>
-                                    </div>
-                                </div>
+                                                </MenuItem>
+                                                <MenuItem onClick={props.handleClose}>
+                                                    <ArrowUpwardIcon fontSize='small' style={{ marginRight: 16 }} />
+                                                    <a
+                                                        href={`data:text/json;charset=utf-8,${encodeURIComponent(
+                                                            JSON.stringify(data)
+                                                        )}`}
+                                                        download="filename.json"
+                                                        className={classes.link}>
+                                                        Export Data as Json
+                                                    </a>
+                                                </MenuItem>
+                                            </SimpleMenu>
 
-                                <div style={{ marginLeft: '4rem' }}>
+                                    </div>
                                     <div className={classes.flexRow} >
                                         <div><p>{data.event && data.event.length} items</p></div>
                                         <div style={{ marginLeft: 20 }} className={classes.flexRow}><ThumbUpAltIcon /><p>2k</p></div>
                                         <div><p>nonoumasy</p></div>
                                     </div>
-                                    <p className={classes.link}>Tags:{data.tags}</p>
+                                    <p className={classes.tags}>Tags:{data.tags}</p>
                                 </div>
 
                             </div>
 
                             {isLoading && <h2 style={{ margin: '60px auto' }}>Loading....</h2>}
                         </div>
-                        <div className='timelineContainer'>
+                        <div className={classes.cardsContainer}>
                             {data.event && data.event.map((item) => (
-                            <Timeline style={{margin: 0}}>
+                                <div style={{ margin: '0 auto' }} key={item._id}>     
+                                    <Card className={classes.card}>
+                                        <div className={classes.imageContainer}>
+                                            {item.eventImageUrl && item.eventImageUrl.includes('youtube.com') ?
+                                                <iframe
+                                                    // component='video'
+                                                    // controls
+                                                    className={classes.video}
+                                                    src={item.eventImageUrl}
+                                                    allowFullScreen
+                                                    mozallowfullscreen="mozallowfullscreen"
+                                                    msallowfullscreen="msallowfullscreen"
+                                                    oallowfullscreen="oallowfullscreen"
+                                                    webkitallowfullscreen="webkitallowfullscreen"
+                                                    width='100%'
+                                                    height='200'
+                                                    allow="accelerometer"
+                                                    title={item.year}
+                                                // type="*"
+                                                ></iframe>
+                                                :
+                                                item.eventImageUrl &&
+                                                <CardMedia
+                                                    className={classes.media}
+                                                    component='img'
+                                                    image={item.eventImageUrl}
+                                                    alt=''
+                                                />
+                                            }
+                                        </div>
 
-                                <InfiniteScroll
-                                    dataLength={eventItems.length}
-                                    next={fetchMoreData}
-                                    hasMore={true}>
-
-                                    <TimelineItem
-                                        key={item._id}
-                                        align="alternate"
-                                        ref={props.addToRefs}
-                                        className={classes.timelineItem}>
-
-                                        <TimelineOppositeContent>
-                                            <Typography variant="body2" color="textSecondary">
-                                                {item.eventYear}
+                                        <CardContent>
+                                            {item.eventYear &&
+                                                    <Typography variant="body2" color="textSecondary" className={classes.event}>
+                                                    {item.eventYear}
+                                                </Typography>
+                                            }
+                                            
+                                            <Typography className={classes.event}>
+                                                {item.eventDescription}
                                             </Typography>
-                                        </TimelineOppositeContent>
+                                            {item.eventLink &&
+                                                <Link
+                                                    // target='_blank'
+                                                    className={classes.link}
+                                                    style={{ padding: '1rem' }}
+                                                    onClick={() => window.open(item.eventLink, "_blank")}>
+                                                    More Details
+                                                </Link>
+                                            }
 
-                                        <TimelineSeparator >
-                                            <TimelineDot variant='outlined'>
-                                            </TimelineDot>
-                                            <TimelineConnector className={classes.timelineLine} />
-                                        </TimelineSeparator>
+                                        </CardContent>
 
-                                        <TimelineContent>
-                                            <Card className={classes.root}>
-                                                <div className={classes.imageContainer}>
-                                                    {item.eventImageUrl && item.eventImageUrl.includes('youtube.com') ?
-                                                        <iframe
-                                                            // component='video'
-                                                            // controls
-                                                            className={classes.video}
-                                                            src={item.eventImageUrl}
-                                                            allowFullScreen
-                                                            mozallowfullscreen="mozallowfullscreen"
-                                                            msallowfullscreen="msallowfullscreen"
-                                                            oallowfullscreen="oallowfullscreen"
-                                                            webkitallowfullscreen="webkitallowfullscreen"
-                                                            width='100%'
-                                                            height='200'
-                                                            allow="accelerometer"
-                                                            title={item.year}
-                                                        // type="*"
-                                                        ></iframe>
-                                                        :
-                                                        item.eventImageUrl &&
-                                                        <CardMedia
-                                                            className={classes.media}
-                                                            component='img'
-                                                            image={item.eventImageUrl}
-                                                            alt=''
-                                                        />
-                                                    }
+                                        <CardActions className={classes.actions}>
+                                            <div>
+                                                <IconButton>
+                                                    <ThumbUpAltIcon />
+                                                </IconButton>
+                                                100
+                                            </div>
+
+                                            <IconButton
+                                                className={clsx(classes.expand, {
+                                                    [classes.expandOpen]: expanded,
+                                                })}
+                                                onClick={handleExpandClick}
+                                                aria-expanded={expanded}
+                                                aria-label="show more"
+                                            >
+                                                <ChatBubbleIcon />
+                                            </IconButton>
+
+                                            <SimpleMenu props={props}>
+                                                <MenuItem onClick={props.handleClose}>
+                                                    <EditIcon fontSize='small' style={{ marginRight: 16 }} />
+                                                    <Link
+                                                        className={classes.link}
+                                                        to={`/editEvent/${item._id}`}>
+                                                        Edit
+                                                    </Link>
+                                                </MenuItem>
+                                                <MenuItem onClick={props.handleClose}>
+                                                    <DeleteIcon fontSize='small' style={{ marginRight: 16 }} />
+                                                    <Link
+                                                        className={classes.link}
+                                                        onClick={() => deleteEventHandler(item._id)}
+                                                    >
+                                                        Delete
+                                                    </Link>
+                                                </MenuItem>
+                                                <MenuItem onClick={props.handleClose}>
+                                                    <ShareIcon fontSize='small' style={{ marginRight: 16 }} />
+                                                    <Link className={classes.link}>
+                                                        Share
+                                                    </Link>
+                                                </MenuItem>
+                                            </SimpleMenu>
+                                        </CardActions>
+                                        <Divider light />
+                                        <Collapse in={expanded} timeout="auto" unmountOnExit>
+                                            <CardContent className={classes.actions} style={{ marginTop: 20, marginBottom: 0 }}>
+                                                <div >
+                                                    <Avatar alt="Freya" src="https://pbs.twimg.com/media/B-d6yG4IIAAM7Wt.png" />
                                                 </div>
-
-                                                <CardContent>
-                                                    <Typography
-                                                        className={classes.event}
-                                                    >
-                                                        {item.eventDescription}
+                                                <div>
+                                                    <Typography gutterBottom>
+                                                        I love Japanese History.
                                                     </Typography>
-                                                    {item.eventLink &&
-                                                        <Link
-                                                            // target='_blank'
-                                                            className={classes.link}
-                                                            style={{ padding: '1rem' }}
-                                                            onClick={() => window.open(item.eventLink, "_blank")}>
-                                                            More Details
-                                                        </Link>
-                                                    }
-
-                                                </CardContent>
-
-                                                <CardActions className={classes.actions}>
-                                                    <div>
-                                                        <IconButton>
-                                                            <ThumbUpAltIcon />
-                                                        </IconButton>
-                                                        100
-                                                    </div>
-
-                                                    <IconButton
-                                                        className={clsx(classes.expand, {
-                                                            [classes.expandOpen]: expanded,
-                                                        })}
-                                                        onClick={handleExpandClick}
-                                                        aria-expanded={expanded}
-                                                        aria-label="show more"
-                                                    >
-                                                        <ChatBubbleIcon />
-                                                    </IconButton>
-
-                                                    <SimpleMenu props={props}>
-                                                        <MenuItem onClick={props.handleClose}>
-                                                            <EditIcon fontSize='small' style={{ marginRight: 16 }} />
-                                                            <Link
-                                                                className={classes.link}
-                                                                to={`/editEvent/${item._id}`}>
-                                                                Edit
-                                                            </Link>
-                                                        </MenuItem>
-                                                        <MenuItem onClick={props.handleClose}>
-                                                            <DeleteIcon fontSize='small' style={{ marginRight: 16 }} />
-                                                            <Link
-                                                                className={classes.link}
-                                                                onClick={() => deleteEventHandler(item._id)}
-                                                            >
-                                                                Delete
-                                                            </Link>
-                                                        </MenuItem>
-                                                        <MenuItem onClick={props.handleClose}>
-                                                            <ShareIcon fontSize='small' style={{ marginRight: 16 }} />
-                                                            <Link className={classes.link}>
-                                                                Share
-                                                            </Link>
-                                                        </MenuItem>
-                                                    </SimpleMenu>
-                                                </CardActions>
-                                                <Divider light />
-                                                <Collapse in={expanded} timeout="auto" unmountOnExit>
-                                                    <CardContent className={classes.actions} style={{ marginTop: 20, marginBottom: 0 }}>
-                                                        <div >
-                                                            <Avatar alt="Freya" src="https://pbs.twimg.com/media/B-d6yG4IIAAM7Wt.png" />
-                                                        </div>
-                                                        <div>
-                                                            <Typography gutterBottom>
-                                                                I love Japanese History.
-                                                            </Typography>
-                                                        </div>
-                                                    </CardContent>
-                                                    <CardContent className={classes.actions} style={{ marginTop: 0 }}>
-                                                        <div >
-                                                            <Avatar alt="Freya" src="https://vhx.imgix.net/criterionchannelchartersu/assets/6d3d0ab1-77a0-4520-a6b4-b2703f80f78f-a81c655b.jpg?auto=format%2Ccompress&fit=crop&h=360&q=70&w=640" />
-                                                        </div>
-                                                        <div>
-                                                            <Typography gutterBottom>
-                                                                Thanks. I will.
-                                                    </Typography>
-                                                        </div>
-                                                    </CardContent>
-                                                    <CardContent>
-                                                        <TextField
-                                                            margin="normal"
-                                                            fullWidth
-                                                            name="eventComment"
-                                                            label="eventComment"
-                                                            type="text"
-                                                            value={eventComment}
-                                                            onChange={e => setEventComment(e.target.value)}
-                                                            id="eventComment"
-                                                            inputRef={register}
-                                                            className={classes.commentForm}
-                                                        />
-                                                    </CardContent>
-                                                </Collapse>
-                                            </Card>
-                                        </TimelineContent>
-                                    </TimelineItem>
-
-                                </InfiniteScroll>     
-                            </Timeline>
+                                                </div>
+                                            </CardContent>
+                                            <CardContent className={classes.actions} style={{ marginTop: 0 }}>
+                                                <div >
+                                                    <Avatar alt="Freya" src="https://vhx.imgix.net/criterionchannelchartersu/assets/6d3d0ab1-77a0-4520-a6b4-b2703f80f78f-a81c655b.jpg?auto=format%2Ccompress&fit=crop&h=360&q=70&w=640" />
+                                                </div>
+                                                <div>
+                                                    <Typography gutterBottom>
+                                                        Thanks. I will.
+                                            </Typography>
+                                                </div>
+                                            </CardContent>
+                                            <CardContent>
+                                                <TextField
+                                                    margin="normal"
+                                                    fullWidth
+                                                    name="eventComment"
+                                                    label="eventComment"
+                                                    type="text"
+                                                    value={eventComment}
+                                                    onChange={e => setEventComment(e.target.value)}
+                                                    id="eventComment"
+                                                    inputRef={register}
+                                                    className={classes.commentForm}
+                                                />
+                                            </CardContent>
+                                        </Collapse>
+                                    </Card>      
+                            </div>
                             ))}
                             <Footer />
                         </div>
