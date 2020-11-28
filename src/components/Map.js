@@ -26,6 +26,14 @@ const useStyles = makeStyles((theme) => ({
         cursor: 'pointer',
         color: '#fff'
     },
+    select: {
+        textTransform: 'uppercase',
+        fontSize: '12px',
+        fontWeight: 700,
+        textDecoration: 'none',
+        cursor: 'pointer',
+        color: '#333'
+    }
 }))
 
 const Map = (props) => {
@@ -190,11 +198,15 @@ const Map = (props) => {
                             id="demo-simple-select"
                             value={mapboxStyle}
                             onChange={handleChange}
+                            className={classes.select}
                         >
                             <MenuItem value={'mapbox://styles/mapbox/light-v9'}>Light</MenuItem>
                             <MenuItem value={'mapbox://styles/mapbox/dark-v9'}>Dark</MenuItem>
+                            <MenuItem value={'mapbox://styles/nonoumasy/ck80st52c24z91ip168o50043'}>Bubble</MenuItem>
                             <MenuItem value={'mapbox://styles/mapbox/outdoors-v11'}>Outdoors</MenuItem>
                             <MenuItem value={'mapbox://styles/nonoumasy/ckfbuedoy4pwp19t9sdx07c0o'}>Old Map Style</MenuItem>
+                            <MenuItem value={'mapbox://styles/nonoumasy/cke7nfew43y9919mb1kolqmlc'}>Standard</MenuItem>
+                            <MenuItem value={'mapbox://styles/nonoumasy/ckdcv8alb3hxc1io6r81wfuq6'}>Mapbox Japan</MenuItem>
                         </Select>
                     </FormControl>
                 </div>
