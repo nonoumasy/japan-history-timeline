@@ -23,7 +23,7 @@ const NavBar = () =>  {
     return (
         <div className={classes.root}>
             <AppBar position="fixed">
-                <Toolbar style={{textAlign: 'left'}}>
+                <Toolbar style={{textAlign: 'center'}}>
                     <Typography variant="h6" className={classes.title} >
                         <Link
                             to="/"
@@ -33,7 +33,7 @@ const NavBar = () =>  {
                         </Link>
                     </Typography>
 
-                    <Link
+                    {/* <Link
                         to="/signup"
                         style={{ textDecoration: 'none', color: '#fff' }}
                     >
@@ -50,7 +50,7 @@ const NavBar = () =>  {
                         style={{ textDecoration: 'none', color: '#fff', marginLeft: 16 }}
                     >
                         Logout
-                    </Link>
+                    </Link> */}
                 </Toolbar>
             </AppBar>
         </div>

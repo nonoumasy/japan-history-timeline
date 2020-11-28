@@ -114,9 +114,9 @@ const Map = (props) => {
                 {...viewport}
                 attributionControl='true'
                 mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-                // mapStyle="mapbox://styles/mapbox/light-v9"
+                mapStyle="mapbox://styles/mapbox/light-v9"
                 //mapStyle="mapbox://styles/mapbox/outdoors-v11"
-                mapStyle="mapbox://styles/nonoumasy/cki05xd2q10jf1ao1owvmkyvo"
+                // mapStyle="mapbox://styles/nonoumasy/cki05xd2q10jf1ao1owvmkyvo"
                 onViewportChange={viewport => setViewport(viewport)}>
 
                 <div style={{
