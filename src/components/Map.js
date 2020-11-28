@@ -6,11 +6,11 @@ import Button from '@material-ui/core/Button';
 import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-    button: {
-        border: 'none',
-        backgroundColor: 'transparent',
-        focus: 'none'
-    },
+    // button: {
+    //     // border: 'none',
+    //     // backgroundColor: 'transparent',
+    //     // focus: 'none',
+    // },
     link: {
         // textAlign: 'left',
         textTransform: 'uppercase',
@@ -80,7 +80,8 @@ const Map = (props) => {
             ...viewport,
             longitude: item.eventLongitude,
             latitude: item.eventLatitude,
-            zoom: 19,
+            pitch: 90,
+            zoom: 16,
             transitionInterpolator: new FlyToInterpolator({ speed: 1.6 }),
             transitionDuration: 'auto'
         });
@@ -107,6 +108,14 @@ const Map = (props) => {
         
     }
 
+    // minimum size for markers set to 30px
+    let markerHeight
+    let markerWidth
+    const markerMinWidth = 40
+    const markerMinHeight = 30
+    viewport.zoom && (viewport.zoom ** 2) >= markerMinHeight ? markerHeight = (viewport.zoom ** 2) : markerHeight = markerMinHeight 
+    viewport.zoom && (viewport.zoom ** 2.2) >= markerMinWidth ? markerWidth = (viewport.zoom ** 2.2) : markerWidth = markerMinWidth 
+
 
     return (
         <>
@@ -114,7 +123,8 @@ const Map = (props) => {
                 {...viewport}
                 attributionControl='true'
                 mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-                mapStyle="mapbox://styles/mapbox/light-v9"
+                mapStyle="mapbox://styles/nonoumasy/ckdcvbt983i4k1iny85j4q087"
+                // mapStyle="mapbox://styles/mapbox/light-v9"
                 //mapStyle="mapbox://styles/mapbox/outdoors-v11"
                 // mapStyle="mapbox://styles/nonoumasy/cki05xd2q10jf1ao1owvmkyvo"
                 onViewportChange={viewport => setViewport(viewport)}>
@@ -166,16 +176,17 @@ const Map = (props) => {
                             longitude={item.eventLongitude}>
                             
                                 <div 
-                                    className={classes.button}
+                                    // className={classes.button}
                                     onClick={(e) => onClickMarker(e, item)}>
                                     
                                     <div >
                                         {item.eventImageUrl && item.eventImageUrl.includes('youtube.com') ?
                                             <iframe
-                                                component='video'
+                                                // component='video'
                                                 style={{
-                                                    width: `${viewport.zoom ** 1.8}px`,
-                                                    height: `${viewport.zoom ** 1.6}px`,
+                                                    width: `${markerWidth}px`,
+                                                    height: `${markerHeight}px`,
+                                                    // height: '40px',
                                                     objectFit: 'cover',
                                                     borderRadius: '5px',
                                                     boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
@@ -201,7 +212,7 @@ const Map = (props) => {
                                                     //width: `${viewport.zoom ** 1.8}px`,
                                                     width: `auto`,
                                                     // height:`auto`,
-                                                    height:`${viewport.zoom ** 1.8}px`,
+                                                    height:`${markerHeight}px`,
                                                     objectFit: 'cover',
                                                     marginLeft: `-${viewport.zoom ** 1.9/2}px`,
                                                     borderRadius: '5px',
@@ -228,7 +239,7 @@ const Map = (props) => {
                                 tipSize={0}
                             >
                                 <div>
-                                    {popup.eventDescription}
+                                    {`${popup.eventDescription.substring(0, 140)}...`}
                                 </div>
                             </Popup>
                         ) 
