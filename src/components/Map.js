@@ -5,13 +5,18 @@ import marker from '../marker.svg'
 import {makeStyles} from '@material-ui/styles'
 import Button from '@material-ui/core/Button';
 import { Typography } from '@material-ui/core';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles((theme) => ({
-    // button: {
-    //     // border: 'none',
-    //     // backgroundColor: 'transparent',
-    //     // focus: 'none',
-    // },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+    },
+    selectEmpty: {
+        marginTop: theme.spacing(2),
+    },
     link: {
         // textAlign: 'left',
         textTransform: 'uppercase',
@@ -50,10 +55,10 @@ const Map = (props) => {
     } 
 
 
-
     const bounds = getBounds()
     const classes = useStyles()
     const [popup, setPopup] = useState(null)
+    const [mapboxStyle, setMapboxStyle] = useState('mapbox://styles/mapbox/light-v9')
     const [viewport, setViewport] = useState({
         latitude: 0,
         longitude: 0,
@@ -111,6 +116,10 @@ const Map = (props) => {
         
     }
 
+    const handleChange = (event) => {
+        setMapboxStyle(event.target.value);
+    };
+
     // minimum size for markers set to 30px
     let markerHeight
     let markerWidth
@@ -126,10 +135,7 @@ const Map = (props) => {
                 {...viewport}
                 attributionControl='true'
                 mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-                mapStyle="mapbox://styles/nonoumasy/ckdcvbt983i4k1iny85j4q087"
-                // mapStyle="mapbox://styles/mapbox/light-v9"
-                //mapStyle="mapbox://styles/mapbox/outdoors-v11"
-                // mapStyle="mapbox://styles/nonoumasy/cki05xd2q10jf1ao1owvmkyvo"
+                mapStyle={mapboxStyle}
                 onViewportChange={viewport => setViewport(viewport)}>
 
                 <div style={{
@@ -168,6 +174,29 @@ const Map = (props) => {
                             Show All
                         </Typography> 
                     </Button>
+                </div>
+
+                <div
+                    style={{
+                        position: 'absolute',
+                        bottom: 10,
+                        left: 0,
+                        padding: '10px',
+                        zIndex: 200
+                    }}>
+                    <FormControl className={classes.formControl}>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={mapboxStyle}
+                            onChange={handleChange}
+                        >
+                            <MenuItem value={'mapbox://styles/mapbox/light-v9'}>Light</MenuItem>
+                            <MenuItem value={'mapbox://styles/mapbox/dark-v9'}>Dark</MenuItem>
+                            <MenuItem value={'mapbox://styles/mapbox/outdoors-v11'}>Outdoors</MenuItem>
+                            <MenuItem value={'mapbox://styles/nonoumasy/ckfbuedoy4pwp19t9sdx07c0o'}>Old Map Style</MenuItem>
+                        </Select>
+                    </FormControl>
                 </div>
 
                 {props.props.event && props.props.event.map(item => (
