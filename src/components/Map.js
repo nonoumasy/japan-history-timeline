@@ -179,7 +179,7 @@ const Map = (props) => {
                 <div
                     style={{
                         position: 'absolute',
-                        bottom: 20,
+                        bottom: 50,
                         left: 0,
                         padding: '10px',
                         zIndex: 200
