@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import ReactMapGL, { Marker, NavigationControl, FullscreenControl, WebMercatorViewport, Popup, FlyToInterpolator} from 'react-map-gl';
+import marker from '../marker.svg'
 
 import {makeStyles} from '@material-ui/styles'
 import Button from '@material-ui/core/Button';
@@ -48,6 +49,8 @@ const Map = (props) => {
         return { longitude, latitude, zoom }
     } 
 
+
+
     const bounds = getBounds()
     const classes = useStyles()
     const [popup, setPopup] = useState(null)
@@ -56,7 +59,7 @@ const Map = (props) => {
         longitude: 0,
         zoom: 6,
         bearing: 0,
-        pitch: 30,
+        pitch: 0,
         width: "75vw",
         height: "100vh",
         ...bounds
@@ -95,7 +98,7 @@ const Map = (props) => {
             latitude: 35.661005,
             zoom: 10,
             bearing: 0,
-            pitch: 30,
+            pitch: 0,
             transitionInterpolator: new FlyToInterpolator({ speed: 1.6 }),
             transitionDuration: 'auto'
         });
@@ -180,7 +183,7 @@ const Map = (props) => {
                                     onClick={(e) => onClickMarker(e, item)}>
                                     
                                     <div >
-                                        {item.eventImageUrl && item.eventImageUrl.includes('youtube.com') ?
+                                    {item.eventImageUrl ? item.eventImageUrl.includes('youtube.com') ?
                                             <iframe
                                                 // component='video'
                                                 style={{
@@ -205,7 +208,6 @@ const Map = (props) => {
                                                 title={item.year}
                                             ></iframe>
                                             :
-                                            item.eventImageUrl &&
                                             <div>
                                                 <img src={item.eventImageUrl} alt='' 
                                                 style={{
@@ -219,6 +221,10 @@ const Map = (props) => {
                                                     boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
                                                     margin: '0 auto'
                                                 }} /> 
+                                            </div>
+                                            :
+                                            <div>
+                                                <img src={marker} alt=''/>
                                             </div>
                                         }
                                     </div>
@@ -235,6 +241,7 @@ const Map = (props) => {
                                 onClose={() => setPopup(false)}
                                 className={classes.popup}
                                 offsetTop={-20}
+                                dynamicPosition={true}
                                 anchor="bottom"
                                 tipSize={0}
                             >
