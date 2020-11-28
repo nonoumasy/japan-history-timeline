@@ -45,12 +45,12 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        marginRight: 20,
+        // marginRight: 20,
     },
     flexRowBetween: {
         display: 'flex',
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'flex-end',
         justifyContent: 'space-between',
     },
     fab: {
@@ -75,6 +75,21 @@ const useStyles = makeStyles((theme) => ({
     metadata: {
         marginLeft: '4rem',
         display: 'flex',
+    },
+    numItems: {
+        fontSize: '12px',
+    },
+    thumbUpIcon: {
+        fontSize: '16px',
+        marginRight: 4,
+    },
+    numLikes: {
+        fontSize: '12px',
+    },
+    user: {
+        fontSize: '12px',
+        marginBottom: 2,
+        marginTop: 0,
     },
     tags: {
         margin: 0,
@@ -245,19 +260,20 @@ const TimelineDetail = (props) => {
                                     <div><Avatar alt="" src={data.timelineImageUrl} className={classes.avatar}/></div>
                                     <div className={classes.flexRowBetween}>
                                         <div>
+                                            <div><p className={classes.user}>nonoumasy</p></div>
                                             <h2 className={classes.title}>{data.timelineTitle}</h2>
                                         </div>
 
 
-                                            <SimpleMenu props={props}>
+                                        <SimpleMenu props={props}>
                                                 <MenuItem onClick={props.handleClose}>
-                                                    <EditIcon fontSize='small' style={{ marginRight: 16 }} />
-                                                    <Link
-                                                        className={classes.link}
-                                                        to={`/editTimeline/${id}`}
-                                                    >
-                                                    Edit
-                                                </Link>
+                                                        <EditIcon fontSize='small' style={{ marginRight: 16 }}/>
+                                                        <Link
+                                                            className={classes.link}
+                                                            to={`/editTimeline/${id}`}
+                                                        >
+                                                            Edit
+                                                        </Link>
                                                 </MenuItem>
                                                 <MenuItem onClick={props.handleClose}>
                                                     <DeleteIcon fontSize='small' style={{ marginRight: 16 }} />
@@ -294,13 +310,13 @@ const TimelineDetail = (props) => {
                                                         Export Data as Json
                                                     </a>
                                                 </MenuItem>
-                                            </SimpleMenu>
+                                        </SimpleMenu>
 
                                     </div>
                                     <div className={classes.flexRow} >
-                                        <div><p>{data.event && data.event.length} items</p></div>
-                                        <div style={{ marginLeft: 20 }} className={classes.flexRow}><ThumbUpAltIcon /><p>2k</p></div>
-                                        <div><p>nonoumasy</p></div>
+                                        <div><p className={classes.numItems}>{data.event && data.event.length} items</p></div>
+                                        <div style={{ marginLeft: 20 }} className={classes.flexRow}><ThumbUpAltIcon className={classes.thumbUpIcon} /><p className={classes.numLikes}>2k</p></div>
+                                        {/* <div><p className={classes.user}>nonoumasy</p></div> */}
                                     </div>
                                     <p className={classes.tags}>Tags:{data.tags}</p>
                                 </div>

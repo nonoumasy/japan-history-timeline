@@ -86,7 +86,7 @@ const Home = (props) => {
         <Container maxWidth="md" >
                 <Button variant='outlined' style={{ marginBottom: 10, marginTop: 20 }}>
                     <Link to='/addTimeline' className={classes.link}>
-                        Create New Timeline
+                        Create New StoryMap
                 </Link>
                 </Button>
 
