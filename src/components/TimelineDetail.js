@@ -29,7 +29,6 @@ import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import Footer from './Footer'
-import Scroll from './shared/Scroll'
 
 const useStyles = makeStyles((theme) => ({
     mainContainer: {
@@ -236,13 +235,15 @@ const TimelineDetail = (props) => {
         history.push(`/timeline/${id}/addEvent`)
     }
 
+    const eventClickHandler = () => {
+        alert('you clicked me.')
+    }
 
     return (
         <>
             <div className={classes.mainContainer}>
-                <Scroll showBelow={300} />
-                
                 <div className='sidebar'>
+                    <ProgressBar height="4px" color="#666" />
                     <Tooltip arrow placement='left' title='Add New Event' >
                         <Fab
                             color="primary"
@@ -253,7 +254,7 @@ const TimelineDetail = (props) => {
                         </Fab>
                     </Tooltip>
                     <div>
-                        <ProgressBar height="2px" color="#333" />
+                        
                         <div style={{ margin: '0px auto', padding: 0 }}>
                             <div className={classes.headerArea}>
                                 <div className={classes.flexCol}>
@@ -358,7 +359,8 @@ const TimelineDetail = (props) => {
                                             }
                                         </div>
 
-                                        <CardContent>
+                                        <CardContent
+                                            onClick={eventClickHandler}>
                                             {item.eventYear &&
                                                     <Typography variant="body2" color="textSecondary" className={classes.year}>
                                                     {item.eventYear}

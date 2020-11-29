@@ -15,6 +15,7 @@ import TimelineDetail from './components/TimelineDetail'
 import ImportData from './components/ImportData'
 import NotFoundPage from './components/NotFoundPage'
 
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -34,7 +35,7 @@ const theme = createMuiTheme({
     secondary: {
       main: 'red',
     },
-  }
+  },
 });
 
 function App() {
@@ -71,7 +72,7 @@ function App() {
           />
 
           <Route exact path='/'>
-            <div style={{ margin: '60px auto' }}>
+            <div style={{ margin: '90px auto' }}>
               <Home />
             </div>
           </Route>

@@ -33,6 +33,30 @@ const useStyles = makeStyles((theme) => ({
         textDecoration: 'none',
         cursor: 'pointer',
         color: '#333'
+    },
+    marker: {
+        backgroundColor: '#EC5D5D',
+        color: '#fff',
+        width: 20,
+        height: 20,
+        padding: 5,
+        borderRadius: 100,
+        borderStyle: 'solid',
+        borderColor: '#fff',
+        borderWidth: 'medium',
+        textAlign: 'center',
+        fontWeight: 700,
+        fontSize: 14,
+        alignItems: 'center',
+        boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
+    },
+    showAll: {
+        textTransform: 'uppercase',
+        fontSize: '12px',
+        fontWeight: 900,
+        textDecoration: 'none',
+        cursor: 'pointer',
+        color: '#333',
     }
 }))
 
@@ -133,8 +157,8 @@ const Map = (props) => {
     let markerWidth
     const markerMinWidth = 40
     const markerMinHeight = 30
-    viewport.zoom && (viewport.zoom ** 2) >= markerMinHeight ? markerHeight = (viewport.zoom ** 2) : markerHeight = markerMinHeight 
-    viewport.zoom && (viewport.zoom ** 2.2) >= markerMinWidth ? markerWidth = (viewport.zoom ** 2.2) : markerWidth = markerMinWidth 
+    viewport.zoom && (viewport.zoom ** 1.8) >= markerMinHeight ? markerHeight = (viewport.zoom ** 1.8) : markerHeight = markerMinHeight 
+    viewport.zoom && (viewport.zoom ** 2) >= markerMinWidth ? markerWidth = (viewport.zoom ** 2) : markerWidth = markerMinWidth 
 
 
     return (
@@ -177,8 +201,8 @@ const Map = (props) => {
                     <Button 
                         onClick={showAll}
                         variant="contained"
-                        color="primary">
-                        <Typography className={classes.link}>
+                        color="default">
+                        <Typography className={classes.showAll}>
                             Show All
                         </Typography> 
                     </Button>
@@ -211,7 +235,7 @@ const Map = (props) => {
                     </FormControl>
                 </div>
 
-                {props.props.event && props.props.event.map(item => (
+                {props.props.event && props.props.event.map((item, index) => (
                     <>
                         {/* check to see if there location data */}
                             {item.eventLatitude && item.eventLongitude &&
@@ -257,15 +281,15 @@ const Map = (props) => {
                                                     // height:`auto`,
                                                     height:`${markerHeight}px`,
                                                     objectFit: 'cover',
-                                                    marginLeft: `-${viewport.zoom ** 1.9/2}px`,
+                                                    marginLeft: `-${viewport.zoom ** 1.8/2}px`,
                                                     borderRadius: '5px',
                                                     boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
                                                     margin: '0 auto'
                                                 }} /> 
                                             </div>
                                             :
-                                            <div>
-                                                <img src={marker} alt=''/>
+                                            <div className={classes.marker}>
+                                                {index}
                                             </div>
                                         }
                                     </div>

@@ -8,10 +8,42 @@ import { Grid } from "@material-ui/core";
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
         margin: '0px auto'
+    },
+    flexRowBetween: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 20,
+    },
+    sort: {
+        height: 30, 
+        textTransform: 'uppercase',
+        fontSize: '12px',
+        fontWeight: 700,
+        textDecoration: 'none',
+        color: '#333',
+        backgroundColor: '#fff',
+        "&$focused": {
+            backgroundColor: "#fff",
+        },
+        "&$focusVisible": {
+            backgroundColor: "#fff",
+        },
+        "&$selected": {
+            backgroundColor: "#fff",
+        },
+    },
+    formControl: {
+        minWidth: 160,
     },
     link: {
         // textAlign: 'left',
@@ -58,14 +90,20 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 14,
         textAlign: 'center',
         marginTop: 12,
-        marginBottom: 16
-    }
+        marginBottom: 16,
+        lineHeight: 1.3
+    },
 }));
 
 const Home = (props) => {
     const classes = useStyles()
     const [data, setData] = useState([])
     const history = useHistory()
+    const [sort, setSort] = React.useState('');
+
+    const handleChange = (event) => {
+        setSort(event.target.value);
+    };
 
     useEffect(() => {
         fetch('https://japan-history-timeline-api.herokuapp.com/timeline')
@@ -75,8 +113,6 @@ const Home = (props) => {
 
     }, [props.location, setData])
 
-    
-
     const clickImageHandler = (id) => {
         history.push(`/timeline/${id}`)
     }
@@ -84,20 +120,37 @@ const Home = (props) => {
 
     return (
         <Container maxWidth="md" >
-                <Button variant='outlined' style={{ marginBottom: 10, marginTop: 20 }}>
-                    <Link to='/addTimeline' className={classes.link}>
-                        Create New StoryMap
-                </Link>
-                </Button>
+            <div className={classes.flexRowBetween}>
+                <div>
+                    <Button variant='outlined' >
+                        <Link to='/addTimeline' className={classes.link}>
+                            Create New StoryMap
+                    </Link>
+                    </Button>
 
-                <Button style={{ marginBottom: 10, marginTop: 20, marginLeft: 10}}>
-                    <Link to='/' className={classes.link}>
-                        Import Data
-                </Link>
-                </Button>
+                    <Button >
+                        <Link to='/' className={classes.link} style={{marginLeft:10}}>
+                            Import Data
+                    </Link>
+                    </Button>
+                </div>
 
+                <div>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                        <Select
+                            id="demo-simple-select-outlined"
+                            value={sort}
+                            className={classes.sort}
+                            onChange={handleChange}
+                        >   
+                            <MenuItem value={10}>New</MenuItem>
+                            <MenuItem value={20}>Trending</MenuItem>
+                            <MenuItem value={30}>Popular</MenuItem>
+                        </Select>
+                    </FormControl>
+                </div>
+            </div>
             
-
             <Grid
                 container
                 spacing={2}
