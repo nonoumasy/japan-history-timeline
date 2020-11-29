@@ -54,12 +54,12 @@ const useStyles = makeStyles((theme) => ({
     },
     fab: {
         position: 'fixed',
-        top: '90%',
+        top: '85%',
         left: '1.5%',
-        zIndex: 100
+        zIndex: 1000
     },
     headerArea: {
-        width: '20rem',
+        width: '85%',
         margin: '0 auto',
         padding: 0
     },
@@ -101,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 120,
     },
     card: {
-        width: '20rem',
+        width: '85%',
         margin:'0 auto',
         padding: 0,
         marginTop: 20,
@@ -416,12 +416,6 @@ const TimelineDetail = (props) => {
                                                         onClick={() => deleteEventHandler(item._id)}
                                                     >
                                                         Delete
-                                                    </Link>
-                                                </MenuItem>
-                                                <MenuItem onClick={props.handleClose}>
-                                                    <ShareIcon fontSize='small' style={{ marginRight: 16 }} />
-                                                    <Link className={classes.link}>
-                                                        Share
                                                     </Link>
                                                 </MenuItem>
                                             </SimpleMenu>
