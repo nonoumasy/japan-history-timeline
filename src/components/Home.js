@@ -66,11 +66,15 @@ const useStyles = makeStyles((theme) => ({
         margin: 0,
         padding: 0,
         border: 0,
-        background: 'transparent',
+        borderRadius: '7px',
+        // background: 'transparent',
         cursor: 'pointer',
         textDecoration: 'none',
         overflow: 'hidden',
-        boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1)',
+        '&:hover': {
+            boxShadow: '0 2px 10px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.1)', 
+        },
+        
 
     },
     image: {
@@ -79,7 +83,6 @@ const useStyles = makeStyles((theme) => ({
         objectFit: 'cover',
         margin: 0,
         padding: 0,
-        borderRadius: '5px',
         transition: '0.4s',
         '&:hover': {
             transformOrigin: '50% 50%',
@@ -160,7 +163,7 @@ const Home = (props) => {
 
                 {data.map(item => (
                         <Grid item xs={12} sm={6} md={4} lg={3} key={item._id}>
-                            <Card className={classes.container}>
+                            <div className={classes.container}>
                                 <CardMedia
                                     component='img'
                                     className={classes.image}
@@ -168,7 +171,7 @@ const Home = (props) => {
                                     onClick={() => clickImageHandler(item._id)}
                                 />
                                 
-                            </Card>
+                            </div>
                             <Typography variant="h6" className={classes.title}>
                                 {item.timelineTitle}
                             </Typography>
