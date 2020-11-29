@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect, useRef} from 'react'
 import { useHistory, useParams, Link} from 'react-router-dom'
 import axios from 'axios'
 import clsx from 'clsx';
@@ -204,12 +204,14 @@ const TimelineDetail = (props) => {
     const history = useHistory()
     const { id } = useParams()
     const { register, handleSubmit } = useForm()
+    const ref = useRef()
 
     const [data, setData] = useState([])
     const [expanded, setExpanded] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
     const [eventComment, setEventComment] = useState('')
     const [popup, setPopup] = useState(null)
+    const [eventId, setEventId] = useState(null)
     const [viewport, setViewport] = useState({
         latitude: 0,
         longitude: 160,
@@ -231,6 +233,15 @@ const TimelineDetail = (props) => {
                 setIsLoading(false)
             })
     }, [])
+
+    useEffect(eventId => {
+        console.log(eventId)
+        ref.current &&
+        ref.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+        })
+    }, [eventId])
 
     const deleteTimelineHandler = (id) => {
         axios.delete(`https://japan-history-timeline-api.herokuapp.com/timeline/${id}`)
@@ -255,7 +266,7 @@ const TimelineDetail = (props) => {
             longitude: item.eventLongitude,
             latitude: item.eventLatitude,
             pitch: 90,
-            zoom: 15,
+            zoom: 15.5,
             transitionInterpolator: new FlyToInterpolator({ speed: 1 }),
             transitionDuration: 'auto'
         });
@@ -356,8 +367,11 @@ const TimelineDetail = (props) => {
                         </div>
                         <div className={classes.cardsContainer}>
                             {data.event && data.event.map((item) => (
-                                <div style={{ margin: '0 auto' }} key={item._id}>     
-                                    <Card className={classes.card}>
+                                <div 
+                                    style={{ margin: '0 auto' }} 
+                                    key={item._id} 
+                                    >     
+                                    <Card className={classes.card} ref={ref}>
                                         <div className={classes.imageContainer}>
                                             {item.eventImageUrl && item.eventImageUrl.includes('youtube.com') ?
                                                 <iframe
@@ -500,7 +514,10 @@ const TimelineDetail = (props) => {
                             setViewport={setViewport} 
                             flyTo={flyTo} 
                             popup={popup} 
-                            setPopup={setPopup}/>
+                            setPopup={setPopup}
+                            eventId={eventId}
+                            setEventId={setEventId}
+                            />
                     </div>
                 </div>
                 

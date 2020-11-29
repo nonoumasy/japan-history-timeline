@@ -59,28 +59,28 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const Map = ({viewport, setViewport, data, flyTo, popup, setPopup}) => {
+const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, setEventId}) => {
 
-    const getBounds = () => {
-        // Calculate corner values of bounds
-        const eventLongitude = data.event && data.event.map(item => Number(item.eventLongitude))
-        const eventLatitude = data.event && data.event.map(item => Number(item.eventLatitude))
+    // const getBounds = () => {
+    //     // Calculate corner values of bounds
+    //     const eventLongitude = data.event && data.event.map(item => Number(item.eventLongitude))
+    //     const eventLatitude = data.event && data.event.map(item => Number(item.eventLatitude))
 
-        const cornersLongLat = [
-            [Math.min.apply(Math, (eventLongitude)), Math.min.apply(Math, eventLatitude)],
-            [Math.max.apply(Math, eventLongitude), Math.max.apply(Math, eventLatitude)]
-        ]
+    //     const cornersLongLat = [
+    //         [Math.min.apply(Math, (eventLongitude)), Math.min.apply(Math, eventLatitude)],
+    //         [Math.max.apply(Math, eventLongitude), Math.max.apply(Math, eventLatitude)]
+    //     ]
 
-        // console.log('sdfsd',cornersLongLat);
+    //     // console.log('sdfsd',cornersLongLat);
         
-        // Use WebMercatorViewport to get center longitude/latitude and zoom
-        const viewport = cornersLongLat && new WebMercatorViewport({ width: 800, height: 600 })
-            .fitBounds([[139.378484, 35.519149], [139.812484, 35.723422]], { padding: 100 })
-            // .fitBounds(cornersLongLat, { padding: 100 })
+    //     // Use WebMercatorViewport to get center longitude/latitude and zoom
+    //     const viewport = cornersLongLat && new WebMercatorViewport({ width: 800, height: 600 })
+    //         .fitBounds([[139.378484, 35.519149], [139.812484, 35.723422]], { padding: 100 })
+    //         // .fitBounds(cornersLongLat, { padding: 100 })
 
-        const { longitude, latitude, zoom } = viewport
-        return { longitude, latitude, zoom }
-    } 
+    //     const { longitude, latitude, zoom } = viewport
+    //     return { longitude, latitude, zoom }
+    // } 
 
     // const bounds = getBounds()
     const classes = useStyles()
@@ -104,9 +104,9 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup}) => {
         setPopup(null)
         setViewport({
             ...viewport,
-            longitude: 139.736867,
-            latitude: 35.661005,
-            zoom: 10,
+            longitude: 160,
+            latitude: 0,
+            zoom: 1,
             bearing: 0,
             pitch: 0,
             transitionInterpolator: new FlyToInterpolator({ speed: 1.6 }),
@@ -116,6 +116,7 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup}) => {
 
     const onClickMarker = (e, item) => {
         e.preventDefault()
+        setEventId(item._id)
         flyTo(item)
         window.setTimeout(setPopup(item), 1000)
         
@@ -256,7 +257,7 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup}) => {
                                                     // height:`auto`,
                                                     height:`${markerHeight}px`,
                                                     objectFit: 'cover',
-                                                    marginLeft: `-${viewport.zoom ** 1.8/2}px`,
+                                                    // marginLeft: `-${viewport.zoom ** 1.8/2}px`,
                                                     borderRadius: '5px',
                                                     boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
                                                     margin: '0 auto'
@@ -264,7 +265,7 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup}) => {
                                             </div>
                                             :
                                             <div className={classes.marker}>
-                                                {index}
+                                                {`${index + 1}`}
                                             </div>
                                         }
                                     </div>

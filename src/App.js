@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import NavBar from './components/NavBar'
 import Home from './components/Home'
 import {Route, Switch} from 'react-router-dom'
@@ -39,6 +39,8 @@ const theme = createMuiTheme({
 });
 
 function App() {
+
+  const [data, setData] = useState()
   
   return (
     <>
@@ -70,12 +72,12 @@ function App() {
             exact path='/editEvent/:id'
             render={props => <EditEvent {...props} />}
           />
-
-          <Route exact path='/'>
-            <div style={{ margin: '90px auto' }}>
-              <Home />
-            </div>
-          </Route>
+            <Route exact path='/'>
+              <div style={{ margin: '90px auto' }}>
+                <Home />
+              </div>
+            </Route>
+          
 
           <Route
             exact path='/timeline/:id/addEvent'>
