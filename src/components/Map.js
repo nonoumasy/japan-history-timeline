@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import ReactMapGL, { Marker, NavigationControl, FullscreenControl, WebMercatorViewport, Popup, FlyToInterpolator} from 'react-map-gl';
-import marker from '../marker.svg'
 
 import {makeStyles} from '@material-ui/styles'
 import Button from '@material-ui/core/Button';
@@ -60,15 +59,12 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const Map = (props) => {
-
-    
-
+const Map = ({viewport, setViewport, data, flyTo, popup, setPopup}) => {
 
     const getBounds = () => {
         // Calculate corner values of bounds
-        const eventLongitude = props.props.event && props.props.event.map(item => Number(item.eventLongitude))
-        const eventLatitude = props.props.event && props.props.event.map(item => Number(item.eventLatitude))
+        const eventLongitude = data.event && data.event.map(item => Number(item.eventLongitude))
+        const eventLatitude = data.event && data.event.map(item => Number(item.eventLatitude))
 
         const cornersLongLat = [
             [Math.min.apply(Math, (eventLongitude)), Math.min.apply(Math, eventLatitude)],
@@ -86,21 +82,9 @@ const Map = (props) => {
         return { longitude, latitude, zoom }
     } 
 
-
-    const bounds = getBounds()
+    // const bounds = getBounds()
     const classes = useStyles()
-    const [popup, setPopup] = useState(null)
     const [mapboxStyle, setMapboxStyle] = useState('mapbox://styles/mapbox/light-v9')
-    const [viewport, setViewport] = useState({
-        latitude: 0,
-        longitude: 0,
-        zoom: 6,
-        bearing: 0,
-        pitch: 0,
-        width: "75vw",
-        height: "100vh",
-        ...bounds
-    })
     
     useEffect(() => {
         const listener = e => {
@@ -115,17 +99,6 @@ const Map = (props) => {
         }
     }, [])
 
-    const flyTo = (item) => {
-        setViewport({
-            ...viewport,
-            longitude: item.eventLongitude,
-            latitude: item.eventLatitude,
-            pitch: 90,
-            zoom: 16,
-            transitionInterpolator: new FlyToInterpolator({ speed: 1.6 }),
-            transitionDuration: 'auto'
-        });
-    };
 
     const showAll =() => {
         setPopup(null)
@@ -237,7 +210,7 @@ const Map = (props) => {
                     </FormControl>
                 </div>
 
-                {props.props.event && props.props.event.map((item, index) => (
+                {data.event && data.event.map((item, index) => (
                     <>
                         {/* check to see if there location data */}
                             {item.eventLatitude && item.eventLongitude &&

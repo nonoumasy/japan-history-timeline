@@ -22,12 +22,26 @@ const schema = yup.object().shape({
         .string(),
     eventDescription: yup
         .string()
-        .required('Event is a required field.'),
+        .min(3)
+        .required('Description is a required field.'),
     eventImageUrl: yup
         .string(),
     eventLink: yup
-        .string()
-
+        .string(),
+    eventLatitude: yup
+        .number()
+        .transform(cv => isNaN(cv) ? undefined : cv).positive().integer()
+        .nullable()
+        .lessThan(90)
+        .moreThan(-90)
+        .notRequired(),
+    eventLongitude: yup
+        .number()
+        .transform(cv => isNaN(cv) ? undefined : cv).positive().integer()
+        .nullable()
+        .lessThan(180)
+        .moreThan(-180)
+        .notRequired(),
 })
 
 const useStyles = makeStyles((theme) => ({
@@ -219,6 +233,8 @@ export default function EditEvent(props) {
                         min="-90"
                         max="90"
                         inputRef={register}
+                        error={!!errors.eventLatitude}
+                        helperText={errors?.eventLatitude?.message}
                     />
 
                     <TextField
@@ -234,6 +250,8 @@ export default function EditEvent(props) {
                         min="-180"
                         max="180"
                         inputRef={register}
+                        error={!!errors.eventLongitude}
+                        helperText={errors?.eventLongitude?.message}
                     />
 
                     <Button

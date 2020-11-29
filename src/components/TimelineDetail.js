@@ -4,6 +4,7 @@ import axios from 'axios'
 import clsx from 'clsx';
 import { useForm } from 'react-hook-form'
 import Map from './Map'
+import { FlyToInterpolator } from 'react-map-gl';
 
 import { ProgressBar } from 'scrolling-based-progressbar'
 import { makeStyles } from '@material-ui/core/styles';
@@ -99,6 +100,9 @@ const useStyles = makeStyles((theme) => ({
     cardsContainer: {
         marginTop: 40,
         marginBottom: 120,
+    },
+    cardEventContainer: {
+        cursor: 'pointer',    
     },
     card: {
         width: '85%',
@@ -205,6 +209,16 @@ const TimelineDetail = (props) => {
     const [expanded, setExpanded] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
     const [eventComment, setEventComment] = useState('')
+    const [popup, setPopup] = useState(null)
+    const [viewport, setViewport] = useState({
+        latitude: 0,
+        longitude: 0,
+        zoom: 6,
+        bearing: 0,
+        pitch: 0,
+        width: "75vw",
+        height: "100vh",
+    })
 
     // get timeline by id
     useEffect(() => {
@@ -235,8 +249,22 @@ const TimelineDetail = (props) => {
         history.push(`/timeline/${id}/addEvent`)
     }
 
-    const eventClickHandler = () => {
-        alert('you clicked me.')
+    const flyTo = (item) => {
+        setViewport({
+            ...viewport,
+            longitude: item.eventLongitude,
+            latitude: item.eventLatitude,
+            pitch: 90,
+            zoom: 15,
+            transitionInterpolator: new FlyToInterpolator({ speed: 1 }),
+            transitionDuration: 'auto'
+        });
+    };
+
+    const eventClickHandler = async (id) => {
+        const item = await data.event.find(item => item._id === id)
+        flyTo(item)
+        window.setTimeout(setPopup(item), 1000)
     }
 
     return (
@@ -360,7 +388,7 @@ const TimelineDetail = (props) => {
                                         </div>
 
                                         <CardContent
-                                            onClick={eventClickHandler}>
+                                            onClick={() => eventClickHandler(item._id)} className={classes.cardEventContainer}>
                                             {item.eventYear &&
                                                     <Typography variant="body2" color="textSecondary" className={classes.year}>
                                                     {item.eventYear}
@@ -466,7 +494,13 @@ const TimelineDetail = (props) => {
                 </div>
                 <div >
                     <div className='map'>
-                        <Map props={data}/>
+                        <Map 
+                            data={data} 
+                            viewport={viewport}
+                            setViewport={setViewport} 
+                            flyTo={flyTo} 
+                            popup={popup} 
+                            setPopup={setPopup}/>
                     </div>
                 </div>
                 

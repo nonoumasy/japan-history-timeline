@@ -22,6 +22,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 const schema = yup.object().shape({
     timelineTitle: yup
         .string()
+        .min(5)
         .required('Name is a required field.'),
     timelineImageUrl: yup
         .string()

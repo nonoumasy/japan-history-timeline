@@ -12,7 +12,6 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Tooltip from '@material-ui/core/Tooltip';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
@@ -20,16 +19,29 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 
 const schema = yup.object().shape({
     eventYear: yup
-    .string(),
+        .string(),
     eventDescription: yup
-    .string()
-    .required('Description is a required field.'),
+        .string()
+        .min(3)
+        .required('Description is a required field.'),
     eventImageUrl: yup
-    .string(),
+        .string(),
     eventLink: yup
-    .string()
-    
-    
+        .string(),
+    eventLatitude: yup
+        .number()
+        .transform(cv => isNaN(cv) ? undefined : cv).positive().integer()   
+        .nullable()
+        .lessThan(90)
+        .moreThan(-90)
+        .notRequired() ,
+    eventLongitude: yup
+        .number()
+        .transform(cv => isNaN(cv) ? undefined : cv).positive().integer()
+        .nullable()
+        .lessThan(180)
+        .moreThan(-180)
+        .notRequired() ,
 })
 
 const useStyles = makeStyles((theme) => ({
@@ -180,6 +192,8 @@ export default function AddEvent(props) {
                         min="-90" 
                         max="90" 
                         inputRef={register}
+                        error={!!errors.eventLatitude}
+                        helperText={errors?.eventLatitude?.message}
                     />
 
                     <TextField
@@ -193,6 +207,8 @@ export default function AddEvent(props) {
                         min="-180" 
                         max="180" 
                         inputRef={register}
+                        error={!!errors.eventLongitude}
+                        helperText={errors?.eventLongitude?.message}
                     />
 
                     
