@@ -225,7 +225,9 @@ const Map = (props) => {
                             className={classes.select}
                         >
                             <MenuItem value={'mapbox://styles/mapbox/light-v9'}>Light</MenuItem>
+                            <MenuItem value={'mapbox://styles/nonoumasy/ckdcvbt983i4k1iny85j4q087'}>Light 3D</MenuItem>
                             <MenuItem value={'mapbox://styles/mapbox/dark-v9'}>Dark</MenuItem>
+                            <MenuItem value={'mapbox://styles/nonoumasy/cki2mq5hd1rfm1aqa1k4r4dmq'}>Dark 3D</MenuItem>
                             <MenuItem value={'mapbox://styles/nonoumasy/ck80st52c24z91ip168o50043'}>Bubble</MenuItem>
                             <MenuItem value={'mapbox://styles/mapbox/outdoors-v11'}>Outdoors</MenuItem>
                             <MenuItem value={'mapbox://styles/nonoumasy/ckfbuedoy4pwp19t9sdx07c0o'}>Old Map Style</MenuItem>
