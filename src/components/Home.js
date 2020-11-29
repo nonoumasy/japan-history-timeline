@@ -131,14 +131,14 @@ const Home = (props) => {
                     </Link>
                     </Button>
 
-                    <Button >
+                    {/* <Button >
                         <Link to='/' className={classes.link} style={{marginLeft:10}}>
                             Import Data
                     </Link>
-                    </Button>
+                    </Button> */}
                 </div>
 
-                <div>
+                {/* <div>
                     <FormControl variant="outlined" className={classes.formControl}>
                         <Select
                             id="demo-simple-select-outlined"
@@ -151,7 +151,8 @@ const Home = (props) => {
                             <MenuItem value={30}>Popular</MenuItem>
                         </Select>
                     </FormControl>
-                </div>
+                </div> */}
+
             </div>
             
             <Grid
