@@ -109,16 +109,22 @@ const useStyles = makeStyles((theme) => ({
         margin:'0 auto',
         padding: 0,
         marginTop: 20,
+        borderRadius: 10,
+        boxShadow: '0 6px 10px 0 rgba(0, 0, 0, 0.05)', 
+        '&:hover': {
+            boxShadow: '0 2px 10px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.1)',
+        },
+
     },
     media: {
         height: 'auto',
         objectFit: 'cover',
         // paddingTop: '56.25%', 
         transition: '0.4s',
-        '&:hover': {
-            transformOrigin: '50% 50%',
-            transform: 'scale(1.1)',
-        },
+        // '&:hover': {
+        //     transformOrigin: '50% 50%',
+        //     transform: 'scale(1.1)',
+        // },
         marginBottom: 20,
     },
     year: {
