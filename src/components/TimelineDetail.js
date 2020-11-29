@@ -212,8 +212,8 @@ const TimelineDetail = (props) => {
     const [popup, setPopup] = useState(null)
     const [viewport, setViewport] = useState({
         latitude: 0,
-        longitude: 0,
-        zoom: 6,
+        longitude: 160,
+        zoom: 1,
         bearing: 0,
         pitch: 0,
         width: "75vw",
