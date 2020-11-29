@@ -84,7 +84,7 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup}) => {
 
     // const bounds = getBounds()
     const classes = useStyles()
-    const [mapboxStyle, setMapboxStyle] = useState('mapbox://styles/mapbox/light-v9')
+    const [mapboxStyle, setMapboxStyle] = useState('mapbox://styles/nonoumasy/ckdcvbt983i4k1iny85j4q087')
     
     useEffect(() => {
         const listener = e => {
