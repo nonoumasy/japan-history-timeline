@@ -267,6 +267,7 @@ const TimelineDetail = (props) => {
     }
 
     const flyTo = (item) => {
+        item.eventLatitude && item.eventLongitude ?
         setViewport({
             ...viewport,
             longitude: item.eventLongitude,
@@ -275,13 +276,17 @@ const TimelineDetail = (props) => {
             zoom: 15.5,
             transitionInterpolator: new FlyToInterpolator({ speed: 1 }),
             transitionDuration: 'auto'
-        });
+        })
+        :
+        setTimeout(() => {
+            <p>No location</p>
+        }, 2000)    
     };
 
     const eventClickHandler = async (id) => {
         const item = await data.event.find(item => item._id === id)
-        flyTo(item)
-        window.setTimeout(setPopup(item), 1000)
+        await flyTo(item)
+        await window.setTimeout(setPopup(item), 1000)
     }
 
     return (

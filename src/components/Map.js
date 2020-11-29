@@ -287,7 +287,7 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, set
                                 tipSize={0}
                             >
                                 <div>
-                                    {`${popup.eventDescription.substring(0, 140)}...`}
+                                    {`${popup.eventDescription.substring(0, 140)}`}
                                 </div>
                             </Popup>
                         ) 

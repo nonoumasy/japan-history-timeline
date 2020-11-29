@@ -30,14 +30,14 @@ const schema = yup.object().shape({
         .string(),
     eventLatitude: yup
         .number()
-        .transform(cv => isNaN(cv) ? undefined : cv).positive().integer()
+        .transform(cv => isNaN(cv) ? undefined : cv).positive()
         .nullable()
         .lessThan(90)
         .moreThan(-90)
         .notRequired(),
     eventLongitude: yup
         .number()
-        .transform(cv => isNaN(cv) ? undefined : cv).positive().integer()
+        .transform(cv => isNaN(cv) ? undefined : cv).positive()
         .nullable()
         .lessThan(180)
         .moreThan(-180)
