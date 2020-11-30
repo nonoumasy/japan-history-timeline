@@ -113,7 +113,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: 10,
         boxShadow: '0 6px 10px 0 rgba(0, 0, 0, 0.05)', 
         '&:hover': {
-            boxShadow: '0 2px 10px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.1)',
+            boxShadow: '0 0px 40px 0 rgba(0, 0, 0, 0.1), 0 10px 20px 0 rgba(0, 0, 0, 0.1)',
         },
 
     },
@@ -176,7 +176,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '12px',
         fontWeight: 700,
         color: '#333',
-        
+
     },
     cardaction: {
         overflow: 'hidden',
