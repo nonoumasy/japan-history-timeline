@@ -103,6 +103,7 @@ const useStyles = makeStyles((theme) => ({
     },
     cardEventContainer: {
         cursor: 'pointer',    
+        padding: 0,
     },
     card: {
         width: '85%',
@@ -141,14 +142,14 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '12px',
         fontWeight: 700,
         color: '#333',
-        marginLeft: '1rem',
+        // marginLeft: '1rem',
         backgroundColor: "#dfdfdf"
     },
     eventTitle: {
 
     },
     event: {
-        marginLeft: '1rem',
+        // marginLeft: '1rem',
         marginTop: 10,
         marginBottom: 20,
         color: '#666',
@@ -179,7 +180,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: '0 30px 20px'
+        padding: 0,
     },
     imageContainer: {
         margin: 0,
