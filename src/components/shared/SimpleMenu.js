@@ -3,6 +3,7 @@ import React from 'react';
 import Menu from '@material-ui/core/Menu';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
 
 export const SimpleMenu = (props) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -18,7 +19,10 @@ export const SimpleMenu = (props) => {
     return (
         <div>
             <Tooltip title='More Actions'>
-                <MoreHorizIcon onClick={handleClick} aria-controls="simple-menu" aria-haspopup="true" style={{cursor:'pointer'}}/>
+                <IconButton>
+                    <MoreHorizIcon onClick={handleClick} aria-controls="simple-menu" aria-haspopup="true" style={{ cursor: 'pointer' }} />
+                </IconButton>
+                
             </Tooltip>
             <Menu
                 id="simple-menu"

@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     flexRowBetween: {
         display: 'flex',
         flexDirection: 'row',
-        alignItems: 'flex-end',
+        alignItems: 'center',
         justifyContent: 'space-between',
     },
     fab: {
@@ -65,12 +65,16 @@ const useStyles = makeStyles((theme) => ({
         padding: 0
     },
     avatar: {
+        width: 50,
+        height: 50,
         marginTop: 10,
         marginBottom: 30,
         margin: '0 auto'
     },
     title: {
-        margin: 0,
+        marginTop: 10,
+        marginBottom: 0,
+        marginRight: 10,
     },
     metadata: {
         marginLeft: '4rem',
@@ -82,9 +86,6 @@ const useStyles = makeStyles((theme) => ({
     },
     numItems: {
         fontSize: '16px',
-    },
-    numLikes: {
-        fontSize: '12px',
     },
     user: {
         fontSize: '12px',
@@ -173,7 +174,7 @@ const useStyles = makeStyles((theme) => ({
     numLikes: {
         display: 'inline',
         borderRadius: 4,
-        fontSize: '12px',
+        fontSize: '16px',
         fontWeight: 700,
         color: '#333',
 
@@ -329,13 +330,13 @@ const TimelineDetail = (props) => {
 
                                         <SimpleMenu props={props}>
                                                 <MenuItem onClick={props.handleClose}>
-                                                        <EditIcon fontSize='small' style={{ marginRight: 16 }}/>
-                                                        <Link
-                                                            className={classes.link}
-                                                            to={`/editTimeline/${id}`}
-                                                        >
-                                                            Edit
-                                                        </Link>
+                                                <EditIcon fontSize='small' style={{ marginRight: 16 }}  />
+                                                    <Link
+                                                        className={classes.link}
+                                                        to={`/editTimeline/${id}`}
+                                                    >
+                                                        Edit
+                                                    </Link>
                                                 </MenuItem>
                                                 <MenuItem onClick={props.handleClose}>
                                                     <DeleteIcon fontSize='small' style={{ marginRight: 16 }} />
