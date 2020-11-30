@@ -29,7 +29,7 @@ const NavBar = () =>  {
                             to="/"
                             style={{ textDecoration: 'none', color: '#fff' }}
                         >
-                            StoryMaps
+                            StoryMaps | StoryLines
                         </Link>
                     </Typography>
 

@@ -225,7 +225,7 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, set
                                     onClick={(e) => onClickMarker(e, item)}>
                                     
                                     <div >
-                                    {item.eventImageUrl && item.eventImageUrl.includes('youtube.com') ?
+                                    {item.eventImageUrl ? item.eventImageUrl.includes('youtube.com') ?
                                         <div className={classes.marker}>
                                             {`${index + 1}`}
                                         </div>
@@ -262,10 +262,10 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, set
                                                     margin: '0 auto'
                                                 }} /> 
                                             </div>
-                                            // :
-                                            // <div className={classes.marker}>
-                                            //     {`${index + 1}`}
-                                            // </div>
+                                            :
+                                            <div className={classes.marker}>
+                                                {`${index + 1}`}
+                                            </div>
                                         }
                                     </div>
                                 </div>
