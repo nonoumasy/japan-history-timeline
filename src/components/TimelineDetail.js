@@ -225,7 +225,7 @@ const TimelineDetail = (props) => {
         zoom: 1,
         bearing: 0,
         pitch: 0,
-        width: "70vw",
+        width: "50vw",
         height: "100vh",
     })
 
