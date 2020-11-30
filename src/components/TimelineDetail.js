@@ -76,12 +76,12 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: '4rem',
         display: 'flex',
     },
-    year: {
-        fontSize: '12px',
-    },
     thumbUpIcon: {
         fontSize: '16px',
         marginRight: 4,
+    },
+    numItems: {
+        fontSize: '16px',
     },
     numLikes: {
         fontSize: '12px',
@@ -106,7 +106,7 @@ const useStyles = makeStyles((theme) => ({
         padding: 0,
     },
     card: {
-        width: '80%',
+        width: '90%',
         margin:'0 auto',
         padding: 20,
         marginTop: 20,
@@ -125,7 +125,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 30,
     },
     video: {
-        height: 300,
+        height: 340,
         width:'100%',
         outline: 0,
         border: 0,
@@ -141,7 +141,7 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 700,
         color: '#333',
         marginLeft: '1rem',
-        backgroundColor: "#dfdfdf"
+        backgroundColor: "#dfdfdf",
     },
     eventTitle: {
 
@@ -377,7 +377,7 @@ const TimelineDetail = (props) => {
 
                                     </div>
                                     <div className={classes.flexRow} >
-                                        <div><p className={classes.year}>{data.event && data.event.length} items</p></div>
+                                        <div><p className={classes.numItems}>{data.event && data.event.length} items</p></div>
                                         <div style={{ marginLeft: 20 }} className={classes.flexRow}><ThumbUpAltIcon className={classes.thumbUpIcon} /><p className={classes.numLikes}>2k</p></div>
                                         {/* <div><p className={classes.user}>nonoumasy</p></div> */}
                                     </div>

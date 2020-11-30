@@ -39,7 +39,7 @@ const NavBar = () =>  {
                             style={{ textDecoration: 'none', color: '#fff' }}
                         >
                             <Typography className={classes.link}>
-                                StoryMaps | StoryLines
+                                StoryMaps
                             </Typography>
                         </Link>
                     </div>
