@@ -134,6 +134,7 @@ const useStyles = makeStyles((theme) => ({
         border: 0,
         padding: 0,
         borderRadius: 7,
+        marginBottom: 20,
     },
     year: {
         display: 'inline',
@@ -142,16 +143,16 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '12px',
         fontWeight: 700,
         color: '#333',
-        // marginLeft: '1rem',
+        marginLeft: '1rem',
         backgroundColor: "#dfdfdf"
     },
     eventTitle: {
 
     },
     event: {
-        // marginLeft: '1rem',
+        marginLeft: '1rem',
         marginTop: 10,
-        marginBottom: 20,
+        marginBottom: 10,
         color: '#666',
     },
     more: {
@@ -180,7 +181,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 0,
+        padding: '20px 0 10px',
     },
     imageContainer: {
         margin: 0,
