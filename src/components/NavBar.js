@@ -13,7 +13,16 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         flexGrow: 1,
-        fontSize: '16px'
+        marginLeft: '2rem',
+    },
+    link: {
+        // textAlign: 'left',
+        textTransform: 'uppercase',
+        fontSize: '12px',
+        fontWeight: 700,
+        textDecoration: 'none',
+        cursor: 'pointer',
+        color: '#fff',
     },
 }));
 
@@ -24,32 +33,40 @@ const NavBar = () =>  {
         <div className={classes.root}>
             <AppBar position="fixed">
                 <Toolbar style={{textAlign: 'left'}}>
-                    <Typography variant="h6" className={classes.title} >
+                    <div variant="h6" className={classes.title}>
                         <Link
                             to="/"
                             style={{ textDecoration: 'none', color: '#fff' }}
                         >
-                            StoryMaps | StoryLines
+                            <Typography className={classes.link}>
+                                StoryMaps | StoryLines
+                            </Typography>
                         </Link>
-                    </Typography>
+                    </div>
 
                     <Link
                         to="/signup"
                         style={{ textDecoration: 'none', color: '#fff' }}
                     >
-                        Signup
+                        <Typography className={classes.link}>
+                            Signup
+                        </Typography>
                     </Link>
                     <Link
                         to="/login"
                         style={{ textDecoration: 'none', color: '#fff', marginLeft: 16 }}
                     >
-                        Login
+                        <Typography className={classes.link}>
+                            Login
+                        </Typography>
                     </Link>
                     <Link
                         to="/"
                         style={{ textDecoration: 'none', color: '#fff', marginLeft: 16 }}
                     >
-                        Logout
+                        <Typography className={classes.link}>
+                            Logout
+                        </Typography>
                     </Link>
                 </Toolbar>
             </AppBar>
