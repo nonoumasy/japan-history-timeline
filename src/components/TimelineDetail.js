@@ -121,20 +121,15 @@ const useStyles = makeStyles((theme) => ({
         height: 'auto',
         objectFit: 'cover',
         borderRadius: 7,
-        // paddingTop: '56.25%', 
         transition: '0.4s',
-        // '&:hover': {
-        //     transformOrigin: '50% 50%',
-        //     transform: 'scale(1.1)',
-        // },
-        marginBottom: 20,
+        marginBottom: 30,
     },
     video: {
         outline: 0,
         border: 0,
         padding: 0,
         borderRadius: 7,
-        marginBottom: 20,
+        marginBottom: 30,
     },
     year: {
         display: 'inline',

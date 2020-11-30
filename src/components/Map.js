@@ -233,7 +233,7 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, set
                                                     height: `${markerHeight}px`,
                                                     // height: '40px',
                                                     objectFit: 'cover',
-                                                    borderRadius: '5px',
+                                                    borderRadius: '10px',
                                                     boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
                                                     margin: '0 auto',
                                                     outline: 0,
@@ -255,7 +255,7 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, set
                                                     width: `auto`,
                                                     height:`${markerHeight}px`,
                                                     objectFit: 'cover',
-                                                    borderRadius: '5px',
+                                                    borderRadius: '10px',
                                                     boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
                                                     margin: '0 auto'
                                                 }} /> 
