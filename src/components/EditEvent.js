@@ -20,10 +20,13 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 const schema = yup.object().shape({
     eventYear: yup
         .string(),
+    eventTitle: yup
+        .string()
+        .required('Description is a required field.')
+        .min(3),
     eventDescription: yup
         .string()
-        .min(3)
-        .required('Description is a required field.'),
+        .min(3),
     eventImageUrl: yup
         .string(),
     eventLink: yup
@@ -70,6 +73,7 @@ export default function EditEvent(props) {
 
     const [data, setData] = useState('')
     const [eventYear, setEventYear] = useState('')
+    const [eventTitle, setEventTitle] = useState('')
     const [eventDescription, setEventDescription] = useState('')
     const [eventImageUrl, setEventImageUrl] = useState('')
     const [eventLink, setEventLink] = useState('')
@@ -91,6 +95,7 @@ export default function EditEvent(props) {
             .then(data => {
                 // console.log('sd',data);
                 setEventYear(data.eventYear)
+                setEventTitle(data.eventTitle)
                 setEventDescription(data.eventDescription)
                 setEventImageUrl(data.eventImageUrl)
                 setEventLink(data.eventLink)
@@ -102,10 +107,11 @@ export default function EditEvent(props) {
 
     useEffect(() => {
         if (data) {
-            const { eventYear, eventDescription, eventImageUrl, eventLink, eventLatitude, eventLongitude } = data
+            const { eventYear, eventTitle, eventDescription, eventImageUrl, eventLink, eventLatitude, eventLongitude } = data
             // posting to database
             axios.put(`https://japan-history-timeline-api.herokuapp.com/timeline/event/${props.match.params.id}`, {
                 eventYear,
+                eventTitle,
                 eventDescription,
                 eventImageUrl,
                 eventLink,
@@ -157,7 +163,24 @@ export default function EditEvent(props) {
                     <TextField
                         variant="outlined"
                         margin="normal"
+                        fullWidth
                         required
+                        id="eventTitle"
+                        label="eventTitle"
+                        name="eventTitle"
+                        autoComplete="eventTitle"
+                        type="text"
+                        value={eventTitle}
+                        onChange={e => setEventTitle(e.target.value)}
+                        autoFocus
+                        inputRef={register}
+                        error={!!errors.eventTitle}
+                        helperText={errors?.eventTitle?.message}
+                    />
+                    
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
                         fullWidth
                         multiline
                         rows={4}

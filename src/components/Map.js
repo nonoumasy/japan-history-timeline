@@ -117,9 +117,10 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, set
     const onClickMarker = (e, item) => {
         e.preventDefault()
         setEventId(item._id)
-        flyTo(item)
-        window.setTimeout(setPopup(item), 1000)
-        
+        if (item.eventLongitude && item.eventLatitude ) {
+            flyTo(item)
+            setPopup(item)
+        }
     }
 
     const handleChange = (event) => {
@@ -236,7 +237,6 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, set
                                                     boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
                                                     margin: '0 auto',
                                                     outline: 0,
-                                                    border: 0,
                                                     padding: 0
                                                     }}
                                                 src={item.eventImageUrl}
@@ -252,12 +252,9 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, set
                                             <div>
                                                 <img src={item.eventImageUrl} alt='' 
                                                 style={{
-                                                    //width: `${viewport.zoom ** 1.8}px`,
                                                     width: `auto`,
-                                                    // height:`auto`,
                                                     height:`${markerHeight}px`,
                                                     objectFit: 'cover',
-                                                    // marginLeft: `-${viewport.zoom ** 1.8/2}px`,
                                                     borderRadius: '5px',
                                                     boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
                                                     margin: '0 auto'

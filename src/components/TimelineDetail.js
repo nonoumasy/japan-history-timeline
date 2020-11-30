@@ -107,7 +107,7 @@ const useStyles = makeStyles((theme) => ({
     card: {
         width: '85%',
         margin:'0 auto',
-        padding: 0,
+        padding: 20,
         marginTop: 20,
         borderRadius: 10,
         boxShadow: '0 6px 10px 0 rgba(0, 0, 0, 0.05)', 
@@ -119,6 +119,7 @@ const useStyles = makeStyles((theme) => ({
     media: {
         height: 'auto',
         objectFit: 'cover',
+        borderRadius: 7,
         // paddingTop: '56.25%', 
         transition: '0.4s',
         // '&:hover': {
@@ -126,6 +127,12 @@ const useStyles = makeStyles((theme) => ({
         //     transform: 'scale(1.1)',
         // },
         marginBottom: 20,
+    },
+    video: {
+        outline: 0,
+        border: 0,
+        padding: 0,
+        borderRadius: 7,
     },
     year: {
         display: 'inline',
@@ -136,7 +143,9 @@ const useStyles = makeStyles((theme) => ({
         color: '#333',
         marginLeft: '1rem',
         backgroundColor: "#dfdfdf"
-    
+    },
+    eventTitle: {
+
     },
     event: {
         marginLeft: '1rem',
@@ -176,11 +185,6 @@ const useStyles = makeStyles((theme) => ({
         margin: 0,
         padding: 0,
         overflow: 'hidden'
-    },
-    video: {
-        outline: 0,
-        border: 0,
-        padding: 0,
     },
     spinner: {
         display: 'flex',
@@ -356,7 +360,8 @@ const TimelineDetail = (props) => {
                                                         href={`data:text/json;charset=utf-8,${encodeURIComponent(
                                                             JSON.stringify(data)
                                                         )}`}
-                                                        download="filename.json"
+                                                        download={ data.timelineTitle && `${(data.timelineTitle).split(' ').join('_')}.json`}
+                                                        // download='filename.json'
                                                         className={classes.link}>
                                                         Export Data as Json
                                                     </a>
@@ -415,11 +420,14 @@ const TimelineDetail = (props) => {
                                         <CardContent
                                             onClick={() => eventClickHandler(item._id)} className={classes.cardEventContainer}>
                                             {item.eventYear &&
-                                                    <Typography variant="body2" color="textSecondary" className={classes.year}>
-                                                    {item.eventYear}
+                                                <Typography variant="body2" color="textSecondary" className={classes.year}>
+                                                {item.eventYear}
                                                 </Typography>
                                             }
-                                            
+                                            {item.eventTitle &&
+                                            <Typography className={classes.eventTitle}>
+                                                {item.eventTitle}
+                                            </Typography>}
                                             <Typography className={classes.event}>
                                                 {item.eventDescription}
                                             </Typography>

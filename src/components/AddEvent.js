@@ -20,10 +20,13 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 const schema = yup.object().shape({
     eventYear: yup
         .string(),
+    eventTitle: yup
+        .string()
+        .required('Title is a required field.')
+        .min(3),
     eventDescription: yup
         .string()
-        .min(3)
-        .required('Description is a required field.'),
+        .min(3),
     eventImageUrl: yup
         .string(),
     eventLink: yup
@@ -76,12 +79,13 @@ export default function AddEvent(props) {
         setExpanded(!expanded);
     };
     
-    const { eventYear, eventDescription, eventImageUrl, eventLink, eventLatitude,
+    const { eventYear, eventTitle, eventDescription, eventImageUrl, eventLink, eventLatitude,
         eventLongitude} = data
     useEffect(() => {
         if (data) {
             axios.put(`https://japan-history-timeline-api.herokuapp.com/timeline/${id}/update`, {
                 eventYear,
+                eventTitle,
                 eventDescription,
                 eventImageUrl,
                 eventLink,
@@ -110,7 +114,6 @@ export default function AddEvent(props) {
                     <TextField
                         variant="outlined"
                         margin="normal"
-                        
                         fullWidth
                         id="eventYear"
                         label="eventYear"
@@ -125,7 +128,20 @@ export default function AddEvent(props) {
                     <TextField
                         variant="outlined"
                         margin="normal"
+                        fullWidth
                         required
+                        id="eventTitle"
+                        label="eventTitle"
+                        name="eventTitle"
+                        autoComplete="eventTitle"
+                        type="text"
+                        inputRef={register}
+                        error={!!errors.eventTitle}
+                        helperText={errors?.eventTitle?.message}
+                    />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
                         fullWidth
                         multiline
                         rows={4}
