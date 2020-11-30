@@ -147,7 +147,7 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, set
 
                 <div style={{
                     position: 'absolute',
-                    top: 50,
+                    top: 10,
                     left: 0,
                     padding: '10px',
                     zIndex: 200
@@ -157,7 +157,7 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, set
 
                 <div style={{
                     position: 'absolute',
-                    top: 90,
+                    top: 50,
                     left: 0,
                     padding: '10px',
                     zIndex: 200
@@ -169,13 +169,13 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, set
                     style={{
                     position: 'absolute',
                     top: 10,
-                    left: 0,
+                    right: '50%',
                     padding: '10px',
                     zIndex: 200
                 }}>
                     <Button 
                         onClick={showAll}
-                        variant="contained"
+                        variant="outlined"
                         color="default">
                         <Typography className={classes.showAll}>
                             Show All
@@ -225,29 +225,31 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, set
                                     onClick={(e) => onClickMarker(e, item)}>
                                     
                                     <div >
-                                    {item.eventImageUrl ? item.eventImageUrl.includes('youtube.com') ?
-                                            <iframe
-                                                // component='video'
-                                                style={{
-                                                    width: `${markerWidth}px`,
-                                                    height: `${markerHeight}px`,
-                                                    // height: '40px',
-                                                    objectFit: 'cover',
-                                                    borderRadius: '10px',
-                                                    boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
-                                                    margin: '0 auto',
-                                                    outline: 0,
-                                                    padding: 0
-                                                    }}
-                                                src={item.eventImageUrl}
-                                                allowFullScreen
-                                                mozallowfullscreen="mozallowfullscreen"
-                                                msallowfullscreen="msallowfullscreen"
-                                                oallowfullscreen="oallowfullscreen"
-                                                webkitallowfullscreen="webkitallowfullscreen"
-                                                allow="accelerometer"
-                                                title={item.year}
-                                            ></iframe>
+                                    {item.eventImageUrl && item.eventImageUrl.includes('youtube.com') ?
+                                        <div className={classes.marker}>
+                                            {`${index + 1}`}
+                                        </div>
+                                            // <iframe
+                                            //     // component='video'
+                                            //     style={{
+                                            //         width: `${markerWidth}px`,
+                                            //         height: `${markerHeight}px`,
+                                            //         objectFit: 'cover',
+                                            //         borderRadius: 7,
+                                            //         boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
+                                            //         margin: '0 auto',
+                                            //         outline: 0,
+                                            //         padding: 0
+                                            //         }}
+                                            //     src={item.eventImageUrl}
+                                            //     allowFullScreen
+                                            //     mozallowfullscreen="mozallowfullscreen"
+                                            //     msallowfullscreen="msallowfullscreen"
+                                            //     oallowfullscreen="oallowfullscreen"
+                                            //     webkitallowfullscreen="webkitallowfullscreen"
+                                            //     allow="accelerometer"
+                                            //     title={item.year}
+                                            // ></iframe>
                                             :
                                             <div>
                                                 <img src={item.eventImageUrl} alt='' 
@@ -255,15 +257,15 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, set
                                                     width: `auto`,
                                                     height:`${markerHeight}px`,
                                                     objectFit: 'cover',
-                                                    borderRadius: '10px',
+                                                    borderRadius: 7,
                                                     boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
                                                     margin: '0 auto'
                                                 }} /> 
                                             </div>
-                                            :
-                                            <div className={classes.marker}>
-                                                {`${index + 1}`}
-                                            </div>
+                                            // :
+                                            // <div className={classes.marker}>
+                                            //     {`${index + 1}`}
+                                            // </div>
                                         }
                                     </div>
                                 </div>

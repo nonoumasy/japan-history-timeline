@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
         zIndex: 1000
     },
     headerArea: {
-        width: '85%',
+        width: '80%',
         margin: '0 auto',
         padding: 0
     },
@@ -106,7 +106,7 @@ const useStyles = makeStyles((theme) => ({
         padding: 0,
     },
     card: {
-        width: '85%',
+        width: '80%',
         margin:'0 auto',
         padding: 20,
         marginTop: 20,
@@ -225,7 +225,7 @@ const TimelineDetail = (props) => {
         zoom: 1,
         bearing: 0,
         pitch: 0,
-        width: "75vw",
+        width: "70vw",
         height: "100vh",
     })
 
@@ -478,8 +478,8 @@ const TimelineDetail = (props) => {
                                                 </MenuItem>
                                             </SimpleMenu>
                                         </CardActions>
-                                        <Divider light />
                                         <Collapse in={expanded} timeout="auto" unmountOnExit>
+                                            <Divider light />
                                             <CardContent className={classes.actions} style={{ marginTop: 20, marginBottom: 0 }}>
                                                 <div >
                                                     <Avatar alt="Freya" src="https://pbs.twimg.com/media/B-d6yG4IIAAM7Wt.png" />
