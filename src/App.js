@@ -45,8 +45,8 @@ function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Scroll showBelow={300} />
         <NavBar />
+        <Scroll showBelow={300} />
         <Switch>
           
           <Route path='/signup'>
@@ -72,12 +72,11 @@ function App() {
             exact path='/editEvent/:id'
             render={props => <EditEvent {...props} />}
           />
-            <Route exact path='/'>
-              <div style={{ margin: '90px auto' }}>
-                <Home />
-              </div>
-            </Route>
-          
+          <Route exact path='/'>
+            <div style={{ marginTop: '90px' }}>
+              <Home />
+            </div>
+          </Route>
 
           <Route
             exact path='/timeline/:id/addEvent'>

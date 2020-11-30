@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: '4rem',
         display: 'flex',
     },
-    numItems: {
+    year: {
         fontSize: '12px',
     },
     thumbUpIcon: {
@@ -125,6 +125,8 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 30,
     },
     video: {
+        height: 300,
+        width:'100%',
         outline: 0,
         border: 0,
         padding: 0,
@@ -167,6 +169,14 @@ const useStyles = makeStyles((theme) => ({
         textDecoration: 'none',
         cursor: 'pointer',
         color: '#333',
+    },
+    numLikes: {
+        display: 'inline',
+        borderRadius: 4,
+        fontSize: '12px',
+        fontWeight: 700,
+        color: '#333',
+        
     },
     cardaction: {
         overflow: 'hidden',
@@ -367,7 +377,7 @@ const TimelineDetail = (props) => {
 
                                     </div>
                                     <div className={classes.flexRow} >
-                                        <div><p className={classes.numItems}>{data.event && data.event.length} items</p></div>
+                                        <div><p className={classes.year}>{data.event && data.event.length} items</p></div>
                                         <div style={{ marginLeft: 20 }} className={classes.flexRow}><ThumbUpAltIcon className={classes.thumbUpIcon} /><p className={classes.numLikes}>2k</p></div>
                                         {/* <div><p className={classes.user}>nonoumasy</p></div> */}
                                     </div>
@@ -397,11 +407,9 @@ const TimelineDetail = (props) => {
                                                     msallowfullscreen="msallowfullscreen"
                                                     oallowfullscreen="oallowfullscreen"
                                                     webkitallowfullscreen="webkitallowfullscreen"
-                                                    width='100%'
-                                                    height='200'
                                                     allow="accelerometer"
                                                     title={item.year}
-                                                // type="*"
+                                                        type="*"
                                                 ></iframe>
                                                 :
                                                 item.eventImageUrl &&
@@ -444,7 +452,9 @@ const TimelineDetail = (props) => {
                                                 <IconButton>
                                                     <ThumbUpAltIcon />
                                                 </IconButton>
-                                                100
+                                                <Typography className={classes.numLikes}>
+                                                    100
+                                                </Typography>
                                             </div>
 
                                             <IconButton
