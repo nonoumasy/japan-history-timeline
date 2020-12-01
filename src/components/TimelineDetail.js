@@ -228,7 +228,7 @@ const TimelineDetail = (props) => {
     // get timeline by id
     useEffect(() => {
         setIsLoading(true)
-        fetch(`https://japan-history-timeline-api.herokuapp.com/timeline/${id}`)
+        fetch(`http://localhost:5000/timeline/${id}`)
             .then(res => res.json())
             .then(data => {
                 // console.log(data)
@@ -282,6 +282,7 @@ const TimelineDetail = (props) => {
 
     const eventClickHandler = async (id) => {
         const item = await data.event.find(item => item._id === id)
+        item.eventLatitude && item.eventLongitude &&
         await flyTo(item)
         await window.setTimeout(setPopup(item), 1000)
     }
