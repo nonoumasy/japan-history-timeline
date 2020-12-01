@@ -97,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
     },
     cardsContainer: {
         marginTop: 40,
-        marginBottom: 160,
+        marginBottom: 120,
     },
     cardEventContainer: {
         cursor: 'pointer',    

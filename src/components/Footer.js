@@ -5,7 +5,7 @@ import Link from '@material-ui/core/Link'
 
 const Footer = () => {
     return (
-        <div style={{marginTop: 60, marginBottom: 20}}>
+        <div style={{marginTop: 100, marginBottom: 20}}>
             <Typography variant="body2" color="textSecondary" align="center">
                 {'Copyright © '}
                 <Link target='_blank' href="https://www.linkedin.com/in/nonoumasy/">
