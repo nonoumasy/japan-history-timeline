@@ -57,8 +57,8 @@ const useStyles = makeStyles((theme) => ({
     },
     fab: {
         position: 'fixed',
-        top: '80%',
-        left: '1.5%',
+        top: '90%',
+        left: '45%',
         zIndex: 1000
     },
     avatar: {
