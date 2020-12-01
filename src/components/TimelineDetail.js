@@ -126,14 +126,15 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '12px',
         fontWeight: 700,
         color: '#333',
-        marginLeft: '1rem',
         backgroundColor: "#dfdfdf",
+        marginLeft: '1rem',
     },
     eventTitle: {
 
     },
     event: {
-        marginLeft: '1rem',
+        paddingLeft: '1rem',
+        paddingRight: '1rem',
         marginTop: 10,
         marginBottom: 10,
         color: '#666',
@@ -162,7 +163,6 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '16px',
         fontWeight: 700,
         color: '#333',
-
     },
     cardaction: {
         overflow: 'hidden',
@@ -188,7 +188,6 @@ const useStyles = makeStyles((theme) => ({
     },
     expand: {
         transform: 'rotate(0deg)',
-        marginLeft: 'auto',
         transition: theme.transitions.create('transform', {
             duration: theme.transitions.duration.shortest,
         }),
@@ -366,8 +365,14 @@ const TimelineDetail = (props) => {
                                     </div>
                                     <div className={classes.flexRow} >
                                         <div><p className={classes.numItems}>{data.event && data.event.length} items</p></div>
-                                        <div style={{ marginLeft: 20 }} className={classes.flexRow}><ThumbUpAltIcon className={classes.thumbUpIcon} /><p className={classes.numLikes}>2k</p></div>
-                                        {/* <div><p className={classes.user}>nonoumasy</p></div> */}
+                                        <div>
+                                            <IconButton style={{marginLeft: 10}}>
+                                                <ThumbUpAltIcon />
+                                            </IconButton>
+                                            <Typography className={classes.numLikes}>
+                                                <p className={classes.numLikes}>2k</p>
+                                                </Typography>
+                                        </div>
                                     </div>
                                     <p className={classes.tags}>Tags:{data.tags}</p>
                                 </div>
@@ -436,14 +441,6 @@ const TimelineDetail = (props) => {
                                         </CardContent>
 
                                         <CardActions className={classes.actions}>
-                                            <div>
-                                                <IconButton>
-                                                    <ThumbUpAltIcon />
-                                                </IconButton>
-                                                <Typography className={classes.numLikes}>
-                                                    100
-                                                </Typography>
-                                            </div>
 
                                             <IconButton
                                                 className={clsx(classes.expand, {
