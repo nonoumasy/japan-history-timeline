@@ -20,10 +20,10 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 const schema = yup.object().shape({
     eventYear: yup
         .string(),
-    eventTitle: yup
-        .string()
-        .required('Description is a required field.')
-        .min(3),
+    // eventTitle: yup
+    //     .string()
+    //     .required('Description is a required field.')
+    //     .min(3),
     eventDescription: yup
         .string()
         .min(3),
@@ -93,7 +93,7 @@ export default function EditEvent(props) {
             headers: { 'Content-Type': 'application/json' }})
             .then(res => res.json())
             .then(data => {
-                // console.log('sd',data);
+                console.log('sd',data);
                 setEventYear(data.eventYear)
                 setEventTitle(data.eventTitle)
                 setEventDescription(data.eventDescription)
@@ -102,7 +102,7 @@ export default function EditEvent(props) {
                 setEventLatitude(data.eventLatitude)
                 setEventLongitude(data.eventLongitude)
             })
-            // .then({ new: true })
+            .then({ new: true })
     }, [])
 
     useEffect(() => {
@@ -164,7 +164,7 @@ export default function EditEvent(props) {
                         variant="outlined"
                         margin="normal"
                         fullWidth
-                        required
+                        // required
                         id="eventTitle"
                         label="eventTitle"
                         name="eventTitle"

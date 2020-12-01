@@ -227,7 +227,7 @@ const TimelineDetail = (props) => {
     // get timeline by id
     useEffect(() => {
         setIsLoading(true)
-        fetch(`http://localhost:5000/timeline/${id}`)
+        fetch(`https://japan-history-timeline-api.herokuapp.com/timeline/${id}`)
             .then(res => res.json())
             .then(data => {
                 // console.log(data)

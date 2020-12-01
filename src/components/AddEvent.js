@@ -20,10 +20,10 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 const schema = yup.object().shape({
     eventYear: yup
         .string(),
-    eventTitle: yup
-        .string()
-        .required('Title is a required field.')
-        .min(3),
+    // eventTitle: yup
+    //     .string()
+    //     .required('Title is a required field.')
+    //     .min(3),
     eventDescription: yup
         .string()
         .min(3),
@@ -129,7 +129,7 @@ export default function AddEvent(props) {
                         variant="outlined"
                         margin="normal"
                         fullWidth
-                        required
+                        // required
                         id="eventTitle"
                         label="eventTitle"
                         name="eventTitle"

@@ -90,7 +90,7 @@ export default function EditTimeline(props) {
             const { timelineTitle, timelineImageUrl, tags} = data
 
             // posting to database
-            axios.put(`http://localhost:5000/timeline/${props.match.params.id}`, 
+            axios.put(`https://japan-history-timeline-api.herokuapp.com/timeline/${props.match.params.id}`, 
                 {
                     timelineTitle,
                     timelineImageUrl,

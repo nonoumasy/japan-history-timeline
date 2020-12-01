@@ -65,7 +65,7 @@ const Login = () => {
 
     const postData = ({ email, password }) => {
         // posting to db
-        fetch('http://localhost:5000/login', {
+        fetch('https://japan-history-timeline-api.herokuapp.com/login', {
             method: 'post',
             headers: {
                 "content-type": "application/json"
