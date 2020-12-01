@@ -63,15 +63,15 @@ const Login = () => {
         resolver: yupResolver(schema)
     })
 
-    const postData = ({ email, password }) => {
+    const postData = ({ username, password }) => {
         // posting to db
-        fetch('https://japan-history-timeline-api.herokuapp.com/login', {
+        fetch('http://localhost:5000/login', {
             method: 'post',
             headers: {
                 "content-type": "application/json"
             },
             body: JSON.stringify({
-                email,
+                username,
                 password
             })
         }).then(res => res.json())

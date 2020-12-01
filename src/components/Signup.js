@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import axios from 'axios'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
@@ -71,7 +70,6 @@ const Signup = () => {
 
     //formdata
     const { register, handleSubmit, errors } = useForm({
-        // mode: 'onBlur',
         resolver: yupResolver(schema)
     })
 
