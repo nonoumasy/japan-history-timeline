@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     },
     fab: {
         position: 'fixed',
-        top: '90%',
+        top: '85%',
         left: '3%',
         zIndex: 1000
     },
@@ -111,7 +111,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 40,
     },
     video: {
-        height: 340,
+        height: 240,
         width:'100%',
         outline: 0,
         border: 0,
