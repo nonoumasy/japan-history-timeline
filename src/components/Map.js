@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import ReactMapGL, { Marker, NavigationControl, FullscreenControl, WebMercatorViewport, Popup, FlyToInterpolator} from 'react-map-gl';
+import ReactMapGL, { Marker, NavigationControl, FullscreenControl, Popup, FlyToInterpolator} from 'react-map-gl';
 
 import {makeStyles} from '@material-ui/styles'
 import Button from '@material-ui/core/Button';
@@ -140,7 +140,7 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, set
         <>
             <ReactMapGL
                 {...viewport}
-                attributionControl='true'
+                attributionControl={true}
                 mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
                 mapStyle={mapboxStyle}
                 onViewportChange={viewport => setViewport(viewport)}>
@@ -213,7 +213,7 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, set
                 </div>
 
                 {data.event && data.event.map((item, index) => (
-                    <>
+                    <div key={item._id}>
                         {/* check to see if there location data */}
                             {item.eventLatitude && item.eventLongitude &&
                         <Marker 
@@ -291,7 +291,7 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, set
                             </Popup>
                         ) 
                         : null}  
-                    </>
+                    </div>
                     ))
                 }
             </ReactMapGL>
