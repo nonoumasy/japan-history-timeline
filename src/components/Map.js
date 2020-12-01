@@ -99,7 +99,6 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, set
         }
     }, [])
 
-
     const showAll =() => {
         setPopup(null)
         setViewport({
