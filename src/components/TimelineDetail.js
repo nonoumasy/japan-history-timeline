@@ -61,11 +61,6 @@ const useStyles = makeStyles((theme) => ({
         left: '1.5%',
         zIndex: 1000
     },
-    headerArea: {
-        width: '80%',
-        margin: '0 auto',
-        padding: 0
-    },
     avatar: {
         width: 50,
         height: 50,
@@ -308,7 +303,7 @@ const TimelineDetail = (props) => {
                     <div>
                         
                         <div style={{ margin: '0px auto', padding: 0 }}>
-                            <div className={classes.headerArea}>
+                            <div className='headerArea'>
                                 <div className={classes.flexCol}>
                                     <div><Avatar alt="" src={data.timelineImageUrl} className={classes.avatar}/></div>
                                     <div><p className={classes.user}>nonoumasy</p></div>

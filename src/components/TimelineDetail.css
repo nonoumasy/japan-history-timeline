@@ -1,3 +1,9 @@
+.headerArea {
+    width: 80%;
+    margin: 0 auto;
+    padding: 0;
+}
+
 .Card {
     width: 80%;
     margin: 0 auto;
@@ -11,8 +17,30 @@
     box-shadow: 0 0px 40px 0 rgba(0, 0, 0, 0.1), 0 10px 20px 0 rgba(0, 0, 0, 0.1);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1920px) {
+    .Card {
+        width: 70%;
+    }
+    .headerArea {
+        width: 70%;
+    }
+}
+
+@media (max-width: 1440px) {
     .Card {
         width: 80%;
+    }
+    .headerArea {
+        width: 80%;
+    }
+}
+
+@media (max-width: 900px) {
+    .Card {
+        width: 100%;
+    }
+
+    .headerArea {
+        width: 100%;
     }
 }
