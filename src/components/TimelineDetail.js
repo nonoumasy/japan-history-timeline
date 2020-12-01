@@ -81,7 +81,12 @@ const useStyles = makeStyles((theme) => ({
         marginRight: 4,
     },
     numItems: {
-        fontSize: '16px',
+        textTransform: 'uppercase',
+        fontSize: '12px',
+        fontWeight: 700,
+        textDecoration: 'none',
+        cursor: 'pointer',
+        color: '#333',
     },
     user: {
         fontSize: '12px',
@@ -158,9 +163,11 @@ const useStyles = makeStyles((theme) => ({
     },
     numLikes: {
         display: 'inline',
-        borderRadius: 4,
-        fontSize: '16px',
+        textTransform: 'uppercase',
+        fontSize: '12px',
         fontWeight: 700,
+        textDecoration: 'none',
+        cursor: 'pointer',
         color: '#333',
     },
     cardaction: {
@@ -360,19 +367,22 @@ const TimelineDetail = (props) => {
                                                     </a>
                                                 </MenuItem>
                                         </SimpleMenu>
+                                    </div>
 
-                                    </div>
-                                    <div className={classes.flexRow} >
-                                        <div><p className={classes.numItems}>{data.event && data.event.length} items</p></div>
-                                        <div>
-                                            <IconButton style={{marginLeft: 10}}>
-                                                <ThumbUpAltIcon />
-                                            </IconButton>
-                                            <Typography className={classes.numLikes}>
-                                                <p className={classes.numLikes}>2k</p>
-                                                </Typography>
+                                        <div className={classes.flexRow} >
+                                            <div className={classes.numItems}>
+                                                {data.event && data.event.length} items
+                                            </div>
+                                            <div className={classes.flexRow}    >
+                                                <IconButton style={{marginLeft: 10}}>
+                                                    <ThumbUpAltIcon />
+                                                </IconButton>
+                                                <div>
+                                                    <p className={classes.numLikes}>100</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+
                                     <p className={classes.tags}>Tags:{data.tags}</p>
                                 </div>
 

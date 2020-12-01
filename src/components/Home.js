@@ -180,10 +180,6 @@ const Home = (props) => {
                 )
                 }
             </Grid>
-
-            
-            
-            
         </Container>
     )
 }
