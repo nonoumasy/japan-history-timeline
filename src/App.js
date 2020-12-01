@@ -39,8 +39,6 @@ const theme = createMuiTheme({
 });
 
 function App() {
-
-  const [data, setData] = useState()
   
   return (
     <>
