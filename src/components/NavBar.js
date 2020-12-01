@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         flexGrow: 1,
-        marginLeft: '2rem',
+        // marginLeft: '2rem',
     },
     link: {
         // textAlign: 'left',
