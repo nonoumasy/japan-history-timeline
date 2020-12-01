@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     fab: {
         position: 'fixed',
         top: '90%',
-        left: '45%',
+        left: '3%',
         zIndex: 1000
     },
     avatar: {
@@ -221,7 +221,7 @@ const TimelineDetail = (props) => {
         zoom: 1,
         bearing: 0,
         pitch: 0,
-        width: "50vw",
+        width: "60vw",
         height: "100vh",
     })
 

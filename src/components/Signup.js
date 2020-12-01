@@ -75,37 +75,8 @@ const Signup = () => {
         resolver: yupResolver(schema)
     })
 
-    useEffect(() => {
-        if (url) {
-            uploadFields()
-        }
-    }, [url])
-
     const postData = () => {
-        if (image) {
-            uploadPic()
-        } else {
-            uploadFields()
-        }
-    }
-
-    const uploadPic = () => {
-        const data = new FormData()
-        data.append('file', image)
-        data.append('upload_preset', 'timelines')
-        data.append('cloud_name', 'nonoumasy')
-
-        // posting to cloudinary 
-        axios.post('https://api.cloudinary.com/v1_1/nonoumasy/image/upload', data)
-            .then(result => {
-                setUrl(result.data.url)
-            })
-            .catch(err => console.log(err))
-    }
-
-    const uploadFields = () => {
-        //posting to db
-        fetch(' /auth/signup', {
+        fetch('http://localhost:5000/signup', {
             method: 'post',
             headers: {
                 "content-type": "application/json"
@@ -113,21 +84,11 @@ const Signup = () => {
             body: JSON.stringify({
                 username,
                 email,
-                password,
-                image: url
+                password
             })
         })
-            .then(res => res.json())
-            .then(data => {
-                if (data.error) {
-                    console.log(data.error)
-                } else {
-                    console.log(data.message)
-                    history.push('/')
-                }
-
-            })
-            .catch(err => console.log(err))
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
     }
 
     return (
@@ -135,7 +96,7 @@ const Signup = () => {
             <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
-                    <img src={'https://res.cloudinary.com/nonoumasy/image/upload/v1604132149/f40d42588779c6424f0c4abcfdb383ab_htr43v.jpg'} style={{ height: '40px', width: '40px', objectFit: 'cover' }} />
+                    <img src={'https://res.cloudinary.com/nonoumasy/image/upload/v1604132149/f40d42588779c6424f0c4abcfdb383ab_htr43v.jpg'} style={{ height: '40px', width: '40px', objectFit: 'cover' }} alt=''/>
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Sign up

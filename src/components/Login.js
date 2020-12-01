@@ -65,7 +65,7 @@ const Login = () => {
 
     const postData = ({ email, password }) => {
         // posting to db
-        fetch('/auth/login', {
+        fetch('http://localhost:5000/login', {
             method: 'post',
             headers: {
                 "content-type": "application/json"
