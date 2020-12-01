@@ -31,6 +31,8 @@ import TextField from '@material-ui/core/TextField';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import Footer from './Footer'
 
+import './TimelineDetail.css'
+
 const useStyles = makeStyles((theme) => ({
     mainContainer: {
         position: 'fixed',
@@ -55,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     },
     fab: {
         position: 'fixed',
-        top: '85%',
+        top: '80%',
         left: '1.5%',
         zIndex: 1000
     },
@@ -72,8 +74,8 @@ const useStyles = makeStyles((theme) => ({
         margin: '0 auto'
     },
     title: {
-        marginTop: 10,
-        marginBottom: 0,
+        marginTop: 0,
+        marginBottom: -10,
         marginRight: 10,
     },
     metadata: {
@@ -89,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
     },
     user: {
         fontSize: '12px',
-        marginBottom: 2,
+        marginBottom: 0,
         marginTop: 0,
     },
     tags: {
@@ -106,24 +108,12 @@ const useStyles = makeStyles((theme) => ({
         cursor: 'pointer',    
         padding: 0,
     },
-    card: {
-        width: '90%',
-        margin:'0 auto',
-        padding: 20,
-        marginTop: 20,
-        borderRadius: 10,
-        boxShadow: '0 6px 10px 0 rgba(0, 0, 0, 0.05)', 
-        '&:hover': {
-            boxShadow: '0 0px 40px 0 rgba(0, 0, 0, 0.1), 0 10px 20px 0 rgba(0, 0, 0, 0.1)',
-        },
-
-    },
     media: {
         height: 'auto',
         objectFit: 'cover',
         borderRadius: 7,
         transition: '0.4s',
-        marginBottom: 30,
+        marginBottom: 40,
     },
     video: {
         height: 340,
@@ -132,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
         border: 0,
         padding: 0,
         borderRadius: 7,
-        marginBottom: 30,
+        marginBottom: 40,
     },
     year: {
         display: 'inline',
@@ -321,9 +311,10 @@ const TimelineDetail = (props) => {
                             <div className={classes.headerArea}>
                                 <div className={classes.flexCol}>
                                     <div><Avatar alt="" src={data.timelineImageUrl} className={classes.avatar}/></div>
+                                    <div><p className={classes.user}>nonoumasy</p></div>
                                     <div className={classes.flexRowBetween}>
                                         <div>
-                                            <div><p className={classes.user}>nonoumasy</p></div>
+                                            
                                             <h2 className={classes.title}>{data.timelineTitle}</h2>
                                         </div>
 
@@ -393,9 +384,9 @@ const TimelineDetail = (props) => {
                             {data.event && data.event.map((item) => (
                                 <div 
                                     style={{ margin: '0 auto' }} 
-                                    key={item._id} 
+                                    key={item._id}  
                                     >     
-                                    <Card className={classes.card} ref={ref}>
+                                    <div className="Card" ref={ref}>
                                         <div className={classes.imageContainer}>
                                             {item.eventImageUrl && item.eventImageUrl.includes('youtube.com') ?
                                                 <iframe
@@ -526,7 +517,7 @@ const TimelineDetail = (props) => {
                                                 />
                                             </CardContent>
                                         </Collapse>
-                                    </Card>      
+                                    </div>      
                             </div>
                             ))}
                             <Footer />
