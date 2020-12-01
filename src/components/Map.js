@@ -221,8 +221,8 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, set
                             
                                 <div 
                                     // className={classes.button}
-                                onMouseEnter={() => setPopup(item)}
-                                onMouseLeave={() => setPopup('')}
+                                    onMouseEnter={() => setPopup(item)}
+                                    onMouseLeave={() => setPopup('')}
                                     onClick={(e) => onClickMarker(e, item)}>
                                     
                                     <div >
