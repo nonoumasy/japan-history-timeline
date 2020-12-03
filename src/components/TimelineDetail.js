@@ -221,7 +221,11 @@ const TimelineDetail = (props) => {
     const [eventComment, setEventComment] = useState('')
     const [popup, setPopup] = useState(null)
     const [eventId, setEventId] = useState(null)
-    const bounds = getBounds()
+    const [bounds, setBounds] = useState({
+        latitude: 0,
+        longitude: 0,
+        zoom: 0
+    })
     const [viewport, setViewport] = useState({
         latitude: 0,
         longitude: 0,
@@ -232,7 +236,7 @@ const TimelineDetail = (props) => {
         height: "100vh"
     })
 
-    // get timeline by id
+    // get timeline by id, get map extents, setViewport
     useEffect(() => {
         setIsLoading(true)
         fetch(`https://japan-history-timeline-api.herokuapp.com/timeline/${id}`)
@@ -240,10 +244,28 @@ const TimelineDetail = (props) => {
             .then(data => {
                 setData(data)
                 setIsLoading(false)
+                return data
             })
-            .then(getBounds())
+            .then(data => {
+                // console.log('data2',data)
+                let bounds = getBounds(data)
+                console.log('bounds', bounds)
+                return bounds
+            })
+            .then(bounds => {
+                bounds &&
+                    setViewport({
+                        ...viewport,
+                        longitude: bounds.longitude,
+                        latitude: bounds.latitude,
+                        zoom: bounds.zoom
+                    });
+                setBounds(bounds)
+            })
             .catch(err => console.log(err))
     }, [])
+
+
 
     // scroll to item 
     useEffect(eventId => {
@@ -254,7 +276,7 @@ const TimelineDetail = (props) => {
         })
     }, [eventId])
 
-    function getBounds() {
+    function getBounds(data) {
         // Calculate corner values of bounds
         // data.event && data.event.map(item => console.log('eventLongitude', item.eventLongitude))
         const eventLongitude = data.event && data.event.map(item => item.eventLongitude && item.eventLongitude !== 'null' && item.eventLongitude)
@@ -572,7 +594,7 @@ const TimelineDetail = (props) => {
                             eventId={eventId}
                             setEventId={setEventId}
                             bounds={bounds}
-                            getBounds={getBounds}
+                            // getBounds={getBounds}
                             />
                     </div>
                     

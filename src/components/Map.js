@@ -64,16 +64,6 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , setEventId, 
     const classes = useStyles()
     const [mapboxStyle, setMapboxStyle] = useState('mapbox://styles/nonoumasy/ckdcvbt983i4k1iny85j4q087')
 
-    useEffect(() => {
-        bounds &&
-        setViewport({
-            ...viewport,
-            longitude: bounds.longitude,
-            latitude: bounds.latitude,
-            zoom: bounds.zoom
-        });
-    }, [bounds])
-
     const showAll =() => {
         setPopup(null)
         setViewport({
