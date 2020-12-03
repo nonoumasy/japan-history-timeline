@@ -70,13 +70,9 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , setEventId, 
             ...viewport,
             longitude: bounds.longitude,
             latitude: bounds.latitude,
-            zoom: bounds.zoom,
-            bearing: 0,
-            pitch: 0,
-            transitionInterpolator: new FlyToInterpolator({ speed: 1.6 }),
-            transitionDuration: 'auto'
+            zoom: bounds.zoom
         });
-    }, [setViewport])
+    }, [bounds])
 
     const showAll =() => {
         setPopup(null)
