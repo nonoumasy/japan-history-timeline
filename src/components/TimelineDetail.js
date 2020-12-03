@@ -231,27 +231,36 @@ const TimelineDetail = (props) => {
         width: "60vw",
         height: "100vh"
     })
-
-
+    
     function getBounds() {
         // Calculate corner values of bounds
-        const eventLongitude = data.event && data.event.map(item => Number(item.eventLongitude))
-        const eventLatitude = data.event && data.event.map(item => Number(item.eventLatitude))
+        // data.event && data.event.map(item => console.log('eventLongitude', item.eventLongitude))
+        const eventLongitude = data.event && data.event.map(item => item.eventLongitude && item.eventLongitude !== 'null' && item.eventLongitude)
+        const eventLatitude = data.event && data.event.map(item => item.eventLatitude && item.eventLatitude !== 'null' && item.eventLatitude)
+        // console.log('checkNull',eventLongitude)
 
-        const numvar1 = eventLongitude && Math.min.apply(Math, eventLongitude)
-        const numvar2 = eventLatitude && Math.min.apply(Math, eventLatitude)
-        const numvar3 = eventLongitude && Math.max.apply(Math, eventLongitude)
-        const numvar4 = eventLatitude && Math.max.apply(Math, eventLatitude)
+        let eventLongitudeFiltered = eventLongitude && eventLongitude.filter(function (el) {
+            return el !== null
+        })
+        let eventLatitudeFiltered = eventLatitude && eventLatitude.filter(function (el) {
+            return el != null
+        });
+
+        // console.log('eventLongitudeFiltered', eventLongitudeFiltered, eventLatitudeFiltered)
+
+        const numvar1 = eventLongitudeFiltered && Math.min.apply(Math, eventLongitudeFiltered)
+        const numvar2 = eventLatitudeFiltered && Math.min.apply(Math, eventLatitudeFiltered)
+        const numvar3 = eventLongitudeFiltered && Math.max.apply(Math, eventLongitudeFiltered)
+        const numvar4 = eventLatitudeFiltered && Math.max.apply(Math, eventLatitudeFiltered)
 
         // Use WebMercatorViewport to get center longitude/latitude and zoo
-        const viewport = typeof numvar1 === 'number' && typeof numvar2 === 'number' && typeof numvar3 === 'number' && typeof numvar4 === 'number' && new WebMercatorViewport({ width: 800, height: 600 })
-            .fitBounds([[numvar1, numvar2], [numvar3, numvar4]], { padding: 0 })
+        const viewport = typeof numvar1 === 'number' && typeof numvar2 === 'number' && typeof numvar3 === 'number' && typeof numvar4 === 'number' && new WebMercatorViewport({width: 800, height: 600})
+            .fitBounds([[numvar1, numvar2], [numvar3, numvar4]], { padding: 50 })
         // .fitBounds([[12.3, 31.7683], [35.2137, 42]], { padding: 100 })
 
         const { longitude, latitude, zoom } = viewport
         return { longitude, latitude, zoom }
     }
-
 
     // get timeline by id
     useEffect(() => {
@@ -259,15 +268,24 @@ const TimelineDetail = (props) => {
         fetch(`https://japan-history-timeline-api.herokuapp.com/timeline/${id}`)
             .then(res => res.json())
             .then(data => {
-                // console.log(data)
                 setData(data)
                 setIsLoading(false)
             })
+            .then(getBounds())
+            .then(bounds => setViewport({
+                ...viewport,
+                longitude: bounds.longitude,
+                latitude: bounds.latitude,
+                zoom: bounds.zoom,
+                bearing: 0,
+                pitch: 0
+            }))
+            .then(console.log('bounds',bounds))
+            .catch(err => console.log(err))
     }, [])
 
     // scroll to item 
     useEffect(eventId => {
-        // console.log(eventId)
         ref.current &&
         ref.current.scrollIntoView({
                 behavior: 'smooth',

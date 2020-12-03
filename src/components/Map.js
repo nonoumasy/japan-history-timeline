@@ -63,25 +63,6 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, set
     const classes = useStyles()
     const [mapboxStyle, setMapboxStyle] = useState('mapbox://styles/nonoumasy/ckdcvbt983i4k1iny85j4q087')
 
-    console.log(bounds)
-    console.log(bounds.longitude)
-    console.log(bounds.latitude)
-    console.log(bounds.zoom)
-
-    useEffect((bounds) => {
-        bounds &&
-            setViewport({
-                ...viewport,
-                longitude: bounds.longitude,
-                latitude: bounds.latitude,
-                zoom: bounds.zoom, 
-                bearing: 0,
-                pitch: 0,
-                transitionInterpolator: new FlyToInterpolator({ speed: 1.6 }),
-                transitionDuration: 'auto'
-            })
-    }, [])
-
     const showAll =() => {
         setPopup(null)
         setViewport({
@@ -197,7 +178,7 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, set
                 {data.event && data.event.map((item, index) => (
                     <div key={item._id}>
                         {/* check to see if there location data */}
-                            {item.eventLatitude && item.eventLongitude &&
+                        {item.eventLatitude && item.eventLongitude && (item.eventLatitude !== null) && (item.eventLongitude !== null) &&    
                         <Marker 
                             latitude={item.eventLatitude} 
                             longitude={item.eventLongitude}>
