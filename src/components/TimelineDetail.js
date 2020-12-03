@@ -221,21 +221,19 @@ const TimelineDetail = (props) => {
     const [eventComment, setEventComment] = useState('')
     const [popup, setPopup] = useState(null)
     const [eventId, setEventId] = useState(null)
+    const bounds = getBounds()
     const [viewport, setViewport] = useState({
         latitude: 0,
-        longitude: 160,
-        zoom: 1,
+        longitude: 0,
+        zoom: 0,
         bearing: 0,
         pitch: 0,
         width: "60vw",
         height: "100vh"
     })
 
-    const bounds = getBounds()
-    console.log(bounds)
 
-
-    function getBounds () {
+    function getBounds() {
         // Calculate corner values of bounds
         const eventLongitude = data.event && data.event.map(item => Number(item.eventLongitude))
         const eventLatitude = data.event && data.event.map(item => Number(item.eventLatitude))
@@ -245,30 +243,15 @@ const TimelineDetail = (props) => {
         const numvar3 = eventLongitude && Math.max.apply(Math, eventLongitude)
         const numvar4 = eventLatitude && Math.max.apply(Math, eventLatitude)
 
-        const num1 = 12.3
-        const num2 = 31.7683
-        const num3 = 35.2137
-        const num4 = 42
-
-        // console.log(num1 === numvar1)
-        // console.log(num2 === numvar2)
-        // console.log(num3 === numvar3)
-        // console.log(num4 === numvar4)
-
-        console.log(numvar1)
-        console.log(numvar2)
-        console.log(numvar3)
-        console.log(numvar4)
-
         // Use WebMercatorViewport to get center longitude/latitude and zoo
-        const viewport = typeof numvar1 === 'number' && typeof numvar2 === 'number' && typeof numvar3 === 'number' && typeof numvar4 === 'number' &&  new WebMercatorViewport({ width: 800, height: 600 })
-            // .fitBounds(cornersLongLat, { padding: 100 })
-            .fitBounds([[numvar1, numvar2], [numvar3, numvar4]], { padding: 100 })
-            // .fitBounds([[12.3, 31.7683], [35.2137, 42]], { padding: 100 })
+        const viewport = typeof numvar1 === 'number' && typeof numvar2 === 'number' && typeof numvar3 === 'number' && typeof numvar4 === 'number' && new WebMercatorViewport({ width: 800, height: 600 })
+            .fitBounds([[numvar1, numvar2], [numvar3, numvar4]], { padding: 0 })
+        // .fitBounds([[12.3, 31.7683], [35.2137, 42]], { padding: 100 })
 
         const { longitude, latitude, zoom } = viewport
         return { longitude, latitude, zoom }
     }
+
 
     // get timeline by id
     useEffect(() => {
@@ -574,6 +557,7 @@ const TimelineDetail = (props) => {
                             setPopup={setPopup}
                             eventId={eventId}
                             setEventId={setEventId}
+                            bounds={bounds}
                             />
                     </div>
                     

@@ -59,68 +59,36 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, setEventId}) => {
+const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, setEventId, bounds}) => {
     const classes = useStyles()
     const [mapboxStyle, setMapboxStyle] = useState('mapbox://styles/nonoumasy/ckdcvbt983i4k1iny85j4q087')
 
-    
+    console.log(bounds)
+    console.log(bounds.longitude)
+    console.log(bounds.latitude)
+    console.log(bounds.zoom)
 
-    function getBounds() {
-        // Calculate corner values of bounds
-        const eventLongitude = data.event && data.event.map(item => Number(item.eventLongitude))
-        const eventLatitude = data.event && data.event.map(item => Number(item.eventLatitude))
+    useEffect((bounds) => {
+        bounds &&
+            setViewport({
+                ...viewport,
+                longitude: bounds.longitude,
+                latitude: bounds.latitude,
+                zoom: bounds.zoom, 
+                bearing: 0,
+                pitch: 0,
+                transitionInterpolator: new FlyToInterpolator({ speed: 1.6 }),
+                transitionDuration: 'auto'
+            })
+    }, [])
 
-        const numvar1 = eventLongitude && Math.min.apply(Math, eventLongitude)
-        const numvar2 = eventLatitude && Math.min.apply(Math, eventLatitude)
-        const numvar3 = eventLongitude && Math.max.apply(Math, eventLongitude)
-        const numvar4 = eventLatitude && Math.max.apply(Math, eventLatitude)
-
-        const num1 = 12.3
-        const num2 = 31.7683
-        const num3 = 35.2137
-        const num4 = 42
-
-        // console.log(num1 === numvar1)
-        // console.log(num2 === numvar2)
-        // console.log(num3 === numvar3)
-        // console.log(num4 === numvar4)
-
-        console.log(numvar1)
-        console.log(numvar2)
-        console.log(numvar3)
-        console.log(numvar4)
-
-        // Use WebMercatorViewport to get center longitude/latitude and zoo
-        const viewport = typeof numvar1 === 'number' && typeof numvar2 === 'number' && typeof numvar3 === 'number' && typeof numvar4 === 'number' && new WebMercatorViewport({ width: 800, height: 600 })
-            // .fitBounds(cornersLongLat, { padding: 100 })
-            .fitBounds([[numvar1, numvar2], [numvar3, numvar4]], { padding: 0 })
-        // .fitBounds([[12.3, 31.7683], [35.2137, 42]], { padding: 100 })
-
-        const { longitude, latitude, zoom } = viewport
-        return { longitude, latitude, zoom }
-    }
-    
-    useEffect(() => {
-
-        const bounds = getBounds()
-        // console.log(bounds)
+    const showAll =() => {
+        setPopup(null)
         setViewport({
             ...viewport,
             longitude: bounds.longitude,
             latitude: bounds.latitude,
             zoom: bounds.zoom,
-            bearing: 0,
-            pitch: 0
-        }, []);
-    })
-    
-    const showAll =() => {
-        setPopup(null)
-        setViewport({
-            ...viewport,
-            longitude: 160,
-            latitude: 0,
-            zoom: 1,
             bearing: 0,
             pitch: 0,
             transitionInterpolator: new FlyToInterpolator({ speed: 1.6 }),
