@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import ReactMapGL, { Marker, NavigationControl, FullscreenControl, Popup, FlyToInterpolator} from 'react-map-gl';
+import ReactMapGL, { Marker, NavigationControl, FullscreenControl, Popup, FlyToInterpolator, WebMercatorViewport} from 'react-map-gl';
 
 import {makeStyles} from '@material-ui/styles'
 import Button from '@material-ui/core/Button';
@@ -36,17 +36,17 @@ const useStyles = makeStyles((theme) => ({
     marker: {
         backgroundColor: '#EC5D5D',
         color: '#fff',
-        width: 20,
-        height: 20,
+        width: 36,
+        height: 36,
         padding: 5,
-        borderRadius: 100,
+        borderRadius: 1000,
         borderStyle: 'solid',
         borderColor: '#fff',
-        borderWidth: 'medium',
+        borderWidth: '3px',
         textAlign: 'center',
-        fontWeight: 700,
-        fontSize: 14,
         alignItems: 'center',
+        fontWeight: 900,
+        fontSize: 14,
         boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
     },
     showAll: {
@@ -60,45 +60,60 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , eventId, setEventId}) => {
-
-    // const getBounds = () => {
-    //     // Calculate corner values of bounds
-    //     const eventLongitude = data.event && data.event.map(item => Number(item.eventLongitude))
-    //     const eventLatitude = data.event && data.event.map(item => Number(item.eventLatitude))
-
-    //     const cornersLongLat = [
-    //         [Math.min.apply(Math, (eventLongitude)), Math.min.apply(Math, eventLatitude)],
-    //         [Math.max.apply(Math, eventLongitude), Math.max.apply(Math, eventLatitude)]
-    //     ]
-
-    //     // console.log('sdfsd',cornersLongLat);
-        
-    //     // Use WebMercatorViewport to get center longitude/latitude and zoom
-    //     const viewport = cornersLongLat && new WebMercatorViewport({ width: 800, height: 600 })
-    //         .fitBounds([[139.378484, 35.519149], [139.812484, 35.723422]], { padding: 100 })
-    //         // .fitBounds(cornersLongLat, { padding: 100 })
-
-    //     const { longitude, latitude, zoom } = viewport
-    //     return { longitude, latitude, zoom }
-    // } 
-
-    // const bounds = getBounds()
     const classes = useStyles()
     const [mapboxStyle, setMapboxStyle] = useState('mapbox://styles/nonoumasy/ckdcvbt983i4k1iny85j4q087')
+
+    
+
+    function getBounds() {
+        // Calculate corner values of bounds
+        const eventLongitude = data.event && data.event.map(item => Number(item.eventLongitude))
+        const eventLatitude = data.event && data.event.map(item => Number(item.eventLatitude))
+
+        const numvar1 = eventLongitude && Math.min.apply(Math, eventLongitude)
+        const numvar2 = eventLatitude && Math.min.apply(Math, eventLatitude)
+        const numvar3 = eventLongitude && Math.max.apply(Math, eventLongitude)
+        const numvar4 = eventLatitude && Math.max.apply(Math, eventLatitude)
+
+        const num1 = 12.3
+        const num2 = 31.7683
+        const num3 = 35.2137
+        const num4 = 42
+
+        // console.log(num1 === numvar1)
+        // console.log(num2 === numvar2)
+        // console.log(num3 === numvar3)
+        // console.log(num4 === numvar4)
+
+        console.log(numvar1)
+        console.log(numvar2)
+        console.log(numvar3)
+        console.log(numvar4)
+
+        // Use WebMercatorViewport to get center longitude/latitude and zoo
+        const viewport = typeof numvar1 === 'number' && typeof numvar2 === 'number' && typeof numvar3 === 'number' && typeof numvar4 === 'number' && new WebMercatorViewport({ width: 800, height: 600 })
+            // .fitBounds(cornersLongLat, { padding: 100 })
+            .fitBounds([[numvar1, numvar2], [numvar3, numvar4]], { padding: 0 })
+        // .fitBounds([[12.3, 31.7683], [35.2137, 42]], { padding: 100 })
+
+        const { longitude, latitude, zoom } = viewport
+        return { longitude, latitude, zoom }
+    }
     
     useEffect(() => {
-        const listener = e => {
-            if (e.key === 'Escape') {
-                setPopup(null)
-            }
-        }
-        window.addEventListener('keydown', listener)
 
-        return () => {
-            window.removeEventListener('keydown', listener)
-        }
-    }, [])
-
+        const bounds = getBounds()
+        // console.log(bounds)
+        setViewport({
+            ...viewport,
+            longitude: bounds.longitude,
+            latitude: bounds.latitude,
+            zoom: bounds.zoom,
+            bearing: 0,
+            pitch: 0
+        }, []);
+    })
+    
     const showAll =() => {
         setPopup(null)
         setViewport({

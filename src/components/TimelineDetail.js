@@ -4,7 +4,7 @@ import axios from 'axios'
 import clsx from 'clsx';
 import { useForm } from 'react-hook-form'
 import Map from './Map'
-import { FlyToInterpolator } from 'react-map-gl';
+import { FlyToInterpolator, WebMercatorViewport } from 'react-map-gl';
 
 import { ProgressBar } from 'scrolling-based-progressbar'
 import { makeStyles } from '@material-ui/core/styles';
@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'fixed',
         display: 'flex',
         flexDirection: 'row',
+        
     },
     flexCol: {
         display: 'flex',
@@ -227,8 +228,47 @@ const TimelineDetail = (props) => {
         bearing: 0,
         pitch: 0,
         width: "60vw",
-        height: "100vh",
+        height: "100vh"
     })
+
+    const bounds = getBounds()
+    console.log(bounds)
+
+
+    function getBounds () {
+        // Calculate corner values of bounds
+        const eventLongitude = data.event && data.event.map(item => Number(item.eventLongitude))
+        const eventLatitude = data.event && data.event.map(item => Number(item.eventLatitude))
+
+        const numvar1 = eventLongitude && Math.min.apply(Math, eventLongitude)
+        const numvar2 = eventLatitude && Math.min.apply(Math, eventLatitude)
+        const numvar3 = eventLongitude && Math.max.apply(Math, eventLongitude)
+        const numvar4 = eventLatitude && Math.max.apply(Math, eventLatitude)
+
+        const num1 = 12.3
+        const num2 = 31.7683
+        const num3 = 35.2137
+        const num4 = 42
+
+        // console.log(num1 === numvar1)
+        // console.log(num2 === numvar2)
+        // console.log(num3 === numvar3)
+        // console.log(num4 === numvar4)
+
+        console.log(numvar1)
+        console.log(numvar2)
+        console.log(numvar3)
+        console.log(numvar4)
+
+        // Use WebMercatorViewport to get center longitude/latitude and zoo
+        const viewport = typeof numvar1 === 'number' && typeof numvar2 === 'number' && typeof numvar3 === 'number' && typeof numvar4 === 'number' &&  new WebMercatorViewport({ width: 800, height: 600 })
+            // .fitBounds(cornersLongLat, { padding: 100 })
+            .fitBounds([[numvar1, numvar2], [numvar3, numvar4]], { padding: 100 })
+            // .fitBounds([[12.3, 31.7683], [35.2137, 42]], { padding: 100 })
+
+        const { longitude, latitude, zoom } = viewport
+        return { longitude, latitude, zoom }
+    }
 
     // get timeline by id
     useEffect(() => {
@@ -242,8 +282,9 @@ const TimelineDetail = (props) => {
             })
     }, [])
 
+    // scroll to item 
     useEffect(eventId => {
-        console.log(eventId)
+        // console.log(eventId)
         ref.current &&
         ref.current.scrollIntoView({
                 behavior: 'smooth',
@@ -269,7 +310,7 @@ const TimelineDetail = (props) => {
     }
 
     const flyTo = (item) => {
-        item.eventLatitude && item.eventLongitude ?
+        item.eventLatitude && item.eventLongitude &&
         setViewport({
             ...viewport,
             longitude: item.eventLongitude,
@@ -278,26 +319,22 @@ const TimelineDetail = (props) => {
             zoom: 15.5,
             transitionInterpolator: new FlyToInterpolator({ speed: 1 }),
             transitionDuration: 'auto'
-        })
-        :
-        setTimeout(() => {
-            <p>No location</p>
-        }, 2000)    
+        }) 
     };
 
     const eventClickHandler = async (id) => {
         const item = await data.event.find(item => item._id === id)
         item.eventLatitude && item.eventLongitude &&
         await flyTo(item)
-        await window.setTimeout(setPopup(item), 1000)
+        await setPopup(item)
     }
 
     return (
         <>
+            <ProgressBar height="4px" color="#666" />
             <div className={classes.mainContainer}>
                 <div className='sidebar'>
-                    <ProgressBar height="4px" color="#666" />
-                    <Tooltip arrow placement='left' title='Add New Event' >
+                    <Tooltip arrow placement='top' title='Add New Event' >
                         <Fab
                             color="primary"
                             aria-label="add"
@@ -306,8 +343,8 @@ const TimelineDetail = (props) => {
                             <AddIcon />
                         </Fab>
                     </Tooltip>
+
                     <div>
-                        
                         <div style={{ margin: '0px auto', padding: 0 }}>
                             <div className='headerArea'>
                                 <div className={classes.flexCol}>
@@ -539,6 +576,7 @@ const TimelineDetail = (props) => {
                             setEventId={setEventId}
                             />
                     </div>
+                    
                 </div>
                 
             </div>
