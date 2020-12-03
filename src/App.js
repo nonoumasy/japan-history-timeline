@@ -1,8 +1,8 @@
 import React from 'react'
 import NavBar from './components/NavBar'
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import { AuthProvider } from './components/AuthContext'
-import PrivateRoute from './components/PrivateRoute'
+// import { AuthProvider } from './components/AuthContext'
+// import PrivateRoute from './components/PrivateRoute'
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -43,7 +43,7 @@ function App() {
   
   return (
     <>
-      <AuthProvider>
+      {/* <AuthProvider> */}
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Router>
@@ -73,11 +73,11 @@ function App() {
                 exact path='/editEvent/:id'
                 render={props => <EditEvent {...props} />}
               />
-              <PrivateRoute exact path='/'>
+              <Route exact path='/'>
                 <div style={{ marginTop: '90px' }}>
                   <Home />
                 </div>
-              </PrivateRoute>
+              </Route>
 
               <Route
                 exact path='/timeline/:id/addEvent'>
@@ -114,7 +114,7 @@ function App() {
           </Router>
 
         </ThemeProvider>
-    </AuthProvider>
+    {/* </AuthProvider> */}
     </>
   );
 }
