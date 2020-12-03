@@ -7,7 +7,6 @@ import axios from 'axios'
 import clsx from 'clsx';
 
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -104,7 +103,7 @@ export default function AddEvent(props) {
 
     return (
         <Container component="main" maxWidth="xs">
-            <CssBaseline />
+            
             <div className={classes.paper}>
                 <Typography>
                     Add New Event

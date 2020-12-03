@@ -71,7 +71,8 @@ const useStyles = makeStyles((theme) => ({
         textDecoration: 'none',
         overflow: 'hidden',
         '&:hover': {
-            boxShadow: '0 2px 10px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.1)', 
+            // boxShadow: '0 2px 10px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.1)', 
+            boxShadow: '0 5px 20px 0 rgba(0, 0, 0, 0.5)',
         },
         
 
@@ -113,7 +114,7 @@ const Home = (props) => {
             .then(data => setData(data))
             .catch(err => console.log(err))
 
-    }, [props.location, setData])
+    }, [setData])
 
     const clickImageHandler = (id) => {
         history.push(`/timeline/${id}`)
