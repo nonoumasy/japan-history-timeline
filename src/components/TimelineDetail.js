@@ -228,10 +228,32 @@ const TimelineDetail = (props) => {
         zoom: 0,
         bearing: 0,
         pitch: 0,
-        width: "60vw",
+        width: "50vw",
         height: "100vh"
     })
-    
+
+    // get timeline by id
+    useEffect(() => {
+        setIsLoading(true)
+        fetch(`https://japan-history-timeline-api.herokuapp.com/timeline/${id}`)
+            .then(res => res.json())
+            .then(data => {
+                setData(data)
+                setIsLoading(false)
+            })
+            .then(getBounds())
+            .catch(err => console.log(err))
+    }, [])
+
+    // scroll to item 
+    useEffect(eventId => {
+        ref.current &&
+        ref.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+        })
+    }, [eventId])
+
     function getBounds() {
         // Calculate corner values of bounds
         // data.event && data.event.map(item => console.log('eventLongitude', item.eventLongitude))
@@ -254,44 +276,13 @@ const TimelineDetail = (props) => {
         const numvar4 = eventLatitudeFiltered && Math.max.apply(Math, eventLatitudeFiltered)
 
         // Use WebMercatorViewport to get center longitude/latitude and zoo
-        const viewport = typeof numvar1 === 'number' && typeof numvar2 === 'number' && typeof numvar3 === 'number' && typeof numvar4 === 'number' && new WebMercatorViewport({width: 800, height: 600})
-            .fitBounds([[numvar1, numvar2], [numvar3, numvar4]], { padding: 50 })
+        const viewport = typeof numvar1 === 'number' && typeof numvar2 === 'number' && typeof numvar3 === 'number' && typeof numvar4 === 'number' && new WebMercatorViewport({ width: 800, height: 600 })
+            .fitBounds([[numvar1, numvar2], [numvar3, numvar4]], { padding: 100 })
         // .fitBounds([[12.3, 31.7683], [35.2137, 42]], { padding: 100 })
 
         const { longitude, latitude, zoom } = viewport
         return { longitude, latitude, zoom }
     }
-
-    // get timeline by id
-    useEffect(() => {
-        setIsLoading(true)
-        fetch(`https://japan-history-timeline-api.herokuapp.com/timeline/${id}`)
-            .then(res => res.json())
-            .then(data => {
-                setData(data)
-                setIsLoading(false)
-            })
-            .then(getBounds())
-            .then(bounds => setViewport({
-                ...viewport,
-                longitude: bounds.longitude,
-                latitude: bounds.latitude,
-                zoom: bounds.zoom,
-                bearing: 0,
-                pitch: 0
-            }))
-            .then(console.log('bounds',bounds))
-            .catch(err => console.log(err))
-    }, [])
-
-    // scroll to item 
-    useEffect(eventId => {
-        ref.current &&
-        ref.current.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-        })
-    }, [eventId])
 
     const deleteTimelineHandler = (id) => {
         axios.delete(`https://japan-history-timeline-api.herokuapp.com/timeline/${id}`)
@@ -322,6 +313,12 @@ const TimelineDetail = (props) => {
             transitionDuration: 'auto'
         }) 
     };
+
+    const eventHoverHandler = async (id) => {
+        const item = await data.event.find(item => item._id === id)
+        item.eventLatitude && item.eventLongitude &&
+        await setPopup(item)
+    }
 
     const eventClickHandler = async (id) => {
         const item = await data.event.find(item => item._id === id)
@@ -463,6 +460,8 @@ const TimelineDetail = (props) => {
                                         </div>
 
                                         <CardContent
+                                            onMouseEnter={() => eventHoverHandler(item._id)}
+                                            onMouseLeave={() => setPopup('')}
                                             onClick={() => eventClickHandler(item._id)} className={classes.cardEventContainer}>
                                             {item.eventYear &&
                                                 <Typography variant="body2" color="textSecondary" className={classes.year}>
@@ -576,6 +575,7 @@ const TimelineDetail = (props) => {
                             eventId={eventId}
                             setEventId={setEventId}
                             bounds={bounds}
+                            getBounds={getBounds}
                             />
                     </div>
                     
