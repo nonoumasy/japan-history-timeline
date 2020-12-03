@@ -458,34 +458,31 @@ const TimelineDetail = (props) => {
                                                 />
                                             }
                                         </div>
-
-                                        <CardContent
-                                            onMouseEnter={() => eventHoverHandler(item._id)}
-                                            onMouseLeave={() => setPopup('')}
-                                            onClick={() => eventClickHandler(item._id)} className={classes.cardEventContainer}>
-                                            {item.eventYear &&
-                                                <Typography variant="body2" color="textSecondary" className={classes.year}>
-                                                {item.eventYear}
+                                            <CardContent
+                                                onMouseEnter={() => eventHoverHandler(item._id)}
+                                                onMouseLeave={() => setPopup('')}
+                                                onClick={() => eventClickHandler(item._id)} className={classes.cardEventContainer}>
+                                                {item.eventYear &&
+                                                    <Typography variant="body2" color="textSecondary" className={classes.year}>
+                                                    {item.eventYear}
+                                                    </Typography>
+                                                }
+                                                {item.eventTitle &&
+                                                <Typography className={classes.eventTitle}>
+                                                    {item.eventTitle}
+                                                </Typography>}
+                                                <Typography className={classes.event}>
+                                                    {item.eventDescription}
                                                 </Typography>
-                                            }
-                                            {item.eventTitle &&
-                                            <Typography className={classes.eventTitle}>
-                                                {item.eventTitle}
-                                            </Typography>}
-                                            <Typography className={classes.event}>
-                                                {item.eventDescription}
-                                            </Typography>
-                                            {item.eventLink &&
-                                                <Link
-                                                    // target='_blank'
-                                                    className={classes.more}
-                                                    onClick={() => window.open(item.eventLink, "_blank")}>
-                                                    More Details
-                                                </Link>
-                                            }
-
-                                        </CardContent>
-
+                                                {item.eventLink &&
+                                                    <Link
+                                                        // target='_blank'
+                                                        className={classes.more}
+                                                        onClick={() => window.open(item.eventLink, "_blank")}>
+                                                        More Details
+                                                    </Link>
+                                                }
+                                            </CardContent>
                                         <CardActions className={classes.actions}>
 
                                             <IconButton
