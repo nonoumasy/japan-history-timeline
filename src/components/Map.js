@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , setEventId, bounds, getBounds}) => {
+const Map = ({ viewport, setViewport, data, flyTo, popup, setPopup, setEventId, bounds, onClickMarker}) => {
     const classes = useStyles()
     const [mapboxStyle, setMapboxStyle] = useState('mapbox://styles/nonoumasy/ckdcvbt983i4k1iny85j4q087')
 
@@ -78,14 +78,7 @@ const Map = ({viewport, setViewport, data, flyTo, popup, setPopup , setEventId, 
         });
     }
 
-    const onClickMarker = (e, item) => {
-        e.preventDefault()
-        setEventId(item._id)
-        if (item.eventLongitude && item.eventLatitude ) {
-            flyTo(item)
-            setPopup(item)
-        }
-    }
+    
 
     const handleChange = (event) => {
         setMapboxStyle(event.target.value);

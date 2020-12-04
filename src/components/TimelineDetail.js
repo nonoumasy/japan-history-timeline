@@ -107,13 +107,13 @@ const useStyles = makeStyles((theme) => ({
     cardEventContainer: {
         cursor: 'pointer',    
         padding: 0,
+        marginTop: 20,
     },
     media: {
         height: 'auto',
         objectFit: 'cover',
         borderRadius: 7,
         transition: '0.4s',
-        marginBottom: 40,
     },
     video: {
         height: 240,
@@ -122,7 +122,6 @@ const useStyles = makeStyles((theme) => ({
         border: 0,
         padding: 0,
         borderRadius: 7,
-        marginBottom: 40,
     },
     year: {
         display: 'inline',
@@ -133,6 +132,7 @@ const useStyles = makeStyles((theme) => ({
         color: '#333',
         backgroundColor: "#dfdfdf",
         marginLeft: '1rem',
+        marginTop: 20,
     },
     eventTitle: {
 
@@ -213,7 +213,6 @@ const TimelineDetail = (props) => {
     const history = useHistory()
     const { id } = useParams()
     const { register, handleSubmit } = useForm()
-    const ref = useRef()
 
     const [data, setData] = useState([])
     const [expanded, setExpanded] = useState(false);
@@ -247,9 +246,7 @@ const TimelineDetail = (props) => {
                 return data
             })
             .then(data => {
-                // console.log('data2',data)
                 let bounds = getBounds(data)
-                console.log('bounds', bounds)
                 return bounds
             })
             .then(bounds => {
@@ -258,23 +255,23 @@ const TimelineDetail = (props) => {
                         ...viewport,
                         longitude: bounds.longitude,
                         latitude: bounds.latitude,
-                        zoom: bounds.zoom
+                        zoom: bounds.zoom,
+                        bearing: 0,
+                        pitch: 0
                     });
                 setBounds(bounds)
             })
             .catch(err => console.log(err))
     }, [])
 
-
-
-    // scroll to item 
-    useEffect(eventId => {
-        ref.current &&
-        ref.current.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-        })
-    }, [eventId])
+    const onClickMarker = (e, item) => {
+        e.preventDefault()
+        setEventId(item._id)
+        if (item.eventLongitude && item.eventLatitude) {
+            flyTo(item)
+            setPopup(item)
+        }
+    }
 
     function getBounds(data) {
         // Calculate corner values of bounds
@@ -299,15 +296,15 @@ const TimelineDetail = (props) => {
 
         // Use WebMercatorViewport to get center longitude/latitude and zoo
         const viewport = typeof numvar1 === 'number' && typeof numvar2 === 'number' && typeof numvar3 === 'number' && typeof numvar4 === 'number' && new WebMercatorViewport({ width: 800, height: 600 })
-            .fitBounds([[numvar1, numvar2], [numvar3, numvar4]], { padding: 100 })
+            .fitBounds([[numvar1, numvar2], [numvar3, numvar4]], { padding: 0 })
         // .fitBounds([[12.3, 31.7683], [35.2137, 42]], { padding: 100 })
 
         const { longitude, latitude, zoom } = viewport
         return { longitude, latitude, zoom }
     }
 
-    const deleteTimelineHandler = (id) => {
-        axios.delete(`https://japan-history-timeline-api.herokuapp.com/timeline/${id}`)
+    const deleteTimelineHandler = async (id) => {
+        await axios.delete(`https://japan-history-timeline-api.herokuapp.com/timeline/${id}`)
         history.push('/')
     }
 
@@ -451,9 +448,8 @@ const TimelineDetail = (props) => {
                             {data.event && data.event.map((item) => (
                                 <div 
                                     style={{ margin: '0 auto' }} 
-                                    key={item._id}  
                                     >     
-                                    <div className="Card" ref={ref}>
+                                    <div className="Card" key={item._id}>
                                         <div className={classes.imageContainer}>
                                             {item.eventImageUrl && item.eventImageUrl.includes('youtube.com') ?
                                                 <iframe
@@ -594,7 +590,7 @@ const TimelineDetail = (props) => {
                             eventId={eventId}
                             setEventId={setEventId}
                             bounds={bounds}
-                            // getBounds={getBounds}
+                            onClickMarker={onClickMarker}
                             />
                     </div>
                     
