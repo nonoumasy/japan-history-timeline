@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef} from 'react'
+import React, { useState, useEffect} from 'react'
 import { useHistory, useParams, Link} from 'react-router-dom'
 import axios from 'axios'
 import clsx from 'clsx';
@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
     flexCol: {
         display: 'flex',
         flexDirection: 'column',
+        alignItems: 'center',
     },
     flexRow: {
         display: 'flex',
@@ -65,13 +66,20 @@ const useStyles = makeStyles((theme) => ({
         width: 50,
         height: 50,
         marginTop: 10,
-        marginBottom: 30,
+        marginBottom: 20,
         margin: '0 auto'
     },
     title: {
         marginTop: 0,
         marginBottom: -10,
-        marginRight: 10,
+        // marginRight: 10,
+        textAlign: 'center',
+    },
+    user: {
+        fontSize: '16px',
+        marginBottom: 10,
+        marginTop: 20,
+        textAlignt: 'center',
     },
     metadata: {
         marginLeft: '4rem',
@@ -79,7 +87,15 @@ const useStyles = makeStyles((theme) => ({
     },
     thumbUpIcon: {
         fontSize: '16px',
-        marginRight: 4,
+    },
+    numLikes: {
+        textTransform: 'uppercase',
+        fontSize: '12px',
+        fontWeight: 700,
+        textDecoration: 'none',
+        cursor: 'pointer',
+        color: '#333',
+        marginTop: 0,
     },
     numItems: {
         textTransform: 'uppercase',
@@ -89,16 +105,13 @@ const useStyles = makeStyles((theme) => ({
         cursor: 'pointer',
         color: '#333',
     },
-    user: {
-        fontSize: '12px',
-        marginBottom: 0,
-        marginTop: 0,
-    },
     tags: {
-        margin: 0,
+        margin: '60px auto',
+        textAlign: 'center',
         textTransform: 'uppercase',
         fontSize: '12px',
         fontWeight: 700,
+
     },
     cardsContainer: {
         marginTop: 40,
@@ -155,15 +168,6 @@ const useStyles = makeStyles((theme) => ({
     },
     link: {
         // textAlign: 'left',
-        textTransform: 'uppercase',
-        fontSize: '12px',
-        fontWeight: 700,
-        textDecoration: 'none',
-        cursor: 'pointer',
-        color: '#333',
-    },
-    numLikes: {
-        display: 'inline',
         textTransform: 'uppercase',
         fontSize: '12px',
         fontWeight: 700,
@@ -366,80 +370,71 @@ const TimelineDetail = (props) => {
                             <div className='headerArea'>
                                 <div className={classes.flexCol}>
                                     <div><Avatar alt="" src={data.timelineImageUrl} className={classes.avatar}/></div>
-                                    <div><p className={classes.user}>nonoumasy</p></div>
-                                    <div className={classes.flexRowBetween}>
-                                        <div>
-                                            
-                                            <h2 className={classes.title}>{data.timelineTitle}</h2>
-                                        </div>
-
-
-                                        <SimpleMenu props={props}>
-                                                <MenuItem onClick={props.handleClose}>
-                                                <EditIcon fontSize='small' style={{ marginRight: 16 }}  />
-                                                    <Link
-                                                        className={classes.link}
-                                                        to={`/editTimeline/${id}`}
-                                                    >
-                                                        Edit
-                                                    </Link>
-                                                </MenuItem>
-                                                <MenuItem onClick={props.handleClose}>
-                                                    <DeleteIcon fontSize='small' style={{ marginRight: 16 }} />
-                                                    <Link
-                                                        className={classes.link}
-                                                        onClick={() => deleteTimelineHandler(data._id)}
-                                                    >
-                                                    Delete
-                                                </Link>
-
-                                                </MenuItem>
-                                                <MenuItem onClick={props.handleClose}>
-                                                    <ShareIcon fontSize='small' style={{ marginRight: 16 }} />
-                                                    <Link className={classes.link}>
-                                                        Share
-                                                </Link>
-                                                </MenuItem>
-                                                <MenuItem onClick={props.handleClose}>
-                                                    <ArrowDownwardIcon fontSize='small' style={{ marginRight: 16 }} />
-                                                    <Link
-                                                        className={classes.link}
-                                                        to={`/import/${data._id}`}>
-                                                        Import Data
-                                                </Link>
-                                                </MenuItem>
-                                                <MenuItem onClick={props.handleClose}>
-                                                    <ArrowUpwardIcon fontSize='small' style={{ marginRight: 16 }} />
-                                                    <a
-                                                        href={`data:text/json;charset=utf-8,${encodeURIComponent(
-                                                            JSON.stringify(data)
-                                                        )}`}
-                                                        download={ data.timelineTitle && `${(data.timelineTitle).split(' ').join('_')}.json`}
-                                                        // download='filename.json'
-                                                        className={classes.link}>
-                                                        Export Data as Json
-                                                    </a>
-                                                </MenuItem>
-                                        </SimpleMenu>
+                                    <div>
+                                        <h2 className={classes.title}>{data.timelineTitle}</h2>
                                     </div>
-
+                                    <div><p className={classes.user}>nonoumasy</p></div>
                                         <div className={classes.flexRow} >
-                                            <div className={classes.numItems}>
+                                            {/* <div className={classes.numItems}>
                                                 {data.event && data.event.length} items
-                                            </div>
+                                            </div> */}
                                             <div className={classes.flexRow}    >
-                                                <IconButton style={{marginLeft: 10}}>
-                                                    <ThumbUpAltIcon />
+                                                <IconButton >
+                                                <ThumbUpAltIcon className={classes.thumbUpIcon}/>
                                                 </IconButton>
-                                                <div>
-                                                    <p className={classes.numLikes}>100</p>
-                                                </div>
                                             </div>
                                         </div>
+                                    <div>
+                                        <p className={classes.numLikes}>100</p>
+                                    </div>
+                                    <SimpleMenu props={props}>
+                                        <MenuItem onClick={props.handleClose}>
+                                            <EditIcon fontSize='small' style={{ marginRight: 16 }} />
+                                            <Link
+                                                className={classes.link}
+                                                to={`/editTimeline/${id}`}
+                                            >
+                                                Edit
+                                                    </Link>
+                                        </MenuItem>
+                                        <MenuItem onClick={props.handleClose}>
+                                            <DeleteIcon fontSize='small' style={{ marginRight: 16 }} />
+                                            <Link
+                                                className={classes.link}
+                                                onClick={() => deleteTimelineHandler(data._id)}
+                                            >
+                                                Delete
+                                                </Link>
 
-                                    <p className={classes.tags}>Tags:{data.tags}</p>
+                                        </MenuItem>
+                                        <MenuItem onClick={props.handleClose}>
+                                            <ShareIcon fontSize='small' style={{ marginRight: 16 }} />
+                                            <Link className={classes.link}>
+                                                Share
+                                                </Link>
+                                        </MenuItem>
+                                        <MenuItem onClick={props.handleClose}>
+                                            <ArrowDownwardIcon fontSize='small' style={{ marginRight: 16 }} />
+                                            <Link
+                                                className={classes.link}
+                                                to={`/import/${data._id}`}>
+                                                Import Data
+                                                </Link>
+                                        </MenuItem>
+                                        <MenuItem onClick={props.handleClose}>
+                                            <ArrowUpwardIcon fontSize='small' style={{ marginRight: 16 }} />
+                                            <a
+                                                href={`data:text/json;charset=utf-8,${encodeURIComponent(
+                                                    JSON.stringify(data)
+                                                )}`}
+                                                download={data.timelineTitle && `${(data.timelineTitle).split(' ').join('_')}.json`}
+                                                // download='filename.json'
+                                                className={classes.link}>
+                                                Export Data as Json
+                                                    </a>
+                                        </MenuItem>
+                                    </SimpleMenu>
                                 </div>
-
                             </div>
 
                             {isLoading && <h2 style={{ margin: '60px auto' }}>Loading....</h2>}
@@ -574,6 +569,7 @@ const TimelineDetail = (props) => {
                                     </div>      
                             </div>
                             ))}
+                            <p className={classes.tags}>Tags:{data.tags}</p>
                             <Footer />
                         </div>
                     </div>
