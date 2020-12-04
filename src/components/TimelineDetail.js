@@ -300,7 +300,7 @@ const TimelineDetail = (props) => {
 
         // Use WebMercatorViewport to get center longitude/latitude and zoo
         const viewport = typeof numvar1 === 'number' && typeof numvar2 === 'number' && typeof numvar3 === 'number' && typeof numvar4 === 'number' && new WebMercatorViewport({ width: 800, height: 600 })
-            .fitBounds([[numvar1, numvar2], [numvar3, numvar4]], { padding: 0 })
+            .fitBounds([[numvar1, numvar2], [numvar3, numvar4]], { padding: 100 })
         // .fitBounds([[12.3, 31.7683], [35.2137, 42]], { padding: 100 })
 
         const { longitude, latitude, zoom } = viewport
