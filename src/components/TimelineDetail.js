@@ -17,7 +17,7 @@ import { SimpleMenu } from './shared/SimpleMenu';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
-import { Avatar, Tooltip } from '@material-ui/core';
+import { Avatar, Card, Tooltip } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -442,13 +442,13 @@ const TimelineDetail = (props) => {
                             </div>
 
                             {isLoading && <h2 style={{ margin: '60px auto' }}>Loading....</h2>}
+
                         </div>
                         <div className={classes.cardsContainer}>
+                            {/* <Card data={data} props={props}/> */}
+                            
                             {data.event && data.event.map((item, index) => (
-                             
-                                <div 
-                                    style={{ margin: '0 auto' }} 
-                                    >     
+                                <div style={{ margin: '0 auto' }}>     
                                     <div className="Card" key={index}>
                                         <div className={classes.imageContainer}>
                                             {item.eventImageUrl && item.eventImageUrl.includes('youtube.com') ?
@@ -502,17 +502,7 @@ const TimelineDetail = (props) => {
                                                 }
                                             </CardContent>
                                         <CardActions className={classes.actions}>
-
-                                            <IconButton
-                                                className={clsx(classes.expand, {
-                                                    [classes.expandOpen]: expanded,
-                                                })}
-                                                onClick={handleExpandClick}
-                                                aria-expanded={expanded}
-                                                aria-label="show more"
-                                            >
-                                                <ChatBubbleIcon />
-                                            </IconButton>
+                                            <div></div>
 
                                             <div className={classes.pageNum}>{index + 1}</div>
 
@@ -536,43 +526,6 @@ const TimelineDetail = (props) => {
                                                 </MenuItem>
                                             </SimpleMenu>
                                         </CardActions>
-                                        <Collapse in={expanded} timeout="auto" unmountOnExit>
-                                            <Divider light />
-                                            <CardContent className={classes.actions} style={{ marginTop: 20, marginBottom: 0 }}>
-                                                <div >
-                                                    <Avatar alt="Freya" src="https://pbs.twimg.com/media/B-d6yG4IIAAM7Wt.png" />
-                                                </div>
-                                                <div>
-                                                    <Typography gutterBottom>
-                                                        I love Japanese History.
-                                                    </Typography>
-                                                </div>
-                                            </CardContent>
-                                            <CardContent className={classes.actions} style={{ marginTop: 0 }}>
-                                                <div >
-                                                    <Avatar alt="Freya" src="https://vhx.imgix.net/criterionchannelchartersu/assets/6d3d0ab1-77a0-4520-a6b4-b2703f80f78f-a81c655b.jpg?auto=format%2Ccompress&fit=crop&h=360&q=70&w=640" />
-                                                </div>
-                                                <div>
-                                                    <Typography gutterBottom>
-                                                        Thanks. I will.
-                                            </Typography>
-                                                </div>
-                                            </CardContent>
-                                            <CardContent>
-                                                <TextField
-                                                    margin="normal"
-                                                    fullWidth
-                                                    name="eventComment"
-                                                    label="eventComment"
-                                                    type="text"
-                                                    value={eventComment}
-                                                    onChange={e => setEventComment(e.target.value)}
-                                                    id="eventComment"
-                                                    inputRef={register}
-                                                    className={classes.commentForm}
-                                                />
-                                            </CardContent>
-                                        </Collapse>
                                     </div>      
                             </div>
                             ))}

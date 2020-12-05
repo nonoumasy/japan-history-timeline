@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react'
-import ReactMapGL, { Marker, NavigationControl, FullscreenControl, Popup, FlyToInterpolator, WebMercatorViewport} from 'react-map-gl';
+import React, {useState} from 'react'
+import ReactMapGL, { Marker, NavigationControl, FullscreenControl, Popup, FlyToInterpolator} from 'react-map-gl';
 
 import {makeStyles} from '@material-ui/styles'
 import Button from '@material-ui/core/Button';
