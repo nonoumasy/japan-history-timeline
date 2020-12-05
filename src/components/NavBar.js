@@ -1,5 +1,5 @@
-import React from 'react';
-import { withRouter, Link } from 'react-router-dom'
+import React, {useEffect} from 'react';
+import { withRouter, Link, Route } from 'react-router-dom'
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -26,12 +26,30 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const logoutHandler = () => {
+    alert('asdfds')
+    fetch('http://localhost:5000/auth/logout')
+    .then(() => console.log('You are logged out.'))
+}
+
 const NavBar = () =>  {
     const classes = useStyles();
+
+    useEffect(() => {
+        fetch('http://localhost:5000/')
+            .then(res => res.json())
+            .then(result => console.log('req',result.user))
+            .catch(err => console.log(err))
+    }, [])
 
     return (
         <div className={classes.root}>
             <AppBar position="fixed">
+
+                {/* if (user) {
+
+                } */}
+
                 <Toolbar style={{textAlign: 'left'}}>
                     <div variant="h6" className={classes.title}>
                         <Link
@@ -45,11 +63,11 @@ const NavBar = () =>  {
                     </div>
 
                     <Link
-                        to="/signup"
+                        to="/profile"
                         style={{ textDecoration: 'none', color: '#fff' }}
                     >
                         <Typography className={classes.link}>
-                            Signup
+                            Profile
                         </Typography>
                     </Link>
                     <Link
@@ -60,14 +78,14 @@ const NavBar = () =>  {
                             Login
                         </Typography>
                     </Link>
-                    <Link
-                        to="/"
+                    <a
+                        href='http://localhost:5000/auth/logout'
                         style={{ textDecoration: 'none', color: '#fff', marginLeft: 16 }}
                     >
                         <Typography className={classes.link}>
                             Logout
                         </Typography>
-                    </Link>
+                    </a>
                 </Toolbar>
             </AppBar>
         </div>
