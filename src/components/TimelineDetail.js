@@ -74,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: -10,
         // marginRight: 10,
         textAlign: 'center',
+        maxWidth: '20rem'
     },
     user: {
         fontSize: '16px',
@@ -210,6 +211,9 @@ const useStyles = makeStyles((theme) => ({
         margin: '0px 0px',
         padding: 0
     },
+    pageNum: {
+        fontSize: 12,
+    }
 }));
 
 const TimelineDetail = (props) => {
@@ -316,17 +320,17 @@ const TimelineDetail = (props) => {
         await axios.delete(`https://japan-history-timeline-api.herokuapp.com/timeline/event/${id}`)
     }
 
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
+    const handleExpandClick = async () => {
+        await setExpanded(!expanded);
     };
 
-    const eventHandler = (id) => {
-        history.push(`/timeline/${id}/addEvent`)
+    const eventHandler = async (id) => {
+        await history.push(`/timeline/${id}/addEvent`)
     }
 
-    const flyTo = (item) => {
+    const flyTo = async (item) => {
         item.eventLatitude && item.eventLongitude &&
-        setViewport({
+        await setViewport({
             ...viewport,
             longitude: item.eventLongitude,
             latitude: item.eventLatitude,
@@ -440,11 +444,12 @@ const TimelineDetail = (props) => {
                             {isLoading && <h2 style={{ margin: '60px auto' }}>Loading....</h2>}
                         </div>
                         <div className={classes.cardsContainer}>
-                            {data.event && data.event.map((item) => (
+                            {data.event && data.event.map((item, index) => (
+                             
                                 <div 
                                     style={{ margin: '0 auto' }} 
                                     >     
-                                    <div className="Card" key={item._id}>
+                                    <div className="Card" key={index}>
                                         <div className={classes.imageContainer}>
                                             {item.eventImageUrl && item.eventImageUrl.includes('youtube.com') ?
                                                 <iframe
@@ -508,6 +513,8 @@ const TimelineDetail = (props) => {
                                             >
                                                 <ChatBubbleIcon />
                                             </IconButton>
+
+                                            <div className={classes.pageNum}>{index + 1}</div>
 
                                             <SimpleMenu props={props}>
                                                 <MenuItem onClick={props.handleClose}>

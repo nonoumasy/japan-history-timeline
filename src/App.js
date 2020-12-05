@@ -7,7 +7,6 @@ import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Home from './components/Home'
-import Signup from './components/Signup'
 import Login from './components/Login'
 import AddEvent from './components/AddEvent'
 import EditTimeline from './components/EditTimeline'
@@ -16,6 +15,7 @@ import AddTimeline from './components/AddTimeline'
 import TimelineDetail from './components/TimelineDetail'
 import ImportData from './components/ImportData'
 import NotFoundPage from './components/NotFoundPage'
+import Profile from './components/Profile';
 
 const theme = createMuiTheme({
   palette: {
@@ -49,10 +49,6 @@ function App() {
           <Router>
             <NavBar />
             <Switch>
-
-              <Route path='/signup'>
-                <Signup />
-              </Route>
 
               <Route path='/login'>
                 <Login />
@@ -101,6 +97,14 @@ function App() {
                   <AddTimeline />
                 </div>
               </Route>
+
+            <Route exact path='/profile'>
+              <div style={{ margin: '60px auto' }}>
+                <Profile />
+              </div>
+            </Route>
+
+
 
               {/* <Box mt={8} mb={4}>
           <Footer />

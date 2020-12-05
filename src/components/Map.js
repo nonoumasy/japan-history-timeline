@@ -37,8 +37,8 @@ const useStyles = makeStyles((theme) => ({
     marker: {
         backgroundColor: '#EC5D5D',
         color: '#fff',
-        width: 36,
-        height: 36,
+        width: 32,
+        height: 32,
         padding: 5,
         borderRadius: 1000,
         borderStyle: 'solid',
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         alignItems: 'center',
         fontWeight: 900,
-        fontSize: 14,
+        fontSize: 12,
         boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
     },
     showAll: {
@@ -88,7 +88,7 @@ const Map = ({ viewport, setViewport, data, flyTo, popup, setPopup, setEventId, 
     let markerHeight
     let markerWidth
     const markerMinWidth = 40
-    const markerMinHeight = 30
+    const markerMinHeight = 40
     viewport.zoom && (viewport.zoom ** 1.8) >= markerMinHeight ? markerHeight = (viewport.zoom ** 1.8) : markerHeight = markerMinHeight 
     viewport.zoom && (viewport.zoom ** 2) >= markerMinWidth ? markerWidth = (viewport.zoom ** 2) : markerWidth = markerMinWidth 
 
@@ -217,10 +217,12 @@ const Map = ({ viewport, setViewport, data, flyTo, popup, setPopup, setEventId, 
                                                 style={{
                                                     width: `auto`,
                                                     height:`${markerHeight}px`,
+                                                    // width: '50px',
+                                                    // height:`50px`,
                                                     objectFit: 'cover',
                                                     borderRadius: 7,
                                                     boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
-                                                    margin: '0 auto'
+                                                    margin: '0 auto',
                                                 }} /> 
                                             </div>
                                             :
