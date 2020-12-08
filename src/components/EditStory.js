@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function EditTimeline(props) {
+export default function EditStory(props) {
     const classes = useStyles();
     const history = useHistory()
     const { register, handleSubmit, errors } = useForm({
@@ -116,7 +116,7 @@ export default function EditTimeline(props) {
         <Container component="main" maxWidth="xs">
             <div className={classes.paper}>
                 <Typography>
-                    EditTimeline
+                    EditStory
                 </Typography>
 
                 <form className={classes.form} noValidate onSubmit={handleSubmit((data) => setData(data))}>

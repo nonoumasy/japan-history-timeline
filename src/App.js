@@ -9,7 +9,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Home from './components/Home'
 import Login from './components/Login'
 import AddEvent from './components/AddEvent'
-import EditTimeline from './components/EditTimeline'
+import EditStory from './components/EditStory'
 import EditEvent from './components/EditEvent'
 import AddStory from './components/AddStory'
 import Story from './components/Story'
@@ -59,12 +59,6 @@ function App() {
               <Login />
             </Route>
 
-            <Route path='/import/:id'>
-              <div style={{ margin: '60px auto' }}>
-                <ImportData />
-              </div>
-            </Route>
-
             <Route exact path='/AddStory'>
               <div style={{ margin: '60px auto' }}>
                 <AddStory />
@@ -72,29 +66,24 @@ function App() {
             </Route>
 
             <Route
-              exact path='/editTimeline/:id'
-              render={props => <EditTimeline {...props} />}
+              exact path='/editStory/:id'
+              render={props => <EditStory {...props} />}
             />
+
+            <Route
+              exact path='/story/:id/addEvent'>
+              <AddEvent />
+            </Route>
 
             <Route
               exact path='/editEvent/:id'
               render={props => <EditEvent {...props} />}
             />
+
             <Route exact path='/'>
               <div style={{ marginTop: '90px' }}>
                 <Home />
               </div>
-            </Route>
-
-            <Route exact path='/profile'>
-              <div style={{ marginTop: '90px' }}>
-                <Profile />
-              </div>
-            </Route>
-
-            <Route
-              exact path='/story/:id/addEvent'>
-              <AddEvent />
             </Route>
 
             <Route exact path='/story/:id'>
