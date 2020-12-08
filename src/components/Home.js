@@ -109,7 +109,7 @@ const Home = (props) => {
 
     useEffect(() => {
         setIsLoading(true)
-        fetch('http://localhost:5000/timeline')
+        fetch('http://localhost:5000/story')
             .then(res => res.json())
             .then(data =>{
                 setData(data)
@@ -120,7 +120,7 @@ const Home = (props) => {
     }, [setData])
 
     const clickImageHandler = (id) => {
-        history.push(`/timeline/${id}`)
+        history.push(`/story/${id}`)
     }
 
     return (
@@ -128,7 +128,7 @@ const Home = (props) => {
             <div className={classes.flexRowBetween}>
                 <div>
                     <Button variant='outlined' >
-                        <Link to='/addTimeline' className={classes.link}>
+                        <Link to='/addStory' className={classes.link}>
                             Create New StoryMap
                     </Link>
                     </Button>
@@ -171,13 +171,13 @@ const Home = (props) => {
                                 <CardMedia
                                     component='img'
                                     className={classes.image}
-                                    image={item.timelineImageUrl}
+                                    image={item.storyImageUrl}
                                     onClick={() => clickImageHandler(item._id)}
                                 />
                                 
                             </div>
                             <Typography variant="h6" className={classes.title}>
-                                {item.timelineTitle}
+                                {item.storyTitle}
                             </Typography>
                         </Grid>
                     )

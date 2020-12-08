@@ -17,33 +17,34 @@ import InfoIcon from '@material-ui/icons/Info';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
 const schema = yup.object().shape({
-    eventYear: yup
-        .string(),
-    // eventTitle: yup
-    //     .string()
-    //     .required('Title is a required field.')
-    //     .min(3),
-    eventDescription: yup
+    eventDate: yup
+        .date(),
+    eventTitle: yup
         .string()
+        .required('Title is a required field.')
         .min(3),
+    eventDescription: yup
+        .string(),
     eventImageUrl: yup
         .string(),
     eventLink: yup
         .string(),
-    eventLatitude: yup
-        .number()
-        .transform(cv => isNaN(cv) ? undefined : cv).positive()
-        .nullable()
-        .lessThan(90)
-        .moreThan(-90)
-        .notRequired() ,
-    eventLongitude: yup
-        .number()
-        .transform(cv => isNaN(cv) ? undefined : cv).positive()
-        .nullable()
-        .lessThan(180)
-        .moreThan(-180)
-        .notRequired() ,
+    // eventLatitude: yup
+    //     .number()
+    //     .transform(cv => isNaN(cv) ? undefined : cv).positive()
+    //     .nullable()
+    //     .lessThan(90)
+    //     .moreThan(-90)
+    //     .notRequired() ,
+    // eventLongitude: yup
+    //     .number()
+    //     .transform(cv => isNaN(cv) ? undefined : cv).positive()
+    //     .nullable()
+    //     .lessThan(180)
+    //     .moreThan(-180)
+    //     .notRequired() ,
+    eventAudio: yup
+        .string(),
 })
 
 const useStyles = makeStyles((theme) => ({
@@ -78,12 +79,12 @@ export default function AddEvent(props) {
         setExpanded(!expanded);
     };
     
-    const { eventYear, eventTitle, eventDescription, eventImageUrl, eventLink, eventLatitude,
+    const { eventDate, eventTitle, eventDescription, eventImageUrl, eventLink, eventLatitude,
         eventLongitude} = data
     useEffect(() => {
         if (data) {
-            axios.put(`https://japan-history-timeline-api.herokuapp.com/timeline/${id}/update`, {
-                eventYear,
+            axios.put(`http://localhost:5000/story/${id}/update`, {
+                eventDate,
                 eventTitle,
                 eventDescription,
                 eventImageUrl,
@@ -114,21 +115,21 @@ export default function AddEvent(props) {
                         variant="outlined"
                         margin="normal"
                         fullWidth
-                        id="eventYear"
-                        label="eventYear"
-                        name="eventYear"
-                        autoComplete="eventYear"
+                        id="eventDate"
+                        label="eventDate"
+                        name="eventDate"
+                        autoComplete="eventDate"
                         type="text"
                         autoFocus
                         inputRef={register}
-                        error={!!errors.eventYear}
-                        helperText={errors?.eventYear?.message}
+                        error={!!errors.eventDate}
+                        helperText={errors?.eventDate?.message}
                     />
                     <TextField
                         variant="outlined"
                         margin="normal"
                         fullWidth
-                        // required
+                        required
                         id="eventTitle"
                         label="eventTitle"
                         name="eventTitle"
@@ -195,38 +196,49 @@ export default function AddEvent(props) {
                         type="text"
                         id="eventLink"
                         inputRef={register}
-                    />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        name="eventLatitude"
-                        label="eventLatitude"
-                        type="number"
-                        id="eventLatitude"
-                        min="-90" 
-                        max="90" 
-                        inputRef={register}
-                        error={!!errors.eventLatitude}
-                        helperText={errors?.eventLatitude?.message}
+                        error={!!errors.eventLink}
+                        helperText={errors?.eventLink?.message}
                     />
 
                     <TextField
                         variant="outlined"
                         margin="normal"
                         fullWidth
-                        name="eventLongitude"
-                        label="eventLongitude"
-                        type="number"
-                        id="eventLongitude"
-                        min="-180" 
-                        max="180" 
+                        name="eventAudio"
+                        label="eventAudio"
+                        type="text"
+                        id="eventAudio"
                         inputRef={register}
-                        error={!!errors.eventLongitude}
-                        helperText={errors?.eventLongitude?.message}
+                        error={!!errors.eventAudio}
+                        helperText={errors?.eventAudio?.message}
                     />
-
                     
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        name="type"
+                        label="type"
+                        type="text"
+                        id="type"
+                        defaultValue={'Point'}
+                        inputRef={register}
+                        error={!!errors.type}
+                        helperText={errors?.type?.message}
+                    />
+
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        name="coordinates"
+                        label="coordinates"
+                        type="number"
+                        id="coordinates"
+                        inputRef={register}
+                        error={!!errors.coordinates}
+                        helperText={errors?.coordinates?.message}
+                    />
 
                     <Button
                         type="submit"

@@ -11,7 +11,7 @@ import Login from './components/Login'
 import AddEvent from './components/AddEvent'
 import EditTimeline from './components/EditTimeline'
 import EditEvent from './components/EditEvent'
-import AddTimeline from './components/AddTimeline'
+import AddStory from './components/AddStory'
 import Story from './components/Story'
 import ImportData from './components/ImportData'
 import NotFoundPage from './components/NotFoundPage'
@@ -55,53 +55,53 @@ function App() {
             <NavBar />
             <Switch>
 
-              <Route path='/login'>
-                <Login />
-              </Route>
+            <Route path='/login'>
+              <Login />
+            </Route>
 
-              <Route path='/import/:id'>
-                <div style={{ margin: '60px auto' }}>
-                  <ImportData />
-                </div>
-              </Route>
+            <Route path='/import/:id'>
+              <div style={{ margin: '60px auto' }}>
+                <ImportData />
+              </div>
+            </Route>
 
-              <Route
-                exact path='/editTimeline/:id'
-                render={props => <EditTimeline {...props} />}
-              />
+            <Route exact path='/AddStory'>
+              <div style={{ margin: '60px auto' }}>
+                <AddStory />
+              </div>
+            </Route>
 
-              <Route
-                exact path='/editEvent/:id'
-                render={props => <EditEvent {...props} />}
-              />
-              <Route exact path='/'>
-                <div style={{ marginTop: '90px' }}>
-                  <Home />
-                </div>
-              </Route>
+            <Route
+              exact path='/editTimeline/:id'
+              render={props => <EditTimeline {...props} />}
+            />
 
-              <Route exact path='/profile'>
-                <div style={{ marginTop: '90px' }}>
-                  <Profile />
-                </div>
-              </Route>
+            <Route
+              exact path='/editEvent/:id'
+              render={props => <EditEvent {...props} />}
+            />
+            <Route exact path='/'>
+              <div style={{ marginTop: '90px' }}>
+                <Home />
+              </div>
+            </Route>
 
-              <Route
-                exact path='/timeline/:id/addEvent'>
-                <AddEvent />
-              </Route>
+            <Route exact path='/profile'>
+              <div style={{ marginTop: '90px' }}>
+                <Profile />
+              </div>
+            </Route>
 
-              <Route exact path='/timeline/:id'>
-                <div style={{ marginTop: '60px' }}>
-                  <Story />
-                </div>
-              </Route>
+            <Route
+              exact path='/story/:id/addEvent'>
+              <AddEvent />
+            </Route>
 
-              <Route exact path='/addTimeline'>
-                <div style={{ margin: '60px auto' }}>
-                  <AddTimeline />
-                </div>
-              </Route>
+            <Route exact path='/story/:id'>
+              <div style={{ marginTop: '60px' }}>
+                <Story />
+              </div>
+            </Route>
 
             <Route exact path='/profile'>
               <div style={{ margin: '60px auto' }}>

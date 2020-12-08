@@ -97,6 +97,9 @@ const useStyles = makeStyles((theme) => ({
         color: '#333',
         marginTop: 0,
     },
+    summary: {
+
+    },
     numItems: {
         textTransform: 'uppercase',
         fontSize: '12px',
@@ -140,7 +143,9 @@ const useStyles = makeStyles((theme) => ({
         marginTop: 10,
     },
     eventTitle: {
-
+        marginLeft: '1rem',
+        marginTop: 20,
+        fontWeight: 700,
     },
     event: {
         paddingLeft: '1rem',
@@ -241,7 +246,7 @@ const useStyles = makeStyles((theme) => ({
     
 }));
 
-const TimelineDetail = (props) => {
+const Story = (props) => {
     const classes = useStyles();
     const history = useHistory()
     const { id } = useParams()
@@ -266,11 +271,13 @@ const TimelineDetail = (props) => {
     })
     const [open, setOpen] = useState(false);
 
+    console.log('data', data)
 
-    // get timeline by id, get map extents, setViewport
+    // get story by id, get map extents, setViewport
     useEffect(() => {
         setIsLoading(true)
-        fetch(`https://japan-history-timeline-api.herokuapp.com/timeline/${id}`)
+        // fetch(`https://japan-history-story-api.herokuapp.com/story/${id}`)
+        fetch(`http://localhost:5000/story/${id}`)
             .then(res => res.json())
             .then(data => {
                 setData(data)
@@ -340,16 +347,17 @@ const TimelineDetail = (props) => {
     }
 
     const deleteTimelineHandler = async (id) => {
-        await axios.delete(`https://japan-history-timeline-api.herokuapp.com/timeline/${id}`)
+        await axios.delete(`http://localhost:5000/story/${id}`)
         history.push('/')
     }
 
     const deleteEventHandler = async (id) => {
-        await axios.delete(`https://japan-history-timeline-api.herokuapp.com/timeline/event/${id}`)
+        await axios.delete(`http://localhost:5000/story/event/${id}`)
+        history.goBack()
     }
 
     const eventHandler = async (id) => {
-        await history.push(`/timeline/${id}/addEvent`)
+        await history.push(`/story/${id}/addEvent`)
     }
 
     const flyTo = async (item) => {
@@ -397,11 +405,11 @@ const TimelineDetail = (props) => {
                         <div style={{ margin: '0px auto', padding: 0 }}>
                             <div className='headerArea'>
                                 <div className={classes.flexCol}>
-                                    <div><Avatar alt="" src={data.timelineImageUrl} className={classes.avatar}/></div>
+                                    <div><Avatar alt="" src={data.storyImageUrl} className={classes.avatar}/></div>
                                     <div>
-                                        <h2 className={classes.title}>{data.timelineTitle}</h2>
+                                        <h2 className={classes.title}>{data.storyTitle}</h2>
                                     </div>
-                                    <div><p className={classes.user}>nonoumasy</p></div>
+                                    <div><p className={classes.user}>{data.storyCreator}</p></div>
                                         <div className={classes.flexRow} >
                                             {/* <div className={classes.numItems}>
                                                 {data.event && data.event.length} items
@@ -455,13 +463,14 @@ const TimelineDetail = (props) => {
                                                 href={`data:text/json;charset=utf-8,${encodeURIComponent(
                                                     JSON.stringify(data)
                                                 )}`}
-                                                download={data.timelineTitle && `${(data.timelineTitle).split(' ').join('_')}.json`}
+                                                download={data.storyTitle && `${(data.storyTitle).split(' ').join('_')}.json`}
                                                 // download='filename.json'
                                                 className={classes.link}>
                                                 Export Data as Json
                                                     </a>
                                         </MenuItem>
                                     </SimpleMenu>
+                                    <div className={classes.summary}>{data.storySummary}</div>
                                 </div>
                             </div>
 
@@ -504,9 +513,9 @@ const TimelineDetail = (props) => {
                                                 onMouseEnter={() => eventHoverHandler(item._id)}
                                                 onMouseLeave={() => setPopup('')}
                                                 onClick={() => eventClickHandler(item._id)} className={classes.cardEventContainer}>
-                                                {item.eventYear &&
+                                                {item.eventDate &&
                                                     <Typography variant="body2" color="textSecondary" className={classes.year}>
-                                                    {item.eventYear}
+                                                {new Date(item.eventDate).toDateString()}
                                                     </Typography>
                                                 }
                                                 {item.eventTitle &&
@@ -553,7 +562,7 @@ const TimelineDetail = (props) => {
                             ))}
 
                             <div className='footer'>
-                                <p className={classes.tags}>Tags: <span style={{fontStyle: 'italic'}}>{data.tags}</span></p>
+                                <p className={classes.tags}>Tags: <span style={{fontStyle: 'italic'}}>{data.storyTags}</span></p>
                                 <div className={classes.referenceContainer}>
                                     <p className={classes.reference}>References: </p>
                                     <Button onClick={handleClick} className={classes.collapseButton}>
@@ -596,4 +605,4 @@ const TimelineDetail = (props) => {
     )
 }
 
-export default TimelineDetail
+export default Story

@@ -1,5 +1,5 @@
 .headerArea {
-    width: 80%;
+    width: 60%;
     margin: 3.75rem auto;
     padding: 0;
 }
@@ -24,10 +24,10 @@
 
 @media (max-width: 1920px) {
     .Card {
-        width: 70%;
+        width: 60%;
     }
     .headerArea {
-        width: 70%;
+        width: 40%;
     }
 }
 
@@ -36,7 +36,7 @@
         width: 80%;
     }
     .headerArea {
-        width: 80%;
+        width: 60%;
     }
 }
 
@@ -46,7 +46,7 @@
     }
 
     .headerArea {
-        width: 0%;
+        width: 80%;
     }
 
     .footer {
