@@ -39,8 +39,6 @@ const Login = () => {
             <Avatar className={classes.avatar}>
                 <img src={'https://res.cloudinary.com/nonoumasy/image/upload/v1604132149/f40d42588779c6424f0c4abcfdb383ab_htr43v.jpg'} style={{ height: '40px', width: '40px', objectFit: 'cover' }} alt='' />
             </Avatar>
-            
-            
             <div style={{ margin: '10px auto', textAlign: 'center' }}>
                 <div>
                     Welcome to StoryMaps

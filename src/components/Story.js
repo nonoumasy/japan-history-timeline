@@ -1,12 +1,10 @@
 import React, { useState, useEffect} from 'react'
 import { useHistory, useParams, Link} from 'react-router-dom'
 import axios from 'axios'
-import clsx from 'clsx';
 import { useForm } from 'react-hook-form'
 import Map from './Map'
 import { FlyToInterpolator, WebMercatorViewport } from 'react-map-gl';
 
-import { ProgressBar } from 'scrolling-based-progressbar'
 import { makeStyles } from '@material-ui/core/styles';
 import Collapse from '@material-ui/core/Collapse';
 import Typography from '@material-ui/core/Typography';
@@ -15,10 +13,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import { SimpleMenu } from './shared/SimpleMenu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
-import { Avatar, Card, Tooltip } from '@material-ui/core';
-import Divider from '@material-ui/core/Divider';
+import { Avatar, Tooltip } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ShareIcon from '@material-ui/icons/Share';
@@ -26,11 +23,12 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import TextField from '@material-ui/core/TextField';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import Footer from './Footer'
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 
-import './TimelineDetail.css'
+import './Story.css'
 
 const useStyles = makeStyles((theme) => ({
     mainContainer: {
@@ -74,13 +72,14 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: -10,
         // marginRight: 10,
         textAlign: 'center',
-        maxWidth: '20rem'
+        maxWidth: '16rem',
     },
     user: {
         fontSize: '16px',
-        marginBottom: 10,
-        marginTop: 20,
+        marginBottom: 0,
+        marginTop: 15,
         textAlignt: 'center',
+        fontStyle: 'italic',
     },
     metadata: {
         marginLeft: '4rem',
@@ -106,14 +105,6 @@ const useStyles = makeStyles((theme) => ({
         cursor: 'pointer',
         color: '#333',
     },
-    tags: {
-        margin: '60px auto',
-        textAlign: 'center',
-        textTransform: 'uppercase',
-        fontSize: '12px',
-        fontWeight: 700,
-
-    },
     cardsContainer: {
         marginTop: 40,
         marginBottom: 120,
@@ -138,7 +129,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: 7,
     },
     year: {
-        display: 'inline',
+        display: 'inline-block',
         borderRadius: 4,
         padding: '4px 8px',
         fontSize: '12px',
@@ -146,7 +137,7 @@ const useStyles = makeStyles((theme) => ({
         color: '#333',
         backgroundColor: "#dfdfdf",
         marginLeft: '1rem',
-        marginTop: 20,
+        marginTop: 10,
     },
     eventTitle: {
 
@@ -185,6 +176,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: '20px 0 10px',
+        marginLeft:0,
     },
     imageContainer: {
         margin: 0,
@@ -213,19 +205,49 @@ const useStyles = makeStyles((theme) => ({
     },
     pageNum: {
         fontSize: 12,
+        margin: 0,
+    },
+    tags: {
+        textAlign: 'left',
+        textTransform: 'uppercase',
+        fontSize: '12px',
+        fontWeight: 700,
+        width: '80%',
+        marginLeft: '1rem',
+        marginTop: 40,
+        marginBottom: 0,
+    },
+    referenceContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: 0,
+    },
+    reference: {
+        textAlign: 'left',
+        textTransform: 'uppercase',
+        fontSize: '12px',
+        fontWeight: 700,
+        width: '80%',
+        marginLeft: '1rem',
+    },
+    collapseButton: {
+        height: 20,
+    },
+    ol: {
+        paddingRight: 40,
     }
+    
 }));
 
 const TimelineDetail = (props) => {
     const classes = useStyles();
     const history = useHistory()
     const { id } = useParams()
-    const { register, handleSubmit } = useForm()
 
     const [data, setData] = useState([])
-    const [expanded, setExpanded] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
-    const [eventComment, setEventComment] = useState('')
     const [popup, setPopup] = useState(null)
     const [eventId, setEventId] = useState(null)
     const [bounds, setBounds] = useState({
@@ -242,6 +264,8 @@ const TimelineDetail = (props) => {
         width: "50vw",
         height: "100vh"
     })
+    const [open, setOpen] = useState(false);
+
 
     // get timeline by id, get map extents, setViewport
     useEffect(() => {
@@ -280,6 +304,10 @@ const TimelineDetail = (props) => {
             setPopup(item)
         }
     }
+
+    const handleClick = () => {
+        setOpen(!open);
+    };
 
     function getBounds(data) {
         // Calculate corner values of bounds
@@ -320,10 +348,6 @@ const TimelineDetail = (props) => {
         await axios.delete(`https://japan-history-timeline-api.herokuapp.com/timeline/event/${id}`)
     }
 
-    const handleExpandClick = async () => {
-        await setExpanded(!expanded);
-    };
-
     const eventHandler = async (id) => {
         await history.push(`/timeline/${id}/addEvent`)
     }
@@ -356,8 +380,8 @@ const TimelineDetail = (props) => {
 
     return (
         <>
-            <ProgressBar height="4px" color="#666" />
             <div className={classes.mainContainer}>
+                
                 <div className='sidebar'>
                     <Tooltip arrow placement='top' title='Add New Event' >
                         <Fab
@@ -502,10 +526,8 @@ const TimelineDetail = (props) => {
                                                 }
                                             </CardContent>
                                         <CardActions className={classes.actions}>
-                                            <div></div>
-
+                                            <div style={{ marginRight: '1rem' }}></div>
                                             <div className={classes.pageNum}>{index + 1}</div>
-
                                             <SimpleMenu props={props}>
                                                 <MenuItem onClick={props.handleClose}>
                                                     <EditIcon fontSize='small' style={{ marginRight: 16 }} />
@@ -529,29 +551,46 @@ const TimelineDetail = (props) => {
                                     </div>      
                             </div>
                             ))}
-                            <p className={classes.tags}>Tags:{data.tags}</p>
-                            <Footer />
+
+                            <div className='footer'>
+                                <p className={classes.tags}>Tags: <span style={{fontStyle: 'italic'}}>{data.tags}</span></p>
+                                <div className={classes.referenceContainer}>
+                                    <p className={classes.reference}>References: </p>
+                                    <Button onClick={handleClick} className={classes.collapseButton}>
+                                        {open ? <ExpandLess /> : <ExpandMore />}
+                                    </Button>
+                                </div>
+                                <Collapse in={open} timeout="auto" unmountOnExit>
+                                    <ol className={classes.ol}>
+                                        <li>Ann Christys, Vikings in the South (London: Bloomsbury, 2015), pp. 59-60.</li>
+                                        <li>Haywood, John. Northmen. Head of Zeus.</li>
+                                        <li>Judith Jesch, Ships and Men in the Late Viking Age: The Vocabulary of Runic Inscriptions and Skaldic Verse (Woodbridge: Boydell, 2001), p. 88.</li>
+                                    </ol>
+                                </Collapse>
+                                <Footer />
+                            </div>
+                            
+                            
+                            
+
+                            
                         </div>
                     </div>
                 </div>
-                <div >
-                    <div className='map'>
-                        <Map 
-                            data={data} 
-                            viewport={viewport}
-                            setViewport={setViewport} 
-                            flyTo={flyTo} 
-                            popup={popup} 
-                            setPopup={setPopup}
-                            eventId={eventId}
-                            setEventId={setEventId}
-                            bounds={bounds}
-                            onClickMarker={onClickMarker}
-                            />
-                    </div>
-                    
-                </div>
-                
+                <div className='map'>
+                    <Map 
+                        data={data} 
+                        viewport={viewport}
+                        setViewport={setViewport} 
+                        flyTo={flyTo} 
+                        popup={popup} 
+                        setPopup={setPopup}
+                        eventId={eventId}
+                        setEventId={setEventId}
+                        bounds={bounds}
+                        onClickMarker={onClickMarker}
+                        />
+                </div>      
             </div>
         </>
     )

@@ -92,7 +92,7 @@ export default function EditEvent(props) {
             headers: { 'Content-Type': 'application/json' }})
             .then(res => res.json())
             .then(data => {
-                console.log('sd',data);
+                // console.log('sd',data);
                 setEventYear(data.eventYear)
                 setEventTitle(data.eventTitle)
                 setEventDescription(data.eventDescription)
@@ -106,11 +106,10 @@ export default function EditEvent(props) {
 
     useEffect(() => {
         if (data) {
-            const { eventYear, eventTitle, eventDescription, eventImageUrl, eventLink, eventLatitude, eventLongitude } = data
+            const { eventYear, eventDescription, eventImageUrl, eventLink, eventLatitude, eventLongitude } = data
             // posting to database
             axios.put(`https://japan-history-timeline-api.herokuapp.com/timeline/event/${props.match.params.id}`, {
                 eventYear,
-                eventTitle,
                 eventDescription,
                 eventImageUrl,
                 eventLink,

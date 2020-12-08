@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from 'react'
 import { Link, useHistory } from 'react-router-dom'
+import Footer from './Footer';
 
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from "@material-ui/core";
 import Typography from '@material-ui/core/Typography'
 import CardMedia from '@material-ui/core/CardMedia';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -74,8 +74,6 @@ const useStyles = makeStyles((theme) => ({
             // boxShadow: '0 2px 10px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.1)', 
             boxShadow: '0 5px 20px 0 rgba(0, 0, 0, 0.5), 0 15px 30px 0 rgba(0, 0, 0, 0.2)',
         },
-        
-
     },
     image: {
         width: '100%',
@@ -102,16 +100,21 @@ const Home = (props) => {
     const classes = useStyles()
     const [data, setData] = useState([])
     const history = useHistory()
-    const [sort, setSort] = React.useState('');
+    const [sort, setSort] = React.useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleChange = (event) => {
         setSort(event.target.value);
     };
 
     useEffect(() => {
-        fetch('https://japan-history-timeline-api.herokuapp.com/timeline')
+        setIsLoading(true)
+        fetch('http://localhost:5000/timeline')
             .then(res => res.json())
-            .then(data => setData(data))
+            .then(data =>{
+                setData(data)
+                setIsLoading(false)
+            })
             .catch(err => console.log(err))
 
     }, [setData])
@@ -159,7 +162,8 @@ const Home = (props) => {
                 spacing={2}
                 // dclassName={classes.gridContainer}
                 justify='flex-start'>
-                    
+
+                {isLoading && <h2 style={{ margin: '60px auto' }}>Loading....</h2>}
 
                 {data.map(item => (
                         <Grid item xs={12} sm={6} md={4} lg={3} key={item._id}>
@@ -180,6 +184,8 @@ const Home = (props) => {
                 )
                 }
             </Grid>
+
+            <Footer/>
         </Container>
     )
 }

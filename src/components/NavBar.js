@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { withRouter, Link, Route } from 'react-router-dom'
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -34,22 +34,31 @@ const logoutHandler = () => {
 
 const NavBar = () =>  {
     const classes = useStyles();
+    const [user, setUser] = useState('')
 
     useEffect(() => {
-        fetch('http://localhost:5000/')
-            .then(res => res.json())
-            .then(result => console.log('req',result.user))
-            .catch(err => console.log(err))
+        fetch("http://localhost:5000/auth/login/success", {
+            method: "GET",
+            credentials: "include",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Credentials": true
+            }
+        })
+            .then(response => {
+                if (response.status === 200) return response.json()
+                throw new Error("failed to authenticate user")
+            })
+            .then(response => {
+                setUser(response.user)
+            })
+            .catch(error => console.log(error))
     }, [])
 
     return (
         <div className={classes.root}>
             <AppBar position="fixed">
-
-                {/* if (user) {
-
-                } */}
-
                 <Toolbar style={{textAlign: 'left'}}>
                     <div variant="h6" className={classes.title}>
                         <Link
@@ -61,31 +70,36 @@ const NavBar = () =>  {
                             </Typography>
                         </Link>
                     </div>
-
-                    <Link
-                        to="/profile"
-                        style={{ textDecoration: 'none', color: '#fff' }}
-                    >
-                        <Typography className={classes.link}>
-                            Profile
+                    {user ?
+                    <>
+                        <Link
+                            to="/profile"
+                            style={{ textDecoration: 'none', color: '#fff' }}
+                        >
+                            <Typography className={classes.link}>
+                                Profile
                         </Typography>
-                    </Link>
-                    <Link
-                        to="/login"
-                        style={{ textDecoration: 'none', color: '#fff', marginLeft: 16 }}
-                    >
-                        <Typography className={classes.link}>
-                            Login
-                        </Typography>
-                    </Link>
-                    <a
+                        </Link>
+                        <a
                         href='http://localhost:5000/auth/logout'
                         style={{ textDecoration: 'none', color: '#fff', marginLeft: 16 }}
-                    >
+                        >
                         <Typography className={classes.link}>
-                            Logout
+                                Logout
                         </Typography>
-                    </a>
+                        </a>
+                        </>
+                        :
+                        <Link
+                            to="/login"
+                            style={{ textDecoration: 'none', color: '#fff', marginLeft: 16 }}
+                        >
+                            <Typography className={classes.link}>
+                                Login
+                        </Typography>
+                        </Link>
+                    
+                }  
                 </Toolbar>
             </AppBar>
         </div>

@@ -12,10 +12,15 @@ import AddEvent from './components/AddEvent'
 import EditTimeline from './components/EditTimeline'
 import EditEvent from './components/EditEvent'
 import AddTimeline from './components/AddTimeline'
-import TimelineDetail from './components/TimelineDetail'
+import Story from './components/Story'
 import ImportData from './components/ImportData'
 import NotFoundPage from './components/NotFoundPage'
 import Profile from './components/Profile';
+import Terms from './components/Terms';
+import Privacy from './components/Privacy';
+import Footer from './components/Footer';
+
+import { Box } from '@material-ui/core';
 
 const theme = createMuiTheme({
   palette: {
@@ -75,6 +80,12 @@ function App() {
                 </div>
               </Route>
 
+              <Route exact path='/profile'>
+                <div style={{ marginTop: '90px' }}>
+                  <Profile />
+                </div>
+              </Route>
+
               <Route
                 exact path='/timeline/:id/addEvent'>
                 <AddEvent />
@@ -82,13 +93,7 @@ function App() {
 
               <Route exact path='/timeline/:id'>
                 <div style={{ marginTop: '60px' }}>
-                  <TimelineDetail />
-                </div>
-              </Route>
-
-              <Route exact path='/timeline/:id'>
-                <div style={{ marginTop: '60px' }}>
-                  <TimelineDetail />
+                  <Story />
                 </div>
               </Route>
 
@@ -104,15 +109,25 @@ function App() {
               </div>
             </Route>
 
+            <Route exact path='/terms'>
+              <div style={{ margin: '100px auto' }}>
+                <Terms />
+              </div>
+            </Route>
 
+            <Route exact path='/privacy'>
+              <div style={{ margin: '100px auto' }}>
+                <Privacy />
+              </div>
+            </Route>
 
-              {/* <Box mt={8} mb={4}>
-          <Footer />
-        </Box> */}
+            <Route path='*'>
+              <NotFoundPage style={{ marginTop: '360px' }} />
+            </Route>
 
-              <Route path='*'>
-                <NotFoundPage style={{ marginTop: '360px' }} />
-              </Route>
+            {/* <Box mt={8} mb={4}>
+              <Footer />
+            </Box> */}
 
             </Switch>
           </Router>

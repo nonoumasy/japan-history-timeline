@@ -1,6 +1,6 @@
 .headerArea {
     width: 80%;
-    margin: 0 auto;
+    margin: 3.75rem auto;
     padding: 0;
 }
 
@@ -15,6 +15,11 @@
 
 .Card:hover {
     box-shadow: 0 0px 40px 0 rgba(0, 0, 0, 0.1), 0 10px 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+.footer {
+    margin: 0 auto;
+    width: 80%;
 }
 
 @media (max-width: 1920px) {
@@ -37,10 +42,14 @@
 
 @media (max-width: 900px) {
     .Card {
-        width: 90%;
+        width: 100%;
     }
 
     .headerArea {
-        width: 90%;
+        width: 0%;
+    }
+
+    .footer {
+        width: 100%;
     }
 }
