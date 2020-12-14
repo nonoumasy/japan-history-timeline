@@ -12,19 +12,26 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Collapse from '@material-ui/core/Collapse';
-import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
 
 const schema = yup.object().shape({
-    timelineTitle: yup
+    storyTitle: yup
         .string()
         .required('Name is a required field.'),
-    timelineImageUrl: yup
+    storyImageUrl: yup
         .string()
         .required('imageUrl is a required field.'),
-    tags: yup
+    storySummary: yup
+        .string(),
+    storyStatus: yup
+        .string(),
+    storyReferences: yup
+        .string(),
+    storyTags: yup
+        .string(),
+    storyMapStyle: yup
         .string()
 
 })
@@ -52,12 +59,19 @@ export default function EditStory(props) {
         // mode: 'onBlur',
         resolver: yupResolver(schema)
     })
-    const [data, setData] = useState('')
-    const [timelineTitle, setTimelineTitle] = useState('')
-    const [timelineImageUrl, setTimelineImageUrl] = useState('')
-    const [tags, setTags] = useState('')
     const [expanded, setExpanded] = useState(false);
     const [expandedTwo, setExpandedTwo] = useState(false);
+
+    const [data, setData] = useState('')
+    const [storyTitle, setStoryTitle] = useState('')
+    const [storyImageUrl, setStoryImageUrl] = useState('')
+    const [storySummary, setStorySummary] = useState('')
+    const [storyStatus, setStoryStatus] = useState('')
+    const [storyReferences, setStoryReferences] = useState('')
+    const [storyMapStyle, setStoryMapStyle] = useState('')
+    const [storyTags, setStoryTags] = useState('')
+    
+    
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -69,14 +83,17 @@ export default function EditStory(props) {
 
     // fills in form with existing value
     useEffect(() => {
-        fetch(`https://japan-history-timeline-api.herokuapp.com/timeline/${props.match.params.id}`, {
+        fetch(`http://localhost:5000/story/${props.match.params.id}`, {
             headers: {'Content-Type': 'application/json'}})
             .then(res => res.json())
             .then(data => { 
-                setTimelineTitle(data.timelineTitle)
-                setTimelineImageUrl(data.timelineImageUrl)
-                setTags(data.tags)
-
+                setStoryTitle(data.storyTitle)
+                setStoryImageUrl(data.storyImageUrl)
+                setStorySummary(data.storySummary)
+                setStoryStatus(data.storyStatus)
+                setStoryReferences(data.storyReferences)
+                setStoryMapStyle(data.storyMapStyle)
+                setStoryTags(data.storyTags)
             })
             .then({ new: true })
     }, [])
@@ -86,14 +103,25 @@ export default function EditStory(props) {
     // updates if data gets updated
     useEffect(() => {
         if (data) {
-            const { timelineTitle, timelineImageUrl, tags} = data
+            const { 
+                storyTitle, 
+                storyImageUrl, 
+                storySummary,
+                storyStatus,
+                storyReferences,
+                storyMapStyle,
+                storyTags } = data
 
             // posting to database
-            axios.put(`https://japan-history-timeline-api.herokuapp.com/timeline/${props.match.params.id}`, 
+            axios.put(`http://localhost:5000/story/${props.match.params.id}`, 
                 {
-                    timelineTitle,
-                    timelineImageUrl,
-                    tags
+                    storyTitle,
+                    storyImageUrl,
+                    storySummary,
+                    storyStatus,
+                    storyReferences,
+                    storyTags, 
+                    storyMapStyle
                 })
                 .then((data) => {
                     if (data.error) {
@@ -101,14 +129,14 @@ export default function EditStory(props) {
                     }
                     else {
                         setData('')
-                        history.push(`/timeline/${props.match.params.id}`)
+                        history.push(`/story/${props.match.params.id}`)
                     }
                 })
                 .catch(err => console.log(err))
         }
     }, [data])
 
-    const handleClose = () => {
+    const handleCancel = () => {
         history.goBack()
     };
 
@@ -125,17 +153,17 @@ export default function EditStory(props) {
                         margin="normal"
                         required
                         fullWidth
-                        id="timelineTitle"
-                        label="timelineTitle"
-                        name="timelineTitle"
-                        autoComplete="timelineTitle"
+                        id="storyTitle"
+                        label="storyTitle"
+                        name="storyTitle"
+                        autoComplete="storyTitle"
                         type="text"
-                        value={timelineTitle}
-                        onChange={e => setTimelineTitle(e.target.value)}
+                        value={storyTitle}
+                        onChange={e => setStoryTitle(e.target.value)}
                         autoFocus
                         inputRef={register}
-                        error={!!errors.timelineTitle}
-                        helperText={errors?.timelineTitle?.message}
+                        error={!!errors.storyTitle}
+                        helperText={errors?.storyTitle?.message}
                     />
 
                     <TextField
@@ -143,17 +171,17 @@ export default function EditStory(props) {
                         margin="normal"
                         required
                         fullWidth
-                        name="timelineImageUrl"
-                        label="timelineImageUrl"
+                        name="storyImageUrl"
+                        label="storyImageUrl"
                         type="text"
-                        value={timelineImageUrl}
-                        onChange={e => setTimelineImageUrl(e.target.value)}
-                        id="timelineImageUrl"
+                        value={storyImageUrl}
+                        onChange={e => setStoryImageUrl(e.target.value)}
+                        id="storyImageUrl"
                         inputRef={register}
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <IconButton
+                                    <Button
                                         className={clsx(classes.expand, {
                                             [classes.expandOpen]: expanded,
                                         })}
@@ -162,33 +190,89 @@ export default function EditStory(props) {
                                         aria-label="show more"
                                     >
                                         <InfoIcon size='sm' />
-                                    </IconButton>
+                                    </Button>
                                 </InputAdornment>
                             ),
                         }}
-                        error={!!errors.timelineImageUrl}
-                        helperText={errors?.timelineImageUrl?.message}
+                        error={!!errors.storyImageUrl}
+                        helperText={errors?.storyImageUrl?.message}
                     />
                     <Collapse in={expanded} timeout="auto" unmountOnExit>
-                        <p>This will be the cover image for your Timeline. For eg. https://image.jpg</p>
+                        <p>This will be the cover image for your Story. For eg. https://image.jpg</p>
                     </Collapse>
 
                     <TextField
                         variant="outlined"
                         margin="normal"
                         fullWidth
-                        id="tags"
-                        label="tags"
-                        name="tags"
-                        autoComplete="tags"
+                        multiline
+                        rows={4}
+                        id="storySummary"
+                        label="storySummary"
+                        name="storySummary"
+                        autoComplete="storySummary"
                         type="text"
-                        value={tags}
-                        onChange={e => setTags(e.target.value)}
+                        value={storySummary}
+                        onChange={e => setStorySummary(e.target.value)}
+                        autoFocus
+                        inputRef={register}
+                        error={!!errors.storySummary}
+                        helperText={errors?.storySummary?.message}
+                    />
+
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        id="storyStatus"
+                        label="storyStatus"
+                        name="storyStatus"
+                        autoComplete="storyStatus"
+                        type="text"
+                        value={storyStatus}
+                        onChange={e => setStoryStatus(e.target.value)}
+                        autoFocus
+                        inputRef={register}
+                        error={!!errors.storyStatus}
+                        helperText={errors?.storyStatus?.message}
+                    />
+
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        multiline
+                        rows={4}
+                        id="storyReferences"
+                        label="storyReferences"
+                        name="storyReferences"
+                        autoComplete="storyReferences"
+                        type="text"
+                        value={storyReferences}
+                        onChange={e => setStoryReferences(e.target.value)}
+                        autoFocus
+                        inputRef={register}
+                        error={!!errors.storyReferences}
+                        helperText={errors?.storyReferences?.message}
+                    />
+
+
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        id="storyTags"
+                        label="storyTags"
+                        name="storyTags"
+                        autoComplete="storyTags"
+                        type="text"
+                        value={storyTags}
+                        onChange={e => setStoryTags(e.target.value)}
                         inputRef={register}
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <IconButton
+                                    <Button
                                         className={clsx(classes.expand, {
                                             [classes.expandOpen]: expandedTwo,
                                         })}
@@ -197,17 +281,33 @@ export default function EditStory(props) {
                                         aria-label="show more"
                                     >
                                         <InfoIcon size='sm' />
-                                    </IconButton>
+                                    </Button>
                                 </InputAdornment>
                             ),
                         }}
-                        error={!!errors.tags}
-                        helperText={errors?.tags?.message}
+                        error={!!errors.storyTags}
+                        helperText={errors?.storyTags?.message}
                     />
                     <Collapse in={expandedTwo} timeout="auto" unmountOnExit>
-                        <p>Add some tags to identify your Timeline. For eg, "Japan", "Battle", etc.</p>
+                        <p>Add some storyTags to identify your Story. For eg, "Japan", "Battle", etc.</p>
                     </Collapse>
 
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        id="storyMapStyle"
+                        label="storyMapStyle"
+                        name="storyMapStyle"
+                        autoComplete="storyMapStyle"
+                        type="text"
+                        value={storyMapStyle}
+                        onChange={e => setStoryMapStyle(e.target.value)}
+                        autoFocus
+                        inputRef={register}
+                        error={!!errors.storyMapStyle}
+                        helperText={errors?.storyMapStyle?.message}
+                    />
 
                     <Button
                         type="submit"
@@ -223,7 +323,7 @@ export default function EditStory(props) {
                         // type="submit"
                         fullWidth
                         color="default"
-                        onClick={handleClose}
+                        onClick={handleCancel}
                         className={classes.submit}
                     >
                         Cancel

@@ -255,9 +255,9 @@ const List = () => {
                     <div style={{ margin: '0px auto', padding: 0 }}>
                         <div className='headerArea'>
                             <div className={classes.flexCol}>
-                                <div><Avatar alt="" src={data.timelineImageUrl} className={classes.avatar} /></div>
+                                <div><Avatar alt="" src={data.storyImageUrl} className={classes.avatar} /></div>
                                 <div>
-                                    <h2 className={classes.title}>{data.timelineTitle}</h2>
+                                    <h2 className={classes.title}>{data.storyTitle}</h2>
                                 </div>
                                 <div><p className={classes.user}>nonoumasy</p></div>
                                 <div className={classes.flexRow} >
@@ -278,7 +278,7 @@ const List = () => {
                                         <EditIcon fontSize='small' style={{ marginRight: 16 }} />
                                         <Link
                                             className={classes.link}
-                                            to={`/editTimeline/${id}`}
+                                            to={`/editStory/${id}`}
                                         >
                                             Edit
                                                     </Link>
@@ -287,7 +287,7 @@ const List = () => {
                                         <DeleteIcon fontSize='small' style={{ marginRight: 16 }} />
                                         <Link
                                             className={classes.link}
-                                            onClick={() => deleteTimelineHandler(data._id)}
+                                            onClick={() => deleteStoryHandler(data._id)}
                                         >
                                             Delete
                                                 </Link>
@@ -313,7 +313,7 @@ const List = () => {
                                             href={`data:text/json;charset=utf-8,${encodeURIComponent(
                                                 JSON.stringify(data)
                                             )}`}
-                                            download={data.timelineTitle && `${(data.timelineTitle).split(' ').join('_')}.json`}
+                                            download={data.storyTitle && `${(data.storyTitle).split(' ').join('_')}.json`}
                                             // download='filename.json'
                                             className={classes.link}>
                                             Export Data as Json

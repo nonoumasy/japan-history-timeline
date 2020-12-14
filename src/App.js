@@ -2,7 +2,6 @@ import React from 'react'
 import NavBar from './components/NavBar'
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 // import { AuthProvider } from './components/AuthContext'
-// import PrivateRoute from './components/PrivateRoute'
 
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -45,6 +44,10 @@ const theme = createMuiTheme({
 });
 
 function App() {
+
+  function PrivateRoute () {
+
+  }
   
   return (
     <>
@@ -59,6 +62,18 @@ function App() {
               <Login />
             </Route>
 
+            <Route exact path='/'>
+              <div style={{ marginTop: '90px' }}>
+                <Home />
+              </div>
+            </Route>
+
+            <Route exact path='/story/:story_id'>
+              <div style={{ marginTop: '60px' }}>
+                <Story />
+              </div>
+            </Route>
+
             <Route exact path='/AddStory'>
               <div style={{ margin: '60px auto' }}>
                 <AddStory />
@@ -71,26 +86,14 @@ function App() {
             />
 
             <Route
-              exact path='/story/:id/addEvent'>
+              exact path='/story/:story_id/add'>
               <AddEvent />
             </Route>
 
             <Route
-              exact path='/editEvent/:id'
+              exact path='/story/:story_id/editEvent/:event_id'
               render={props => <EditEvent {...props} />}
             />
-
-            <Route exact path='/'>
-              <div style={{ marginTop: '90px' }}>
-                <Home />
-              </div>
-            </Route>
-
-            <Route exact path='/story/:id'>
-              <div style={{ marginTop: '60px' }}>
-                <Story />
-              </div>
-            </Route>
 
             <Route exact path='/profile'>
               <div style={{ margin: '60px auto' }}>

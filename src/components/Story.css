@@ -29,6 +29,9 @@
     .headerArea {
         width: 40%;
     }
+    .footer {
+        width: 60%;
+    }
 }
 
 @media (max-width: 1440px) {
@@ -38,17 +41,18 @@
     .headerArea {
         width: 60%;
     }
+    .footer {
+        width: 80%;
+    }
 }
 
 @media (max-width: 900px) {
     .Card {
         width: 100%;
     }
-
     .headerArea {
         width: 80%;
     }
-
     .footer {
         width: 100%;
     }

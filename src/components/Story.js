@@ -14,7 +14,6 @@ import CardActions from '@material-ui/core/CardActions';
 import { SimpleMenu } from './shared/SimpleMenu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import { Avatar, Tooltip } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -249,7 +248,7 @@ const useStyles = makeStyles((theme) => ({
 const Story = (props) => {
     const classes = useStyles();
     const history = useHistory()
-    const { id } = useParams()
+    const { story_id, event_id } = useParams()
 
     const [data, setData] = useState([])
     const [isLoading, setIsLoading] = useState(false)
@@ -271,13 +270,13 @@ const Story = (props) => {
     })
     const [open, setOpen] = useState(false);
 
-    console.log('data', data)
+    // console.log('data', data)
+    // console.log('story_id', story_id)
 
     // get story by id, get map extents, setViewport
     useEffect(() => {
         setIsLoading(true)
-        // fetch(`https://japan-history-story-api.herokuapp.com/story/${id}`)
-        fetch(`http://localhost:5000/story/${id}`)
+        fetch(`http://localhost:5000/story/${story_id}`)
             .then(res => res.json())
             .then(data => {
                 setData(data)
@@ -303,12 +302,12 @@ const Story = (props) => {
             .catch(err => console.log(err))
     }, [])
 
-    const onClickMarker = (e, item) => {
+    const onClickMarker = (e, event) => {
         e.preventDefault()
-        setEventId(item._id)
-        if (item.eventLongitude && item.eventLatitude) {
-            flyTo(item)
-            setPopup(item)
+        setEventId(event._id)
+        if (event.eventLongitude && event.eventLatitude) {
+            flyTo(event)
+            setPopup(event)
         }
     }
 
@@ -318,9 +317,9 @@ const Story = (props) => {
 
     function getBounds(data) {
         // Calculate corner values of bounds
-        // data.event && data.event.map(item => console.log('eventLongitude', item.eventLongitude))
-        const eventLongitude = data.event && data.event.map(item => item.eventLongitude && item.eventLongitude !== 'null' && item.eventLongitude)
-        const eventLatitude = data.event && data.event.map(item => item.eventLatitude && item.eventLatitude !== 'null' && item.eventLatitude)
+        // data.event && data.event.map(event => console.log('eventLongitude', event.eventLongitude))
+        const eventLongitude = data.event && data.event.map(event => event.eventLongitude && event.eventLongitude !== 'null' && event.eventLongitude)
+        const eventLatitude = data.event && data.event.map(event => event.eventLatitude && event.eventLatitude !== 'null' && event.eventLatitude)
         // console.log('checkNull',eventLongitude)
 
         let eventLongitudeFiltered = eventLongitude && eventLongitude.filter(function (el) {
@@ -346,26 +345,26 @@ const Story = (props) => {
         return { longitude, latitude, zoom }
     }
 
-    const deleteTimelineHandler = async (id) => {
-        await axios.delete(`http://localhost:5000/story/${id}`)
+    const deleteStoryHandler = async (story_id) => {
+        await axios.delete(`http://localhost:5000/story/${story_id}`)
         history.push('/')
     }
 
-    const deleteEventHandler = async (id) => {
-        await axios.delete(`http://localhost:5000/story/event/${id}`)
-        history.goBack()
+    const addEventHandler = async (story_id) => {
+        await history.push(`/story/${story_id}/add`)
+    }
+    
+    const deleteEventHandler = async (event_id) => {
+        await axios.delete(`http://localhost:5000/story/DELETE/${event_id}`)
+        setData(data.event.filter((event) => event._id !== event_id))
     }
 
-    const eventHandler = async (id) => {
-        await history.push(`/story/${id}/addEvent`)
-    }
-
-    const flyTo = async (item) => {
-        item.eventLatitude && item.eventLongitude &&
+    const flyTo = async (event) => {
+        event.eventLatitude && event.eventLongitude &&
         await setViewport({
             ...viewport,
-            longitude: item.eventLongitude,
-            latitude: item.eventLatitude,
+            longitude: event.eventLongitude,
+            latitude: event.eventLatitude,
             pitch: 90,
             zoom: 15.5,
             transitionInterpolator: new FlyToInterpolator({ speed: 1 }),
@@ -374,16 +373,16 @@ const Story = (props) => {
     };
 
     const eventHoverHandler = async (id) => {
-        const item = await data.event.find(item => item._id === id)
-        item.eventLatitude && item.eventLongitude &&
-        await setPopup(item)
+        const event = await data.event.find(event => event._id === id)
+        event.eventLatitude && event.eventLongitude &&
+        await setPopup(event)
     }
 
     const eventClickHandler = async (id) => {
-        const item = await data.event.find(item => item._id === id)
-        item.eventLatitude && item.eventLongitude &&
-        await flyTo(item)
-        await setPopup(item)
+        const event = await data.event.find(event => event._id === id)
+        event.eventLatitude && event.eventLongitude &&
+        await flyTo(event)
+        await setPopup(event)
     }
 
     return (
@@ -395,7 +394,7 @@ const Story = (props) => {
                         <Fab
                             color="primary"
                             aria-label="add"
-                            onClick={() => eventHandler(id)}
+                            onClick={() => addEventHandler(story_id)}
                             className={classes.fab}>
                             <AddIcon />
                         </Fab>
@@ -412,12 +411,12 @@ const Story = (props) => {
                                     <div><p className={classes.user}>{data.storyCreator}</p></div>
                                         <div className={classes.flexRow} >
                                             {/* <div className={classes.numItems}>
-                                                {data.event && data.event.length} items
+                                                {data.event && data.event.length} events
                                             </div> */}
                                             <div className={classes.flexRow}    >
-                                                <IconButton >
+                                                <Button >
                                                 <ThumbUpAltIcon className={classes.thumbUpIcon}/>
-                                                </IconButton>
+                                                </Button>
                                             </div>
                                         </div>
                                     <div>
@@ -428,7 +427,7 @@ const Story = (props) => {
                                             <EditIcon fontSize='small' style={{ marginRight: 16 }} />
                                             <Link
                                                 className={classes.link}
-                                                to={`/editTimeline/${id}`}
+                                                to={`/editStory/${story_id}`}
                                             >
                                                 Edit
                                                     </Link>
@@ -437,7 +436,7 @@ const Story = (props) => {
                                             <DeleteIcon fontSize='small' style={{ marginRight: 16 }} />
                                             <Link
                                                 className={classes.link}
-                                                onClick={() => deleteTimelineHandler(data._id)}
+                                                onClick={() => deleteStoryHandler(data._id)}
                                             >
                                                 Delete
                                                 </Link>
@@ -447,7 +446,7 @@ const Story = (props) => {
                                             <ShareIcon fontSize='small' style={{ marginRight: 16 }} />
                                             <Link className={classes.link}>
                                                 Share
-                                                </Link>
+                                            </Link>
                                         </MenuItem>
                                         <MenuItem onClick={props.handleClose}>
                                             <ArrowDownwardIcon fontSize='small' style={{ marginRight: 16 }} />
@@ -480,56 +479,56 @@ const Story = (props) => {
                         <div className={classes.cardsContainer}>
                             {/* <Card data={data} props={props}/> */}
                             
-                            {data.event && data.event.map((item, index) => (
+                            {data.event && data.event.map((event, index) => (
                                 <div style={{ margin: '0 auto' }}>     
                                     <div className="Card" key={index}>
                                         <div className={classes.imageContainer}>
-                                            {item.eventImageUrl && item.eventImageUrl.includes('youtube.com') ?
+                                            {event.eventImageUrl && event.eventImageUrl.includes('youtube.com') ?
                                                 <iframe
                                                     // component='video'
                                                     // controls
                                                     className={classes.video}
-                                                    src={item.eventImageUrl}
+                                                    src={event.eventImageUrl}
                                                     allowFullScreen
                                                     mozallowfullscreen="mozallowfullscreen"
                                                     msallowfullscreen="msallowfullscreen"
                                                     oallowfullscreen="oallowfullscreen"
                                                     webkitallowfullscreen="webkitallowfullscreen"
                                                     allow="accelerometer"
-                                                    title={item.year}
+                                                    title={event.year}
                                                         type="*"
                                                 ></iframe>
                                                 :
-                                                item.eventImageUrl &&
+                                                event.eventImageUrl &&
                                                 <CardMedia
                                                     className={classes.media}
                                                     component='img'
-                                                    image={item.eventImageUrl}
+                                                    image={event.eventImageUrl}
                                                     alt=''
                                                 />
                                             }
                                         </div>
                                             <CardContent
-                                                onMouseEnter={() => eventHoverHandler(item._id)}
+                                                onMouseEnter={() => eventHoverHandler(event._id)}
                                                 onMouseLeave={() => setPopup('')}
-                                                onClick={() => eventClickHandler(item._id)} className={classes.cardEventContainer}>
-                                                {item.eventDate &&
+                                                onClick={() => eventClickHandler(event._id)} className={classes.cardEventContainer}>
+                                                {event.eventDate &&
                                                     <Typography variant="body2" color="textSecondary" className={classes.year}>
-                                                {new Date(item.eventDate).toDateString()}
+                                                {new Date(event.eventDate).getFullYear()}
                                                     </Typography>
                                                 }
-                                                {item.eventTitle &&
+                                                {event.eventTitle &&
                                                 <Typography className={classes.eventTitle}>
-                                                    {item.eventTitle}
+                                                    {event.eventTitle}
                                                 </Typography>}
                                                 <Typography className={classes.event}>
-                                                    {item.eventDescription}
+                                                    {event.eventDescription}
                                                 </Typography>
-                                                {item.eventLink &&
+                                                {event.eventLink &&
                                                     <Link
                                                         // target='_blank'
                                                         className={classes.more}
-                                                        onClick={() => window.open(item.eventLink, "_blank")}>
+                                                        onClick={() => window.open(event.eventLink, "_blank")}>
                                                         More Details
                                                     </Link>
                                                 }
@@ -542,7 +541,7 @@ const Story = (props) => {
                                                     <EditIcon fontSize='small' style={{ marginRight: 16 }} />
                                                     <Link
                                                         className={classes.link}
-                                                        to={`/editEvent/${item._id}`}>
+                                                        to={`/story/${story_id}/editEvent/${event._id}`}>
                                                         Edit
                                                     </Link>
                                                 </MenuItem>
@@ -550,7 +549,7 @@ const Story = (props) => {
                                                     <DeleteIcon fontSize='small' style={{ marginRight: 16 }} />
                                                     <Link
                                                         className={classes.link}
-                                                        onClick={() => deleteEventHandler(item._id)}
+                                                        onClick={() => deleteEventHandler(event._id)}
                                                     >
                                                         Delete
                                                     </Link>

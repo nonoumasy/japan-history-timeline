@@ -141,17 +141,17 @@ const Profile = () => {
     }, [])
 
     // useEffect(() => {
-    //     fetch('https://japan-history-timeline-api.herokuapp.com/timeline')
+    //     fetch('https://japan-history-story-api.herokuapp.com/story')
     //         .then(res => res.json())
     //         .then(data => setData(data))
     //         .catch(err => console.log(err))
 
     // }, [setData])
 
-    console.log('user',user)
+    // console.log('user',user)
 
     const clickImageHandler = (id) => {
-        history.push(`/timeline/${id}`)
+        history.push(`/story/${id}`)
     }
 
     return (
@@ -162,7 +162,7 @@ const Profile = () => {
                             <Avatar alt="" src={user.photo} className={classes.avatar} />
                             <div className={classes.userName}>{user && user.username}</div>
                             <div className={classes.numFollowers}>{user && user.followers}Followers</div>
-                            <div className={classes.numFollowers}>{user && user.timelines}Stories</div>
+                            <div className={classes.numFollowers}>{user && user.storys}Stories</div>
                             <Button variant='outlined' color='primary' className={classes.followButton}>
                                 <div className={classes.link}>Follow</div>
                             </Button>
@@ -172,7 +172,7 @@ const Profile = () => {
                         <Container maxWidth="md" >
                                 <div>
                             <Button variant='outlined' className={classes.createButton}>
-                                        <Link to='/addTimeline' className={classes.link}>
+                                        <Link to='/addStory' className={classes.link}>
                                             Create New StoryMap
                                         </Link>
                                     </Button>
@@ -189,12 +189,12 @@ const Profile = () => {
                                                     <CardMedia
                                                         component='img'
                                                         className={classes.image}
-                                                        image={item.timelineImageUrl}
+                                                        image={item.storyImageUrl}
                                                         onClick={() => clickImageHandler(item._id)}
                                                     />
                                                 </div>
                                                 <Typography variant="h6" className={classes.title}>
-                                                    {item.timelineTitle}
+                                                    {item.storyTitle}
                                                 </Typography>
                                             </Grid>
                                         ))} */}

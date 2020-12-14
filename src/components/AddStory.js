@@ -12,7 +12,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Collapse from '@material-ui/core/Collapse';
-import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
@@ -32,7 +31,9 @@ const schema = yup.object().shape({
     storyReferences: yup
         .string(),
     storyTags: yup
-        .string(),
+        .array()
+        .of(yup.string())
+        .nullable(),
     storyMapStyle: yup
         .string(),
 })
@@ -102,7 +103,9 @@ export default function AddStory() {
                 storyImageUrl,
                 storySummary,
                 storyStatus,
-                storyTags} = data
+                storyReferences,
+                storyTags,
+                storyMapStyle } = data
 
             // posting to database
             axios.post("http://localhost:5000/story", {
@@ -111,8 +114,10 @@ export default function AddStory() {
                 storyImageUrl,
                 storySummary,
                 storyStatus,
-                storyTags
-            })
+                storyReferences,
+                storyTags,
+                storyMapStyle
+                })
                 .then((data) => {
                     if (data.error) {
                         console.log(data.error)
@@ -127,7 +132,7 @@ export default function AddStory() {
         }
     }, [data])
 
-    const handleClose = () => {
+    const handleCancel = () => {
         history.goBack()
     };
 
@@ -135,10 +140,10 @@ export default function AddStory() {
         <Container component="main" maxWidth="xs">
             <div className={classes.paper}>
                 <Typography>
-                    Add New Timeline
+                    Add New Story
                 </Typography>
 
-                <form className={classes.form} noValidate onSubmit={handleSubmit((data) => setData(data))}>
+                <form className={classes.form} noValidate onSubmit={handleSubmit(data => setData(data))}>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -166,7 +171,7 @@ export default function AddStory() {
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <IconButton
+                                    <Button
                                         className={clsx(classes.expand, {
                                             [classes.expandOpen]: expanded,
                                         })}
@@ -175,7 +180,7 @@ export default function AddStory() {
                                         aria-label="show more"
                                     >
                                         <InfoIcon size='sm' />
-                                    </IconButton>
+                                    </Button>
                                 </InputAdornment>
                             ),
                         }}
@@ -184,7 +189,7 @@ export default function AddStory() {
                         helperText={errors?.storyImageUrl?.message}
                     />
                     <Collapse in={expanded} timeout="auto" unmountOnExit>
-                        <p>This will be the cover image for your Timeline. For eg. https://image.jpg</p>
+                        <p>This will be the cover image for your StoryMap. For eg. https://image.jpg</p>
                     </Collapse>
 
                     <TextField
@@ -247,7 +252,7 @@ export default function AddStory() {
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <IconButton
+                                    <Button
                                         className={clsx(classes.expand, {
                                             [classes.expandOpen]: expanded,
                                         })}
@@ -256,7 +261,7 @@ export default function AddStory() {
                                         aria-label="show more"
                                     >
                                         <InfoIcon size='sm' />
-                                    </IconButton>
+                                    </Button>
                                 </InputAdornment>
                         ),
                         }}
@@ -264,7 +269,7 @@ export default function AddStory() {
                         helperText={errors?.storyTags?.message}
                     />
                     <Collapse in={expandedTwo} timeout="auto" unmountOnExit>
-                    <p>Add some tags to identify your Timeline. For eg, "Japan", "Battle", etc.</p>
+                    <p>Add some tags to identify your StoryMaps. For eg, "Japan", "Battle", etc.</p>
                     </Collapse>
 
                     <TextField
@@ -293,10 +298,9 @@ export default function AddStory() {
                     </Button>
 
                     <Button
-                        // type="submit"
                         fullWidth
                         color="default"
-                        onClick={handleClose}
+                        onClick={handleCancel}
                         className={classes.submit}
                     >
                         Cancel

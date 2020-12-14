@@ -34,7 +34,7 @@ const NotFoundPage = () => {
                     <Button variant='outlined' style={{ marginBottom: 10, marginTop: 20 }} className={classes.button}>
                         <Link to='/' className={classes.link}>
                             Go Home
-                    </Link>
+                        </Link>
                     </Button>
                 </div>
                 

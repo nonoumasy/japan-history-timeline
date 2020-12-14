@@ -172,22 +172,22 @@ const Map = ({ viewport, setViewport, data, flyTo, popup, setPopup, setEventId, 
                     </FormControl>
                 </div>
 
-                {data.event && data.event.map((item, index) => (
-                    <div key={item._id}>
+                {data.event && data.event.map((event, index) => (
+                    <div key={event._id}>
                         {/* check to see if there location data */}
-                        {item.eventLatitude && item.eventLongitude && (item.eventLatitude !== null) && (item.eventLongitude !== null) &&    
+                        {event.location && (event.location.coordinates.eventLatitude !== null) && (event.location.coordinates.eventLongitude !== null) &&    
                         <Marker 
-                            latitude={item.eventLatitude} 
-                            longitude={item.eventLongitude}>
+                            latitude={event.location.coordinates.eventLatitude} 
+                            longitude={event.location.coordinates.eventLongitude}>
                             
                                 <div 
                                     // className={classes.button}
-                                    onMouseEnter={() => setPopup(item)}
+                                    onMouseEnter={() => setPopup(event)}
                                     onMouseLeave={() => setPopup('')}
-                                    onClick={(e) => onClickMarker(e, item)}>
+                                    onClick={(e) => onClickMarker(e, event)}>
                                     
                                     <div >
-                                    {item.eventImageUrl ? item.eventImageUrl.includes('youtube.com') ?
+                                    {event.eventImageUrl ? event.eventImageUrl.includes('youtube.com') ?
                                         <div className={classes.marker}>
                                             {`${index + 1}`}
                                         </div>
@@ -203,18 +203,18 @@ const Map = ({ viewport, setViewport, data, flyTo, popup, setPopup, setEventId, 
                                             //         outline: 0,
                                             //         padding: 0
                                             //         }}
-                                            //     src={item.eventImageUrl}
+                                            //     src={event.eventImageUrl}
                                             //     allowFullScreen
                                             //     mozallowfullscreen="mozallowfullscreen"
                                             //     msallowfullscreen="msallowfullscreen"
                                             //     oallowfullscreen="oallowfullscreen"
                                             //     webkitallowfullscreen="webkitallowfullscreen"
                                             //     allow="accelerometer"
-                                            //     title={item.year}
+                                            //     title={event.year}
                                             // ></iframe>
                                             :
                                             <div>
-                                                <img src={item.eventImageUrl} alt='' 
+                                                <img src={event.eventImageUrl} alt='' 
                                                 style={{
                                                     width: `auto`,
                                                     height:`${markerHeight}px`,

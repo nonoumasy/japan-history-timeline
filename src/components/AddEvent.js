@@ -12,9 +12,12 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Collapse from '@material-ui/core/Collapse';
-import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 const schema = yup.object().shape({
     eventDate: yup
@@ -29,6 +32,10 @@ const schema = yup.object().shape({
         .string(),
     eventLink: yup
         .string(),
+    eventAudio: yup
+        .string(),
+    // eventType: yup
+    //     .string(),
     // eventLatitude: yup
     //     .number()
     //     .transform(cv => isNaN(cv) ? undefined : cv).positive()
@@ -43,8 +50,6 @@ const schema = yup.object().shape({
     //     .lessThan(180)
     //     .moreThan(-180)
     //     .notRequired() ,
-    eventAudio: yup
-        .string(),
 })
 
 const useStyles = makeStyles((theme) => ({
@@ -61,56 +66,67 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(2, 0, 0),
     },
+    formControl: {
+        marginTop: '1rem',
+    },
 }));
 
 export default function AddEvent(props) {
     const classes = useStyles();
     const history = useHistory()
     const { register, handleSubmit, errors } = useForm({ 
-        // mode: 'onBlur',
         resolver: yupResolver(schema)
     })
-    const { id } = useParams()
-
+    const { story_id } = useParams()
+    
     const [data, setData] = useState('')
     const [expanded, setExpanded] = useState(false);
-
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
     
-    const { eventDate, eventTitle, eventDescription, eventImageUrl, eventLink, eventLatitude,
-        eventLongitude} = data
+    const { 
+        eventDate,
+        eventTitle,
+        eventDescription,
+        eventImageUrl,
+        eventLink,
+        eventAudio,
+        eventLocation
+    } = data
+
     useEffect(() => {
-        if (data) {
-            axios.put(`http://localhost:5000/story/${id}/update`, {
+            axios.put(`http://localhost:5000/story/${story_id}/update`, {
                 eventDate,
                 eventTitle,
                 eventDescription,
                 eventImageUrl,
                 eventLink,
-                eventLatitude,
-                eventLongitude
+                eventAudio,
+                eventLocation
             })
-                .then(() => history.goBack())
-                .catch(err => console.log(err))
-        }
+            .then(() => history.goBack() )
+            .catch(err => console.log(err))
     }, [data])
 
+    const handleExpandClick = () => {
+        setExpanded(!expanded);
+    };
 
     const handleCancel = () => {
         history.goBack()
     };
 
+    const onSubmit = (data) => {
+        console.log(data);
+        setData(data) 
+    }
+
+
     return (
         <Container component="main" maxWidth="xs">
-            
             <div className={classes.paper}>
                 <Typography>
                     Add New Event
                 </Typography>
-                
-                <form className={classes.form} noValidate onSubmit={handleSubmit((data) => setData(data))}>
+                <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -164,7 +180,7 @@ export default function AddEvent(props) {
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <IconButton
+                                    <Button
                                         className={clsx(classes.expand, {
                                             [classes.expandOpen]: expanded,
                                         })}
@@ -173,7 +189,7 @@ export default function AddEvent(props) {
                                         aria-label="show more"
                                     >
                                         <InfoIcon size='sm' />
-                                    </IconButton>
+                                    </Button>
                                 </InputAdornment>
                             ),
                         }}
@@ -212,32 +228,46 @@ export default function AddEvent(props) {
                         error={!!errors.eventAudio}
                         helperText={errors?.eventAudio?.message}
                     />
-                    
+                    {/* <FormControl fullWidth variant="outlined" className={classes.formControl}>
+                        <InputLabel id="demo-simple-select-outlined-label">eventType</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-outlined-label"
+                            id="demo-simple-select-outlined"
+                            value={eventType}
+                            onChange={handleChange}
+                            defaultValue={'Point'}
+                            label="eventType"
+                            className={classes.selectEmpty}
+                        >
+                            <MenuItem value={'Point'}>Point</MenuItem>
+                            <MenuItem value={'LineString'}>LineString</MenuItem>
+                            <MenuItem value={'Polygon'}>Polygon</MenuItem>
+                        </Select>
+                    </FormControl> */}
                     <TextField
                         variant="outlined"
                         margin="normal"
                         fullWidth
-                        name="type"
-                        label="type"
-                        type="text"
-                        id="type"
-                        defaultValue={'Point'}
+                        name="eventLatitude"
+                        label="eventLatitude"
+                        type="number"
+                        id="eventLatitude"
                         inputRef={register}
-                        error={!!errors.type}
-                        helperText={errors?.type?.message}
+                        error={!!errors.eventLatitude}
+                        helperText={errors?.eventLatitude?.message}
                     />
 
                     <TextField
                         variant="outlined"
                         margin="normal"
                         fullWidth
-                        name="coordinates"
-                        label="coordinates"
+                        name="eventLongitude"
+                        label="eventLongitude"
                         type="number"
-                        id="coordinates"
+                        id="eventLongitude"
                         inputRef={register}
-                        error={!!errors.coordinates}
-                        helperText={errors?.coordinates?.message}
+                        error={!!errors.eventLongitude}
+                        helperText={errors?.eventLongitude?.message}
                     />
 
                     <Button
@@ -251,16 +281,13 @@ export default function AddEvent(props) {
                     </Button>
 
                     <Button
-                        // type="submit"
                         fullWidth
-                        // variant="outlined"
                         color="default"
                         onClick={handleCancel}
                         className={classes.submit}
                     >
                         Cancel
                     </Button>
-                    
                 </form>
             </div>
         </Container>

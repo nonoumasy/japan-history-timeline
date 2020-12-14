@@ -57,10 +57,6 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         objectFit: 'cover',
     },
-    gridContainer: {
-        margin: 0,
-        padding: 0,
-    },
     container: {
         margin: 0,
         padding: 0,
@@ -133,11 +129,6 @@ const Home = (props) => {
                     </Link>
                     </Button>
 
-                    {/* <Button >
-                        <Link to='/' className={classes.link} style={{marginLeft:10}}>
-                            Import Data
-                    </Link>
-                    </Button> */}
                 </div>
 
                 {/* <div>
@@ -160,24 +151,24 @@ const Home = (props) => {
             <Grid
                 container
                 spacing={2}
-                // dclassName={classes.gridContainer}
                 justify='flex-start'>
 
                 {isLoading && <h2 style={{ margin: '60px auto' }}>Loading....</h2>}
 
-                {data.map(item => (
-                        <Grid item xs={12} sm={6} md={4} lg={3} key={item._id}>
+                {data.map(story => (
+                        
+                        <Grid item xs={12} sm={6} md={4} lg={3} key={story._id}>
                             <div className={classes.container}>
                                 <CardMedia
                                     component='img'
                                     className={classes.image}
-                                    image={item.storyImageUrl}
-                                    onClick={() => clickImageHandler(item._id)}
+                                    image={story.storyImageUrl}
+                                    onClick={() => clickImageHandler(story._id)}
                                 />
                                 
-                            </div>
+                            </div>  
                             <Typography variant="h6" className={classes.title}>
-                                {item.storyTitle}
+                                {story.storyTitle}
                             </Typography>
                         </Grid>
                     )
