@@ -92,8 +92,9 @@ export default function AddEvent(props) {
         eventLocation
     } = data
 
+    
     useEffect(() => {
-            axios.put(`http://localhost:5000/story/${story_id}/update`, {
+        axios.put(`http://localhost:5000/story/${story_id}/update`, {
                 eventDate,
                 eventTitle,
                 eventDescription,
@@ -102,9 +103,11 @@ export default function AddEvent(props) {
                 eventAudio,
                 eventLocation
             })
-            .then(() => history.goBack() )
+            .then(() => history.push('/'))
             .catch(err => console.log(err))
     }, [data])
+
+    
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -115,8 +118,8 @@ export default function AddEvent(props) {
     };
 
     const onSubmit = (data) => {
-        console.log(data);
         setData(data) 
+        console.log(data);
     }
 
 

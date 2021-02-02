@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const Map = ({ viewport, setViewport, data, flyTo, popup, setPopup, setEventId, bounds, onClickMarker}) => {
+const Map = ({ viewport, setViewport, eventData, flyTo, popup, setPopup, setEventId, bounds, onClickMarker}) => {
     const classes = useStyles()
     const [mapboxStyle, setMapboxStyle] = useState('mapbox://styles/nonoumasy/ckdcvbt983i4k1iny85j4q087')
 
@@ -78,7 +78,7 @@ const Map = ({ viewport, setViewport, data, flyTo, popup, setPopup, setEventId, 
         });
     }
 
-    
+    eventData && console.log('bottomEventData', eventData)
 
     const handleChange = (event) => {
         setMapboxStyle(event.target.value);
@@ -172,91 +172,76 @@ const Map = ({ viewport, setViewport, data, flyTo, popup, setPopup, setEventId, 
                     </FormControl>
                 </div>
 
-                {data.event && data.event.map((event, index) => (
-                    <div key={event._id}>
-                        {/* check to see if there location data */}
-                        {event.location && (event.location.coordinates.eventLatitude !== null) && (event.location.coordinates.eventLongitude !== null) &&    
-                        <Marker 
-                            latitude={event.location.coordinates.eventLatitude} 
-                            longitude={event.location.coordinates.eventLongitude}>
-                            
-                                <div 
-                                    // className={classes.button}
-                                    onMouseEnter={() => setPopup(event)}
-                                    onMouseLeave={() => setPopup('')}
-                                    onClick={(e) => onClickMarker(e, event)}>
-                                    
-                                    <div >
-                                    {event.eventImageUrl ? event.eventImageUrl.includes('youtube.com') ?
-                                        <div className={classes.marker}>
-                                            {`${index + 1}`}
-                                        </div>
-                                            // <iframe
-                                            //     // component='video'
-                                            //     style={{
-                                            //         width: `${markerWidth}px`,
-                                            //         height: `${markerHeight}px`,
-                                            //         objectFit: 'cover',
-                                            //         borderRadius: 7,
-                                            //         boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
-                                            //         margin: '0 auto',
-                                            //         outline: 0,
-                                            //         padding: 0
-                                            //         }}
-                                            //     src={event.eventImageUrl}
-                                            //     allowFullScreen
-                                            //     mozallowfullscreen="mozallowfullscreen"
-                                            //     msallowfullscreen="msallowfullscreen"
-                                            //     oallowfullscreen="oallowfullscreen"
-                                            //     webkitallowfullscreen="webkitallowfullscreen"
-                                            //     allow="accelerometer"
-                                            //     title={event.year}
-                                            // ></iframe>
-                                            :
-                                            <div>
-                                                <img src={event.eventImageUrl} alt='' 
-                                                style={{
-                                                    width: `auto`,
-                                                    height:`${markerHeight}px`,
-                                                    // width: '50px',
-                                                    // height:`50px`,
-                                                    objectFit: 'cover',
-                                                    borderRadius: 7,
-                                                    boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
-                                                    margin: '0 auto',
-                                                }} /> 
-                                            </div>
-                                            :
-                                            <div className={classes.marker}>
-                                                {`${index + 1}`}
-                                            </div>
-                                        }
-                                    </div>
-                                </div>
-                        </Marker>}
+                {eventData && eventData?.map((event, index) => {
 
-                        {popup ? (
-                            <Popup
-                                id={popup._id}
-                                latitude={popup.eventLatitude}
-                                longitude={popup.eventLongitude}
-                                closeButton={false}
-                                closeOnClick={true}
-                                onClose={() => setPopup(false)}
-                                className={classes.popup}
-                                offsetTop={-20}
-                                dynamicPosition={true}
-                                anchor="bottom"
-                                tipSize={0}
-                            >
-                                <div>
-                                    {`${popup.eventDescription.substring(0, 140)}`}
-                                </div>
-                            </Popup>
-                        ) 
-                        : null}  
-                    </div>
-                    ))
+                    console.log('lat', event?.coordinates?.latitude)
+                    return (
+
+                        <div key={event._id}>
+                            {/* check to see if there location data */}
+                            {event?.coordinates && (event?.coordinates?.latitude !== null) && (event?.coordinates?.longitude !== null) &&
+
+                                <Marker
+                                latitude={event?.coordinates?.latitude}
+                                longitude={event?.coordinates?.longitude}>
+
+                                    <div
+                                        // className={classes.button}
+                                        onMouseEnter={() => setPopup(event)}
+                                        onMouseLeave={() => setPopup('')}
+                                        onClick={(e) => onClickMarker(e, event)}>
+
+                                        <div >
+                                            {event?.image ? event?.image.includes('youtube.com') ?
+                                                <div className={classes.marker}>
+                                                    {`${index + 1}`}
+                                                </div>
+                                                :
+                                                <div>
+                                                <img src={event?.image} alt=''
+                                                        style={{
+                                                            width: `auto`,
+                                                            height: `${markerHeight}px`,
+                                                            // width: '50px',
+                                                            // height:`50px`,
+                                                            objectFit: 'cover',
+                                                            borderRadius: 7,
+                                                            boxShadow: '0 10px 20px 0 rgba(0, 0, 0, 0.5)',
+                                                            margin: '0 auto',
+                                                        }} />
+                                                </div>
+                                                :
+                                                <div className={classes.marker}>
+                                                    {`${index + 1}`}
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </Marker>}
+
+                            {/* {popup ? (
+                                <Popup
+                                    id={popup.id}
+                                    latitude={popup.latitude}
+                                    longitude={popup.longitude}
+                                    closeButton={false}
+                                    closeOnClick={true}
+                                    onClose={() => setPopup(false)}
+                                    className={classes.popup}
+                                    offsetTop={-20}
+                                    dynamicPosition={true}
+                                    anchor="bottom"
+                                    tipSize={0}
+                                >
+                                    <div>
+                                        {`${popup.description.substring(0, 140)}`}
+                                    </div>
+                                </Popup>
+                            )
+                                : null} */}
+                        </div>
+                    )
+                })
                 }
             </ReactMapGL>
         </>

@@ -62,7 +62,7 @@ code {
   height: 100vh;
   width: 50vw;
   overflow: auto;
-  padding: 30px 30px;
+  padding: 30px 30px 400px 30px;
   background-color: #fff;
   z-index: 100;
 }

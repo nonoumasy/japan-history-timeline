@@ -19,6 +19,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 const schema = yup.object().shape({
     storyTitle: yup
         .string()
+        .min(5)
         .required('Name is a required field.'),
     storyImageUrl: yup
         .string()
@@ -30,10 +31,11 @@ const schema = yup.object().shape({
     storyReferences: yup
         .string(),
     storyTags: yup
-        .string(),
+        .array()
+        .of(yup.string())
+        .nullable(),
     storyMapStyle: yup
         .string()
-
 })
 
 const useStyles = makeStyles((theme) => ({
@@ -96,6 +98,7 @@ export default function EditStory(props) {
                 setStoryTags(data.storyTags)
             })
             .then({ new: true })
+            .catch(error => console.log(error))
     }, [])
 
     // console.log('updated data', data)
@@ -104,23 +107,22 @@ export default function EditStory(props) {
     useEffect(() => {
         if (data) {
             const { 
-                storyTitle, 
-                storyImageUrl, 
+                storyTitle,
+                storyImageUrl,
                 storySummary,
                 storyStatus,
                 storyReferences,
-                storyMapStyle,
-                storyTags } = data
+                storyTags,
+                storyMapStyle } = data
 
             // posting to database
-            axios.put(`http://localhost:5000/story/${props.match.params.id}`, 
-                {
+            axios.put(`http://localhost:5000/story/${props.match.params.id}`, {
                     storyTitle,
                     storyImageUrl,
                     storySummary,
                     storyStatus,
                     storyReferences,
-                    storyTags, 
+                    storyTags,
                     storyMapStyle
                 })
                 .then((data) => {
@@ -144,10 +146,10 @@ export default function EditStory(props) {
         <Container component="main" maxWidth="xs">
             <div className={classes.paper}>
                 <Typography>
-                    EditStory
+                    Edit Story
                 </Typography>
 
-                <form className={classes.form} noValidate onSubmit={handleSubmit((data) => setData(data))}>
+                <form className={classes.form} noValidate onSubmit={handleSubmit(data => setData(data))}>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -198,7 +200,7 @@ export default function EditStory(props) {
                         helperText={errors?.storyImageUrl?.message}
                     />
                     <Collapse in={expanded} timeout="auto" unmountOnExit>
-                        <p>This will be the cover image for your Story. For eg. https://image.jpg</p>
+                        <p>This will be the cover image for your StoryMap. For eg. https://image.jpg</p>
                     </Collapse>
 
                     <TextField
@@ -255,8 +257,6 @@ export default function EditStory(props) {
                         error={!!errors.storyReferences}
                         helperText={errors?.storyReferences?.message}
                     />
-
-
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -277,7 +277,7 @@ export default function EditStory(props) {
                                             [classes.expandOpen]: expandedTwo,
                                         })}
                                         onClick={handleExpandClickTwo}
-                                        aria-expanded={expanded}
+                                        aria-expanded={expandedTwo}
                                         aria-label="show more"
                                     >
                                         <InfoIcon size='sm' />

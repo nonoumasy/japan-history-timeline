@@ -1,9 +1,8 @@
 import React, { useState, useEffect} from 'react'
 import { useHistory, useParams, Link} from 'react-router-dom'
-import axios from 'axios'
-import { useForm } from 'react-hook-form'
 import Map from './Map'
 import { FlyToInterpolator, WebMercatorViewport } from 'react-map-gl';
+import firebase from '../firebase'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Collapse from '@material-ui/core/Collapse';
@@ -23,7 +22,6 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
-import Footer from './Footer'
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
@@ -34,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
         position: 'fixed',
         display: 'flex',
         flexDirection: 'row',
-        
     },
     flexCol: {
         display: 'flex',
@@ -141,7 +138,7 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: '1rem',
         marginTop: 10,
     },
-    eventTitle: {
+    title: {
         marginLeft: '1rem',
         marginTop: 20,
         fontWeight: 700,
@@ -211,15 +208,23 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 12,
         margin: 0,
     },
-    tags: {
+    tagsContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+    },
+    tag: {
         textAlign: 'left',
         textTransform: 'uppercase',
         fontSize: '12px',
         fontWeight: 700,
-        width: '80%',
-        marginLeft: '1rem',
-        marginTop: 40,
-        marginBottom: 0,
+        marginRight: 5,
+        padding: '5px',
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderColor: '#333',
+        borderRadius: '5px',
     },
     referenceContainer: {
         display: 'flex',
@@ -250,7 +255,8 @@ const Story = (props) => {
     const history = useHistory()
     const { story_id, event_id } = useParams()
 
-    const [data, setData] = useState([])
+    const [storyData, setStoryData] = useState('')
+    const [eventData, setEventData] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [popup, setPopup] = useState(null)
     const [eventId, setEventId] = useState(null)
@@ -269,39 +275,30 @@ const Story = (props) => {
         height: "100vh"
     })
     const [open, setOpen] = useState(false);
+    const {id} = useParams()
 
-    // console.log('data', data)
-    // console.log('story_id', story_id)
+    const fetchData = async () => {
+        const db = await firebase.firestore()
+        const storyData = await db.collection('stories').doc(id).get()
 
-    // get story by id, get map extents, setViewport
+        const data = await db.collection('stories').doc(id).collection('events').get()
+        const eventData = await data.docs.map(doc => doc.data())
+
+        console.log('item1', eventData)
+        
+        setStoryData(storyData.data())
+        setEventData(eventData)
+    }
+
+    console.log('topEventData',eventData)
     useEffect(() => {
-        setIsLoading(true)
-        fetch(`http://localhost:5000/story/${story_id}`)
-            .then(res => res.json())
-            .then(data => {
-                setData(data)
-                setIsLoading(false)
-                return data
-            })
-            .then(data => {
-                let bounds = getBounds(data)
-                return bounds
-            })
-            .then(bounds => {
-                bounds &&
-                    setViewport({
-                        ...viewport,
-                        longitude: bounds.longitude,
-                        latitude: bounds.latitude,
-                        zoom: bounds.zoom,
-                        bearing: 0,
-                        pitch: 0
-                    });
-                setBounds(bounds)
-            })
-            .catch(err => console.log(err))
+        fetchData()
+        setIsLoading(false)
     }, [])
 
+    
+
+    
     const onClickMarker = (e, event) => {
         e.preventDefault()
         setEventId(event._id)
@@ -346,17 +343,14 @@ const Story = (props) => {
     }
 
     const deleteStoryHandler = async (story_id) => {
-        await axios.delete(`http://localhost:5000/story/${story_id}`)
         history.push('/')
     }
 
     const addEventHandler = async (story_id) => {
-        await history.push(`/story/${story_id}/add`)
+        
     }
     
     const deleteEventHandler = async (event_id) => {
-        await axios.delete(`http://localhost:5000/story/DELETE/${event_id}`)
-        setData(data.event.filter((event) => event._id !== event_id))
     }
 
     const flyTo = async (event) => {
@@ -372,29 +366,28 @@ const Story = (props) => {
         }) 
     };
 
-    const eventHoverHandler = async (id) => {
-        const event = await data.event.find(event => event._id === id)
-        event.eventLatitude && event.eventLongitude &&
-        await setPopup(event)
-    }
+    // const eventHoverHandler = async (id) => {
+    //     const event = await storyData.event.find(event => event.id === id)
+    //     event.eventLatitude && event.eventLongitude &&
+    //     await setPopup(event)
+    // }
 
-    const eventClickHandler = async (id) => {
-        const event = await data.event.find(event => event._id === id)
-        event.eventLatitude && event.eventLongitude &&
-        await flyTo(event)
-        await setPopup(event)
-    }
+    // const eventClickHandler = async (id) => {
+    //     const event = await storyData.event.find(event => event._id === id)
+    //     event.eventLatitude && event.eventLongitude &&
+    //     await flyTo(event)
+    //     await setPopup(event)
+    // }
 
     return (
         <>
             <div className={classes.mainContainer}>
-                
                 <div className='sidebar'>
                     <Tooltip arrow placement='top' title='Add New Event' >
                         <Fab
                             color="primary"
                             aria-label="add"
-                            onClick={() => addEventHandler(story_id)}
+                            // onClick={() => addEventHandler(story_id)}
                             className={classes.fab}>
                             <AddIcon />
                         </Fab>
@@ -404,21 +397,18 @@ const Story = (props) => {
                         <div style={{ margin: '0px auto', padding: 0 }}>
                             <div className='headerArea'>
                                 <div className={classes.flexCol}>
-                                    <div><Avatar alt="" src={data.storyImageUrl} className={classes.avatar}/></div>
+                                    <div><Avatar alt="" src={storyData.image} className={classes.avatar} /></div>
                                     <div>
-                                        <h2 className={classes.title}>{data.storyTitle}</h2>
+                                        <h2 className={classes.title}>{storyData.title}</h2>
                                     </div>
-                                    <div><p className={classes.user}>{data.storyCreator}</p></div>
-                                        <div className={classes.flexRow} >
-                                            {/* <div className={classes.numItems}>
-                                                {data.event && data.event.length} events
-                                            </div> */}
-                                            <div className={classes.flexRow}    >
-                                                <Button >
-                                                <ThumbUpAltIcon className={classes.thumbUpIcon}/>
-                                                </Button>
-                                            </div>
+                                    <div><p className={classes.user}>{storyData.author}</p></div>
+                                    <div className={classes.flexRow} >
+                                        <div className={classes.flexRow}>
+                                            <Button >
+                                                <ThumbUpAltIcon className={classes.thumbUpIcon} />
+                                            </Button>
                                         </div>
+                                    </div>
                                     <div>
                                         <p className={classes.numLikes}>100</p>
                                     </div>
@@ -436,7 +426,7 @@ const Story = (props) => {
                                             <DeleteIcon fontSize='small' style={{ marginRight: 16 }} />
                                             <Link
                                                 className={classes.link}
-                                                onClick={() => deleteStoryHandler(data._id)}
+                                                onClick={() => deleteStoryHandler(storyData._id)}
                                             >
                                                 Delete
                                                 </Link>
@@ -452,142 +442,148 @@ const Story = (props) => {
                                             <ArrowDownwardIcon fontSize='small' style={{ marginRight: 16 }} />
                                             <Link
                                                 className={classes.link}
-                                                to={`/import/${data._id}`}>
-                                                Import Data
+                                                to={`/import/${storyData._id}`}>
+                                                Import storyData
                                                 </Link>
                                         </MenuItem>
                                         <MenuItem onClick={props.handleClose}>
                                             <ArrowUpwardIcon fontSize='small' style={{ marginRight: 16 }} />
                                             <a
-                                                href={`data:text/json;charset=utf-8,${encodeURIComponent(
-                                                    JSON.stringify(data)
+                                                href={`storyData:text/json;charset=utf-8,${encodeURIComponent(
+                                                    JSON.stringify(storyData)
                                                 )}`}
-                                                download={data.storyTitle && `${(data.storyTitle).split(' ').join('_')}.json`}
+                                                download={storyData.storyTitle && `${(storyData.title).split(' ').join('_')}.json`}
                                                 // download='filename.json'
                                                 className={classes.link}>
                                                 Export Data as Json
                                                     </a>
                                         </MenuItem>
                                     </SimpleMenu>
-                                    <div className={classes.summary}>{data.storySummary}</div>
+                                    <div className={classes.summary}>{storyData.summary}</div>
                                 </div>
                             </div>
 
                             {isLoading && <h2 style={{ margin: '60px auto' }}>Loading....</h2>}
 
-                        </div>
-                        <div className={classes.cardsContainer}>
-                            {/* <Card data={data} props={props}/> */}
-                            
-                            {data.event && data.event.map((event, index) => (
-                                <div style={{ margin: '0 auto' }}>     
-                                    <div className="Card" key={index}>
-                                        <div className={classes.imageContainer}>
-                                            {event.eventImageUrl && event.eventImageUrl.includes('youtube.com') ?
-                                                <iframe
-                                                    // component='video'
-                                                    // controls
-                                                    className={classes.video}
-                                                    src={event.eventImageUrl}
-                                                    allowFullScreen
-                                                    mozallowfullscreen="mozallowfullscreen"
-                                                    msallowfullscreen="msallowfullscreen"
-                                                    oallowfullscreen="oallowfullscreen"
-                                                    webkitallowfullscreen="webkitallowfullscreen"
-                                                    allow="accelerometer"
-                                                    title={event.year}
+                            {/* eventsSection */}
+
+                            <div className={classes.cardsContainer}>
+                                {eventData && eventData?.map((event, index) => (
+
+                                    <div style={{ margin: '0 auto' }}>
+                                        <div className="Card" key={index}>
+                                            <div className={classes.imageContainer}>
+                                                {event?.image && event?.image?.includes('youtube.com') ?
+                                                    <iframe
+                                                        // component='video'
+                                                        // controls
+                                                        className={classes.video}
+                                                        src={event.image}
+                                                        allowFullScreen
+                                                        mozallowfullscreen="mozallowfullscreen"
+                                                        msallowfullscreen="msallowfullscreen"
+                                                        oallowfullscreen="oallowfullscreen"
+                                                        webkitallowfullscreen="webkitallowfullscreen"
+                                                        allow="accelerometer"
+                                                        title={event.title}
                                                         type="*"
-                                                ></iframe>
-                                                :
-                                                event.eventImageUrl &&
-                                                <CardMedia
-                                                    className={classes.media}
-                                                    component='img'
-                                                    image={event.eventImageUrl}
-                                                    alt=''
-                                                />
-                                            }
-                                        </div>
-                                            <CardContent
-                                                onMouseEnter={() => eventHoverHandler(event._id)}
-                                                onMouseLeave={() => setPopup('')}
-                                                onClick={() => eventClickHandler(event._id)} className={classes.cardEventContainer}>
-                                                {event.eventDate &&
-                                                    <Typography variant="body2" color="textSecondary" className={classes.year}>
-                                                {new Date(event.eventDate).getFullYear()}
-                                                    </Typography>
+                                                    ></iframe>
+                                                    :
+                                                    event?.image &&
+                                                    <CardMedia
+                                                        className={classes.media}
+                                                        component='img'
+                                                        image={event.image}
+                                                        alt=''
+                                                    />
                                                 }
-                                                {event.eventTitle &&
-                                                <Typography className={classes.eventTitle}>
-                                                    {event.eventTitle}
-                                                </Typography>}
+                                            </div>
+                                            <CardContent
+                                                // onMouseEnter={() => eventHoverHandler(event.id)}
+                                                onMouseLeave={() => setPopup('')}
+                                                // onClick={() => eventClickHandler(event.id)} className={classes.cardEventContainer}
+                                                >
+                                                {/* {event?.date &&
+                                                    <Typography variant="body2" color="textSecondary" className={classes.date}>
+                                                        {event?.date}
+                                                    </Typography>
+                                                } */}
+                                                {event?.title &&
+                                                    <Typography className={classes.title}>
+                                                        {event.title}
+                                                    </Typography>}
                                                 <Typography className={classes.event}>
-                                                    {event.eventDescription}
+                                                    {event.description}
                                                 </Typography>
-                                                {event.eventLink &&
+                                                {event?.link &&
                                                     <Link
                                                         // target='_blank'
                                                         className={classes.more}
-                                                        onClick={() => window.open(event.eventLink, "_blank")}>
+                                                        onClick={() => window.open(event.link, "_blank")}>
                                                         More Details
                                                     </Link>
                                                 }
                                             </CardContent>
-                                        <CardActions className={classes.actions}>
-                                            <div style={{ marginRight: '1rem' }}></div>
-                                            <div className={classes.pageNum}>{index + 1}</div>
-                                            <SimpleMenu props={props}>
-                                                <MenuItem onClick={props.handleClose}>
-                                                    <EditIcon fontSize='small' style={{ marginRight: 16 }} />
-                                                    <Link
-                                                        className={classes.link}
-                                                        to={`/story/${story_id}/editEvent/${event._id}`}>
-                                                        Edit
+                                            <CardActions className={classes.actions}>
+                                                <div style={{ marginRight: '1rem' }}></div>
+                                                <div className={classes.pageNum}>{index + 1}</div>
+                                                <SimpleMenu props={props}>
+                                                    <MenuItem onClick={props.handleClose}>
+                                                        <EditIcon fontSize='small' style={{ marginRight: 16 }} />
+                                                        <Link
+                                                            className={classes.link}
+                                                            to={''}>
+                                                            Edit
                                                     </Link>
-                                                </MenuItem>
-                                                <MenuItem onClick={props.handleClose}>
-                                                    <DeleteIcon fontSize='small' style={{ marginRight: 16 }} />
-                                                    <Link
-                                                        className={classes.link}
-                                                        onClick={() => deleteEventHandler(event._id)}
-                                                    >
-                                                        Delete
+                                                    </MenuItem>
+                                                    <MenuItem onClick={props.handleClose}>
+                                                        <DeleteIcon fontSize='small' style={{ marginRight: 16 }} />
+                                                        <Link
+                                                            className={classes.link}
+                                                            onClick={() => deleteEventHandler(event.id)}
+                                                        >
+                                                            Delete
                                                     </Link>
-                                                </MenuItem>
-                                            </SimpleMenu>
-                                        </CardActions>
-                                    </div>      
-                            </div>
-                            ))}
+                                                    </MenuItem>
+                                                </SimpleMenu>
+                                            </CardActions>
+                                        </div>
+                                    </div>
+                                ))}
 
-                            <div className='footer'>
-                                <p className={classes.tags}>Tags: <span style={{fontStyle: 'italic'}}>{data.storyTags}</span></p>
-                                <div className={classes.referenceContainer}>
-                                    <p className={classes.reference}>References: </p>
-                                    <Button onClick={handleClick} className={classes.collapseButton}>
-                                        {open ? <ExpandLess /> : <ExpandMore />}
-                                    </Button>
+                                <div className='footer'>
+                                    <p className={classes.reference}>Tags: </p>
+                                    <div className={classes.tagsContainer}>
+                                        {storyData?.tags?.map(tag => (
+                                            <div className={classes.tag}>{tag}</div>
+                                        ))}
+                                    </div>
+                                    <div className={classes.referenceContainer}>
+                                        <p className={classes.reference}>References: </p>
+                                        <Button onClick={handleClick} className={classes.collapseButton}>
+                                            {open ? <ExpandLess /> : <ExpandMore />}
+                                        </Button>
+                                    </div>
+                                    <Collapse in={open} timeout="auto" unmountOnExit>
+                                        <ol className={classes.ol}>
+                                            <li>Ann Christys, Vikings in the South (London: Bloomsbury, 2015), pp. 59-60.</li>
+                                            <li>Haywood, John. Northmen. Head of Zeus.</li>
+                                            <li>Judith Jesch, Ships and Men in the Late Viking Age: The Vocabulary of Runic Inscriptions and Skaldic Verse (Woodbridge: Boydell, 2001), p. 88.</li>
+                                        </ol>
+                                    </Collapse>
                                 </div>
-                                <Collapse in={open} timeout="auto" unmountOnExit>
-                                    <ol className={classes.ol}>
-                                        <li>Ann Christys, Vikings in the South (London: Bloomsbury, 2015), pp. 59-60.</li>
-                                        <li>Haywood, John. Northmen. Head of Zeus.</li>
-                                        <li>Judith Jesch, Ships and Men in the Late Viking Age: The Vocabulary of Runic Inscriptions and Skaldic Verse (Woodbridge: Boydell, 2001), p. 88.</li>
-                                    </ol>
-                                </Collapse>
-                                <Footer />
                             </div>
-                            
-                            
-                            
 
-                            
+
+
                         </div>
                     </div>
+                    
                 </div>
+
                 <div className='map'>
                     <Map 
-                        data={data} 
+                        eventData={eventData} 
                         viewport={viewport}
                         setViewport={setViewport} 
                         flyTo={flyTo} 
@@ -599,6 +595,7 @@ const Story = (props) => {
                         onClickMarker={onClickMarker}
                         />
                 </div>      
+                
             </div>
         </>
     )

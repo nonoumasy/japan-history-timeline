@@ -1,10 +1,7 @@
 import React from 'react'
 import NavBar from './components/NavBar'
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-// import { AuthProvider } from './components/AuthContext'
 
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Home from './components/Home'
 import Login from './components/Login'
 import AddEvent from './components/AddEvent'
@@ -12,14 +9,12 @@ import EditStory from './components/EditStory'
 import EditEvent from './components/EditEvent'
 import AddStory from './components/AddStory'
 import Story from './components/Story'
-import ImportData from './components/ImportData'
 import NotFoundPage from './components/NotFoundPage'
 import Profile from './components/Profile';
 import Terms from './components/Terms';
 import Privacy from './components/Privacy';
-import Footer from './components/Footer';
 
-import { Box } from '@material-ui/core';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
   palette: {
@@ -44,84 +39,68 @@ const theme = createMuiTheme({
 });
 
 function App() {
-
-  function PrivateRoute () {
-
-  }
   
   return (
     <>
-      {/* <AuthProvider> */}
         <ThemeProvider theme={theme}>
-          <CssBaseline />
           <Router>
             <NavBar />
-            <Switch>
-
-            <Route path='/login'>
-              <Login />
-            </Route>
-
-            <Route exact path='/'>
-              <div style={{ marginTop: '90px' }}>
-                <Home />
-              </div>
-            </Route>
-
-            <Route exact path='/story/:story_id'>
               <div style={{ marginTop: '60px' }}>
-                <Story />
+                <Switch>
+                  <Route path='/login'>
+                    <Login />
+                  </Route>
+
+                  <Route exact path='/'>
+                      <Home />
+                  </Route>
+
+                  <Route exact path='/story/:id'>
+                      <Story />
+                  </Route>
+
+                  <Route exact path='/addStory'>
+                      <AddStory />
+                  </Route>
+
+                  <Route
+                    exact path='/editStory/:id'
+                    render={props => <EditStory {...props} />}
+                  />
+
+                  <Route
+                    exact path='/story/:story_id/addEvent'>
+                    <AddEvent />
+                  </Route>
+
+                  <Route
+                    exact path='/story/:story_id/editEvent/:event_id'
+                    render={props => <EditEvent {...props} />}
+                  />
+
+                  <Route exact path='/profile'>
+                      <Profile />
+                  </Route>
+
+                  <Route exact path='/terms'>
+                      <Terms />
+                  </Route>
+
+                  <Route exact path='/privacy'>
+                      <Privacy />
+                  </Route>
+
+                  <Route path='*'>
+                    <NotFoundPage style={{ marginTop: '360px' }} />
+                  </Route>
+
+                  {/* <Box mt={8} mb={4}>
+                  <Footer />
+                </Box> */}
+
+                </Switch>
               </div>
-            </Route>
-
-            <Route exact path='/AddStory'>
-              <div style={{ margin: '60px auto' }}>
-                <AddStory />
-              </div>
-            </Route>
-
-            <Route
-              exact path='/editStory/:id'
-              render={props => <EditStory {...props} />}
-            />
-
-            <Route
-              exact path='/story/:story_id/add'>
-              <AddEvent />
-            </Route>
-
-            <Route
-              exact path='/story/:story_id/editEvent/:event_id'
-              render={props => <EditEvent {...props} />}
-            />
-
-            <Route exact path='/profile'>
-              <div style={{ margin: '60px auto' }}>
-                <Profile />
-              </div>
-            </Route>
-
-            <Route exact path='/terms'>
-              <div style={{ margin: '100px auto' }}>
-                <Terms />
-              </div>
-            </Route>
-
-            <Route exact path='/privacy'>
-              <div style={{ margin: '100px auto' }}>
-                <Privacy />
-              </div>
-            </Route>
-
-            <Route path='*'>
-              <NotFoundPage style={{ marginTop: '360px' }} />
-            </Route>
-
-            {/* <Box mt={8} mb={4}>
-              <Footer />
-            </Box> */}
-
-            </Switch>
+            
           </Router>
 
         </ThemeProvider>

@@ -35,7 +35,7 @@ const schema = yup.object().shape({
         .of(yup.string())
         .nullable(),
     storyMapStyle: yup
-        .string(),
+        .string()
 })
 
 const useStyles = makeStyles((theme) => ({
@@ -58,13 +58,14 @@ export default function AddStory() {
     const classes = useStyles();
     const history = useHistory()
     const { register, handleSubmit, errors } = useForm({
-        // mode: 'onBlur',
         resolver: yupResolver(schema)
     })
     const [data, setData] = useState('')
     const [expanded, setExpanded] = useState(false);
     const [expandedTwo, setExpandedTwo] = useState(false);
     const [user, setUser] = useState('')
+
+    console.log('user', user)
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -123,7 +124,7 @@ export default function AddStory() {
                         console.log(data.error)
                     }
                     else {
-                        console.log(data)
+                        // console.log(data)
                         setData('')
                         history.push(`/story/${data.data.id}`)
                     }
@@ -168,6 +169,7 @@ export default function AddStory() {
                         label="storyImageUrl"
                         type="text"
                         id="storyImageUrl"
+                        inputRef={register}
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
@@ -184,7 +186,6 @@ export default function AddStory() {
                                 </InputAdornment>
                             ),
                         }}
-                        inputRef={register}
                         error={!!errors.storyImageUrl}
                         helperText={errors?.storyImageUrl?.message}
                     />
@@ -238,7 +239,6 @@ export default function AddStory() {
                         error={!!errors.storyReferences}
                         helperText={errors?.storyReferences?.message}
                     />
-                    
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -254,7 +254,7 @@ export default function AddStory() {
                                 <InputAdornment position="end">
                                     <Button
                                         className={clsx(classes.expand, {
-                                            [classes.expandOpen]: expanded,
+                                            [classes.expandOpen]: expandedTwo,
                                         })}
                                         onClick={handleExpandClickTwo}
                                         aria-expanded={expandedTwo}
@@ -263,13 +263,13 @@ export default function AddStory() {
                                         <InfoIcon size='sm' />
                                     </Button>
                                 </InputAdornment>
-                        ),
+                            ),
                         }}
                         error={!!errors.storyTags}
                         helperText={errors?.storyTags?.message}
                     />
                     <Collapse in={expandedTwo} timeout="auto" unmountOnExit>
-                    <p>Add some tags to identify your StoryMaps. For eg, "Japan", "Battle", etc.</p>
+                        <p>Add some storyTags to identify your Story. For eg, "Japan", "Battle", etc.</p>
                     </Collapse>
 
                     <TextField
